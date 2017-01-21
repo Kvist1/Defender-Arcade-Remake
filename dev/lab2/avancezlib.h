@@ -57,6 +57,9 @@ public:
 	// Returns the keyboard status. If a flag is set, the corresponding key is being held down.
 	void getKeyStatus(KeyStatus& keys);
 
+	// Calculate fps
+	void calculateFPS(int maxFps, int frameTicks);
+
 private:
 	SDL_Window * window;
 	SDL_Renderer * renderer;
@@ -64,6 +67,7 @@ private:
 	TTF_Font* font;
 
 	KeyStatus key;
+	int fps;
 };
 
 

@@ -57,6 +57,13 @@ int AvancezLib::getElapsedTime()
 	return SDL_GetTicks();
 }
 
+void AvancezLib::calculateFPS(int maxFps, int frameTicks)
+{
+	float delay = 1000.f / (float)maxFps - (float)frameTicks;
+	// / 10 * 10 removes the decimals
+	fps = 1000.f / delay / 10 * 10;
+}
+
 void AvancezLib::drawText(int x, int y, const char* msg)
 {
 	font = TTF_OpenFont("space_invaders.ttf", 24);
@@ -92,16 +99,15 @@ void AvancezLib::drawText(int x, int y, const char* msg)
 
 bool AvancezLib::update()
 {
-
+	// Draw random color
 	SDL_SetRenderDrawColor(renderer, 0, rand()%255, rand()%255, rand()%255);
 	SDL_RenderClear(renderer);
 
-	int fps = 60;
+	// Draw a fps counter
 	std::string fps_text = "FPS: " + std::to_string(fps);
 	drawText(10, 10, fps_text.c_str());
 
 	SDL_RenderPresent(renderer);
-
 
 	return true;
 }
