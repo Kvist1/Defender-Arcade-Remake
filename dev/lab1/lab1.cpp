@@ -1,5 +1,7 @@
 #include "SDL.h"
 
+
+
 int main(int argc, char* argv[])
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -22,7 +24,7 @@ int main(int argc, char* argv[])
 	}
 
 	//Initialize renderer color
-	SDL_SetRenderDrawColor(renderer, 0x55, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 	SDL_RenderClear(renderer);
 
