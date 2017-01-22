@@ -154,9 +154,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avancezlib.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="space_invaders.ttf" />
+    <ResourceCompile Include="lab2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="data\space_invaders.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\enemy_0.bmp" />
+    <Image Include="data\enemy_1.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

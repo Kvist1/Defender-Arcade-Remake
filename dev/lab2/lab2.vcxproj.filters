@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{8a8dca74-3ce2-48b5-a65a-a27bf18b2729}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lab2.cpp">
@@ -26,10 +29,26 @@
     <ClInclude Include="avancezlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="space_invaders.ttf">
+    <ResourceCompile Include="lab2.rc">
       <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="data\space_invaders.ttf">
+      <Filter>data</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\enemy_1.bmp">
+      <Filter>data</Filter>
+    </Image>
+    <Image Include="data\enemy_0.bmp">
+      <Filter>data</Filter>
+    </Image>
   </ItemGroup>
 </Project>

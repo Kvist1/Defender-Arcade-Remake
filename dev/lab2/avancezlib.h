@@ -58,7 +58,7 @@ public:
 	void getKeyStatus(KeyStatus& keys);
 
 	// Calculate fps
-	void calculateFPS(int maxFps, int frameTicks);
+	//void calculateFPS(int maxFps, int frameTicks);
 
 private:
 	SDL_Window * window;

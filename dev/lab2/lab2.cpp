@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "SDL.h"
 #include "avancezlib.h"
 #include <stdio.h>
@@ -5,83 +7,60 @@
 int main(int argc, char* argv[])
 {
 	AvancezLib system;
-	SDL_Event event;
-	bool gameRunning = true;
-	int startTicks;
-	int MS_PER_FRAME = 16;
-	int MAX_FPS = 60;
 
 	/* Initialise SDL and video modes and all that */
-	system.init(900, 640);
+	system.init(640, 480);
 
+	Sprite * foo = system.createSprite("data/enemy_0.bmp");
+	float x = 10;
 
-	/* Main game loop */
-	while (gameRunning) 
+	int num_frames = 0;
+	int sum_delta = 0;
+	float avg_fps = 0;
+	float MAX_FPS = 60;
+	char msg[256];
+
+	float vel = 0.1;
+
+	int last_time = system.getElapsedTime();
+	while (system.update()) 
 	{
+		int new_time = system.getElapsedTime();
+		int delta = new_time - last_time;
+		last_time = new_time;
 
-		startTicks = system.getElapsedTime();
+		sum_delta += delta;
 
-		/* Check for events */
-		while (SDL_PollEvent(&event)) 
+		foo->draw(int(x += vel * delta) % 640, 10);
+
+		AvancezLib::KeyStatus key;
+		system.getKeyStatus(key);
+		if (key.fire)			SDL_Log("fire!\n");
+		if (key.left)			SDL_Log("left!\n");
+		if (key.right)			SDL_Log("right!\n");
+
+		num_frames++;
+
+		if (sum_delta > 100)
 		{
-			/* Look for a keypress */
-			if (event.type == SDL_KEYDOWN) 
-			{
-				/* Check the SDLKey values and move change the coords */
-				switch (event.key.keysym.sym) {
-				case SDLK_LEFT:
-					//alien_x -= 1;
-					SDL_Log("Left");
-					break;
-				case SDLK_RIGHT:
-					//alien_x += 1;
-					SDL_Log("Right");
-					break;
-				case SDLK_SPACE:
-					//alien_y -= 1;
-					SDL_Log("Fire");
-					break;
-				case SDLK_DOWN:
-					//alien_y += 1;
-					break;
-				case SDLK_q:
-					gameRunning = false;
-					break;
-				case SDLK_ESCAPE:
-					gameRunning = false;
-					break;
-				default:
-					break;
-				}
-			}
+			avg_fps = ((float)num_frames / sum_delta) * 1000;
+			num_frames = 0;
+			sum_delta = 0;
 		}
-
-
-		/* Update game */
-		system.update();
-
-
-		int frameTicks = system.getElapsedTime() - startTicks;
-
-		// calculate fps only every 100 frames
-		static int frameCounter = 0;
-		frameCounter++;
-		if (frameCounter == 100)
-		{
-			system.calculateFPS(MAX_FPS, frameTicks);
-			frameCounter = 0;
-		}
-
+		sprintf(msg, "%.3f fps", avg_fps);
+		system.drawText(12, 12, msg);
+	
 		// delay on the loop if needed
-		frameTicks = system.getElapsedTime() - startTicks;
+		float frameTicks = system.getElapsedTime() - last_time;
 		if (1000 / MAX_FPS > frameTicks)
 		{
 			SDL_Delay(1000 / MAX_FPS - frameTicks);
 		}
+	} 
 
-
-	} // end main game loop
+	foo->destroy();
 	
 	system.destroy();
+
 	return 0;
 }
