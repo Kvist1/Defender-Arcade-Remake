@@ -26,3 +26,8 @@ void Rocket::setIsVisible(bool state)
 	isVisible_ = state;
 }
 
+bool Rocket::getIsVisible()
+{
+	return isVisible_;
+}
+

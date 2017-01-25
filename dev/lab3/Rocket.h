@@ -10,6 +10,7 @@ public:
 
 	void update(int playerPosX, AvancezLib::KeyStatus key, int delta);
 	void setIsVisible(bool state);
+	bool getIsVisible();
 
 private:
 	bool isVisible_;

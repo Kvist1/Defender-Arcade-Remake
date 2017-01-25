@@ -40,6 +40,11 @@ bool AvancezLib::init(int width, int height)
 		return false;
 	}
 
+	// init key statuses
+	key.fire = false;
+	key.left = false;
+	key.right = false;
+
 	//Initialize renderer color
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
@@ -90,35 +95,49 @@ void AvancezLib::destroy()
 // Main game loop
 bool AvancezLib::update()
 {
-	bool go_on = true;
+	bool go_on = true; 
 	SDL_Event event;
-
-	key.fire = false;	key.left = false;	key.right = false;
 
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_QUIT)
-			go_on = false;
 
 		if (event.type == SDL_KEYDOWN)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_ESCAPE:
-			case SDLK_q:
-				go_on = false;
-				break;
-			case SDLK_SPACE:
-				key.fire = true;
-				break;
 			case SDLK_LEFT:
 				key.left = true;
 				break;
 			case SDLK_RIGHT:
 				key.right = true;
 				break;
+			case SDLK_SPACE:
+				key.fire = true;
+				break;
+			case SDLK_ESCAPE:
+			case SDLK_q:
+				go_on = false;
+				break;
 			}
 		}
+		if (event.type == SDL_KEYUP)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_LEFT:
+				key.left = false;
+
+				break;
+			case SDLK_RIGHT:
+				key.right = false;
+				break;
+			case SDLK_SPACE:
+				key.fire = false;
+				break;
+			}
+		}
+
+		if (event.type == SDL_QUIT) go_on = false;
 	}
 
 	//Update screen

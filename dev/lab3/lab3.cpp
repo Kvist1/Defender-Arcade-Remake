@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 		sum_delta_alien_step++;
 
 		playerSprite->draw((int)player.x(), (int)player.y());
-		rocketSprite->draw((int)rocket.x(), (int)rocket.y());
+		if (rocket.getIsVisible()) rocketSprite->draw((int)rocket.x(), (int)rocket.y());
 
 		//if (key.fire)			
 		//	SDL_Log("fire!\n");
