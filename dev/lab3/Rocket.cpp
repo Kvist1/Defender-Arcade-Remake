@@ -1,5 +1,11 @@
 #include "Rocket.h"
 
+Rocket::Rocket(AvancezLib& system, float x, float y, float vel)
+	: Entity(system, x, y, vel)
+{
+	isVisible_ = false;
+}
+
 void Rocket::update(int playerPosX, AvancezLib::KeyStatus key, int delta)
 {
 	if (isVisible_) 

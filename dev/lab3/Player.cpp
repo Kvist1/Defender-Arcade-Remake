@@ -2,8 +2,19 @@
 #include "SDL.h"
 #include "avancezlib.h"
 
-void Player::update(AvancezLib::KeyStatus key, int delta)
+Player::Player(AvancezLib& system, float x, float y, float vel)
+	: Entity(system, x, y, vel)
 {
+	isDead_ = false;
+}
+
+void Player::update(AvancezLib& system2)
+{
+	AvancezLib::KeyStatus key;
+	AvancezLib system = getSystem();
+	system.getKeyStatus(key);
+	int delta = system.getDelta();
+
 	if (key.fire) fire(delta);
 	if (key.left) moveLeft(delta);
 	if (key.right) moveRight(delta);

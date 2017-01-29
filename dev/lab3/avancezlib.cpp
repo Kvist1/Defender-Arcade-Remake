@@ -212,7 +212,17 @@ int AvancezLib::getElapsedTime()
 	return SDL_GetTicks();
 }
 
-void AvancezLib::getKeyStatus(KeyStatus & keys)
+void AvancezLib::setDelta(int delta)
+{
+	delta_ = delta;
+}
+
+int AvancezLib::getDelta()
+{
+	return delta_;
+}
+
+void AvancezLib::getKeyStatus(KeyStatus& keys)
 {
 	keys.fire = key.fire;
 	keys.left = key.left;

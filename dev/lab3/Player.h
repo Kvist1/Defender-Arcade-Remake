@@ -2,13 +2,12 @@
 #include "Entity.h"
 #include "avancezlib.h"
 
-class Player : 
-	public Entity
+class Player : public Entity
 {
 public:
-	Player() : isDead_(false), Entity(0, 0, 0) {}
+	Player(AvancezLib& system, float x, float y, float vel);
 
-	void update(AvancezLib::KeyStatus key, int delta);
+	void update(AvancezLib& system2);
 	void setIsDead(bool state);
 	void moveLeft(int delta);
 	void moveRight(int delta);

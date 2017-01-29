@@ -15,19 +15,13 @@ int main(int argc, char* argv[])
 	/* Initialise SDL and video modes and all that */
 	system.init(640, 480);
 
-	// Create player
-	Player player;
-	player.setX(320-16);
-	player.setY(415);
-	player.setVel(0.6f);
+	// Create player : system, x, y, vel
+	Player player(system, 320-16, 415, 0.6f);
 	Sprite * playerSprite = system.createSprite("data/player.bmp");
 	entities[0] = &player;
 
 	// Create rocket
-	Rocket rocket;
-	rocket.setX(320);
-	rocket.setY(415);
-	rocket.setVel(0.3f);
+	Rocket rocket(system, 320, 415, 0.3f);
 	Sprite * rocketSprite = system.createSprite("data/rocket.bmp");
 	entities[1] = &rocket;
 
@@ -36,14 +30,13 @@ int main(int argc, char* argv[])
 	Sprite * alien_1 = system.createSprite("data/enemy_1.bmp");
 	float alien_x = 10;
 
-
-
 	int num_frames = 0;
 	int sum_delta = 0;
 	int sum_delta_alien_step = 0;
 	bool alien_arms_up = true;
 	float avg_fps = 0;
 	float MAX_FPS = 60;
+	int delta = 0;
 	char msg[256];
 
 	float alien_vel = 0.1f;
@@ -53,21 +46,22 @@ int main(int argc, char* argv[])
 	while (system.update()) 
 	{
 		int new_time = system.getElapsedTime();
-		int delta = new_time - last_time;
+		delta = new_time - last_time;
+		system.setDelta(delta);
 		last_time = new_time;
 
 		sum_delta += delta;
 		
-		AvancezLib::KeyStatus key;
-		system.getKeyStatus(key);
+		//AvancezLib::KeyStatus key;
+		//system.getKeyStatus(key);
 
 		/*for (int i = 0; i < numEntities; i++)
 		{
 			entities[i]->update();
 		}*/
 
-		player.update(key, delta);
-		rocket.update(player.x(), key, delta);
+		player.update(system);
+		//rocket.update(player.x(), key, delta);
 
 		if (alien_arms_up)
 		{

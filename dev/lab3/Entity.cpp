@@ -1,10 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(float x, float y, float vel)
+Entity::Entity(AvancezLib& system, float x, float y, float vel)
 {
 	x_ = x;
 	y_ = y;
 	vel_ = vel;
+	system_ = &system;
 }
 
 void Entity::update()
@@ -24,6 +25,11 @@ float Entity::y()
 float Entity::vel()
 {
 	return vel_;
+}
+
+AvancezLib& Entity::getSystem()
+{
+	return *system_;
 }
 
 void Entity::setX(float x)

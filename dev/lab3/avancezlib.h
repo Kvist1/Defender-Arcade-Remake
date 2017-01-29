@@ -47,6 +47,9 @@ public:
 	// Return the total time spent in the game, in seconds.
 	int getElapsedTime();
 
+	void setDelta(int delta);
+	int getDelta();
+
 	struct KeyStatus
 	{
 		bool fire; // space
@@ -67,6 +70,7 @@ private:
 	TTF_Font* font;
 
 	KeyStatus key;
+	int delta_;
 	int fps;
 };
 
