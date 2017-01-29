@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	entities[0] = &player;
 
 	// Create rocket
-	Rocket rocket(system, 320, 415, 0.3f);
+	Rocket rocket(system, player, 320, 415, 0.3f);
 	Sprite * rocketSprite = system.createSprite("data/rocket.bmp");
 	entities[1] = &rocket;
 
@@ -60,8 +60,8 @@ int main(int argc, char* argv[])
 			entities[i]->update();
 		}*/
 
-		player.update(system);
-		//rocket.update(player.x(), key, delta);
+		player.update();
+		rocket.update();
 
 		if (alien_arms_up)
 		{

@@ -8,7 +8,7 @@ Player::Player(AvancezLib& system, float x, float y, float vel)
 	isDead_ = false;
 }
 
-void Player::update(AvancezLib& system2)
+void Player::update()
 {
 	AvancezLib::KeyStatus key;
 	AvancezLib system = getSystem();

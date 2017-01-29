@@ -1,13 +1,19 @@
 #include "Rocket.h"
 
-Rocket::Rocket(AvancezLib& system, float x, float y, float vel)
+Rocket::Rocket(AvancezLib& system, Player& player, float x, float y, float vel)
 	: Entity(system, x, y, vel)
 {
 	isVisible_ = false;
+	player_ = &player;
 }
 
-void Rocket::update(int playerPosX, AvancezLib::KeyStatus key, int delta)
+void Rocket::update()
 {
+	AvancezLib::KeyStatus key;
+	AvancezLib system = getSystem();
+	system.getKeyStatus(key);
+	int delta = system.getDelta();
+
 	if (isVisible_) 
 	{
 		SDL_Log("rocket!\n");
@@ -19,7 +25,7 @@ void Rocket::update(int playerPosX, AvancezLib::KeyStatus key, int delta)
 	} 
 	else if (!isVisible_ && key.fire)
 	{
-		setX(playerPosX+16);
+		setX((*player_).x()+16);
 		setY(415);
 		setIsVisible(true);
 		setY(y() - vel() * delta);
