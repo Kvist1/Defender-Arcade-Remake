@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A39BBDD3-7D5B-4176-AB69-F8D5E48503D7}</ProjectGuid>
+    <ProjectGuid>{E1B93D53-F43C-40EE-A09F-CF72ACA2496B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>lab3solution</RootNamespace>
+    <RootNamespace>Lab3Components</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Simon\Documents\TDA572\dev\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\lib\x64;C:\Users\Simon\Documents\TDA572\dev\SDL2-2.0.5\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Simon\Documents\TDA572\dev\SDL2-2.0.5\lib\x64;C:\Users\Simon\Documents\TDA572\dev\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -149,35 +149,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="data\bomb.bmp" />
-    <Image Include="data\enemy_0.bmp" />
-    <Image Include="data\enemy_1.bmp" />
-    <Image Include="data\font-invaders-from-space.png" />
-    <Image Include="data\player.bmp" />
-    <Image Include="data\rocket.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="data\space_invaders.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="alien.h" />
-    <ClInclude Include="aliens.h" />
-    <ClInclude Include="avancezlib.h" />
-    <ClInclude Include="bomb.h" />
-    <ClInclude Include="circular_array.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Graphics.h" />
-    <ClInclude Include="GraphicsComponent.h" />
-    <ClInclude Include="InputComponent.h" />
-    <ClInclude Include="PhysicsComponent.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="projectile.h" />
-    <ClInclude Include="rocket.h" />
-    <ClInclude Include="World.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="avancezlib.cpp" />
+    <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="invaders.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="avancezlib.h" />
+    <ClInclude Include="GlobalVariables.h" />
+    <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

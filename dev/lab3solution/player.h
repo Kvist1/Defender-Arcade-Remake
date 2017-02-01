@@ -4,7 +4,7 @@
 class Player
 {
 	Sprite * sprite, *rocket_sprite;
-	AvancezLib* system;
+	AvancezLib* system_;
 
 	float time_fire_pressed;	// time from the last time the fire button was pressed
 
@@ -18,7 +18,7 @@ public:
 
 	void Init(AvancezLib* system)
 	{
-		this->system = system;
+		this->system_ = system;
 		sprite = system->createSprite("data/player.bmp");
 		horizontalPosition = 320;
 		verticalPosition = 480 - 32;
@@ -93,13 +93,13 @@ public:
 	void Fire()
 	{
 		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_fire_pressed) < (FIRE_TIME_INTERVAL / game_speed))
+		if ((system_->getElapsedTime() - time_fire_pressed) < (FIRE_TIME_INTERVAL / game_speed))
 			return;
 
 		// use the first rocket available
 		Rocket * rocket = (Rocket *)rockets.GetFirstAvailableElem();
 		rocket->Init(horizontalPosition, 480 - 52);
-		time_fire_pressed = system->getElapsedTime();
+		time_fire_pressed = system_->getElapsedTime();
 	}
 
 

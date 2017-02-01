@@ -3,10 +3,10 @@
 #include "stdio.h"
 #include "avancezlib.h"
 
+#include "GlobalVariables.h"	
 const unsigned int	NUM_LIVES = 2;
-
 const unsigned int	MAX_NUM_ROCKETS = 32;
-const unsigned int	MAX_NUM_BOMBS = 32; // global scope 
+const unsigned int	MAX_NUM_BOMBS = 32;
 const unsigned int	POINTS_PER_ALIEN = 100;
 const float			FIRE_TIME_INTERVAL = .5f;
 const float			BOMB_TIME_INTERVAL = 1.25f;
@@ -17,19 +17,20 @@ const float			BOMB_SPEED = 120.0f;
 const float			MAX_FPS = 40.0f;
 
 bool game_over = false;
-float game_speed = 1.f;		// speed of the game; it is increased each time all the aliens are hit
-							// it is also the score multiplier
+// speed of the game; it is increased each time all the aliens are hit
+// it is also the score multiplier
+float game_speed = 1.f;
 
 
-#include "circular_array.h"
+//#include "circular_array.h"
 
-#include "projectile.h"
-#include "rocket.h"
-#include "bomb.h"
-#include "alien.h"
+//#include "projectile.h"
+//#include "rocket.h"
+//#include "bomb.h"
+//#include "alien.h"
 
 #include "player.h"
-#include "aliens.h"
+//#include "aliens.h"
 
 int main(int argc, char** argv)
 {
@@ -40,14 +41,13 @@ int main(int argc, char** argv)
 	float dt;
 
 	AvancezLib system;
-
 	system.init(640, 480);
 
 	Player player;
 	player.Init(&system);
 
-	Aliens aliens;
-	aliens.Init(&system);
+	//Aliens aliens;
+	//aliens.Init(&system);
 
 	float lastTime = system.getElapsedTime();
 	while (system.update())
@@ -60,25 +60,16 @@ int main(int argc, char** argv)
 		if (game_over)
 			dt = 0.f;
 
-		AvancezLib::KeyStatus keys;
-		system.getKeyStatus(keys);
-		if (keys.right)
-			player.Move(dt * PLAYER_SPEED);
-		else if (keys.left)
-			player.Move(-dt * PLAYER_SPEED);
-		else if (keys.fire)
-			player.Fire();
-
 		player.Update(dt);
-		aliens.Update(dt);
+		//aliens.Update(dt);
 
 		// bad encapsulation: however in this case it is the most practical approach
-		player.TestCollisionsWthAliens(aliens.grid);
+		/*player.TestCollisionsWthAliens(aliens.grid);
 		player.TestCollisionsWthBombs(&(aliens.bombs));
-		aliens.TestCollisionsWthRockets(&player);
+		aliens.TestCollisionsWthRockets(&player);*/
 
-		player.Draw();
-		aliens.Draw();
+		//player.Draw(); //movede to player
+		//aliens.Draw();
 
 		char msg[1024];
 		sprintf(msg, "%07d", player.score);
@@ -112,7 +103,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	aliens.Destroy();
+	//aliens.Destroy();
 	player.Destroy();
 	system.destroy();
 
