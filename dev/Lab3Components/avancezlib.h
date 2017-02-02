@@ -6,12 +6,11 @@
 
 class Sprite
 {
-	SDL_Renderer * renderer;
 	SDL_Texture * texture;
 
 public:
 
-	Sprite(SDL_Renderer * renderer, SDL_Texture * texture);
+	Sprite(SDL_Texture * texture);
 
 	// Destroys the sprite instance
 	void destroy();
@@ -19,7 +18,7 @@ public:
 	// Draw the sprite at the given position.
 	// Valid coordinates are between (0,0) (upper left) and (width-32, height-32) (lower right).
 	// (All sprites are 32*32 pixels, clipping is not supported)
-	void draw(int x, int y);
+	void draw(SDL_Renderer * renderer, int x, int y);
 };
 
 class Graphics
@@ -29,9 +28,21 @@ class Graphics
 public:
 	Graphics(SDL_Renderer * renderer);
 
+	bool init();
+
 	void destroy();
 
-	void draw(Sprite sprite, int x, int y);
+	// Create a sprite given a string.
+	// All sprites are 32*32 pixels.
+	Sprite* createImageSprite(const char* name);
+
+	void drawSprite(Sprite sprite, int x, int y);
+
+	// Draws the given text.
+	void drawText(int x, int y, const char* msg);
+
+private:
+	TTF_Font* font;
 };
 
 
@@ -48,15 +59,8 @@ public:
 	// since the last update call.
 	// If update returns false, the application should terminate.
 	bool update();
-
-	// Create a sprite given a string.
-	// All sprites are 32*32 pixels.
-	Sprite* createSprite(const char* name);
-
 	Graphics* createGraphics();
 
-	// Draws the given text.
-	void drawText(int x, int y, const char* msg);
 
 	// Return the total time spent in the game, in seconds.
 	float getElapsedTime();
@@ -74,8 +78,6 @@ public:
 private:
 	SDL_Window * window;
 	SDL_Renderer * renderer;
-
-	TTF_Font* font;
 
 	KeyStatus key;
 };

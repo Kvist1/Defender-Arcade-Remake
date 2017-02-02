@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 
 	AvancezLib system;
 	system.init(640, 480);
-	Graphics* graphics = system.createGraphics();
+	Graphics graphics = *system.createGraphics();
 
 	World world;
 
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 		if (game_over)
 			dt = 0.f;
 
-		player.Update(world);
+		player.Update(world, graphics);
 		//aliens.Update(dt);
 
 		// bad encapsulation: however in this case it is the most practical approach
@@ -76,14 +76,14 @@ int main(int argc, char** argv)
 
 		char msg[1024];
 		sprintf(msg, "%07d", player.score);
-		system.drawText(300, 32, msg);
+		graphics.drawText(300, 32, msg);
 		sprintf(msg, "bonus: %.1fX", game_speed);
-		system.drawText(510, 32, msg);
+		graphics.drawText(510, 32, msg);
 
 		if (game_over)
 		{
 			sprintf(msg, "*** G A M E  O V E R ***");
-			system.drawText(250, 8, msg);
+			graphics.drawText(250, 8, msg);
 		}
 
 		// check fps 
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 			sum_delta = 0;
 		}
 		sprintf(msg, "%.1f fps", avg_fps);
-		system.drawText(12, 12, msg);
+		graphics.drawText(12, 12, msg);
 
 		// delay on the loop if needed
 		float frameTicks = system.getElapsedTime() - lastTime;

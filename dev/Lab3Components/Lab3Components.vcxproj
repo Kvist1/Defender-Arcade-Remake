@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="avancezlib.cpp" />
+    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="invaders.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="avancezlib.h" />
     <ClInclude Include="GlobalVariables.h" />
+    <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />

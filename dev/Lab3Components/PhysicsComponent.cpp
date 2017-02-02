@@ -3,7 +3,7 @@
 
 void PhysicsComponent::update(AvancezLib* system, Player & player, World & world)
 {
-	float newTime = system->getElapsedTime();
+	newTime = system->getElapsedTime();
 	dt = newTime - lastTime;
 	lastTime = newTime;
 

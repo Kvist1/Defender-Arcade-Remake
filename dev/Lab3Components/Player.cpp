@@ -4,12 +4,12 @@
 void Player::Init(AvancezLib* system)
 {
 	this->system_ = system;
-	sprite = system->createSprite("data/player.bmp");
+	//sprite = system->createSprite("data/player.bmp");
 	horizontalPosition = 320;
 	verticalPosition = 480 - 32;
 
 	//rockets.Allocate(MAX_NUM_ROCKETS);
-	rocket_sprite = system->createSprite("data/rocket.bmp");
+	//rocket_sprite = system->createSprite("data/rocket.bmp");
 	time_fire_pressed = -10000.f;
 
 	lives = NUM_LIVES;
@@ -17,36 +17,16 @@ void Player::Init(AvancezLib* system)
 	game_over = false;
 }
 
-
-void Player::Update(World& world)
+void Player::Update(World& world, Graphics& graphics)
 {
-	/*AvancezLib::KeyStatus keys;
-	system->getKeyStatus(keys);
-	if (keys.right)
-	Move(dt * PLAYER_SPEED);
-	else if (keys.left)
-	Move(-dt * PLAYER_SPEED);
-	else if (keys.fire)
-	Fire();*/
+
 	input_.update(system_, *this);
 	physics_.update(system_, *this, world);
+	graphics_.update(*this, graphics);
 
-	//rockets.Update(dt);
-
-	Draw();
-}
-
-// move the player left or right
-// param move depends on the time, so the player moves always at the same speed on any computer
-void Player::Move(float move)
-{
-	horizontalPosition += move;
-
-	if (horizontalPosition > (640 - 32))
-		horizontalPosition = 640 - 32;
-
-	if (horizontalPosition < 0)
-		horizontalPosition = 0;
+	// draw lives on the upper left side of the screen
+	//for (auto i = 0; i < lives; i++)
+		//graphics.drawSprite(*graphics.createImageSprite("data/player.bmp"), 32 * i, 24);
 }
 
 // fire a rocket if enough time has passed from the previous one
@@ -63,18 +43,6 @@ void Player::Fire()
 	time_fire_pressed = system->getElapsedTime();*/
 }
 
-
-void Player::Draw()
-{
-	sprite->draw(int(horizontalPosition), verticalPosition);
-
-	//rockets.Draw(rocket_sprite);
-
-	// draw lives on the upper left side of the screen
-	for (auto i = 0; i < lives; i++)
-		sprite->draw(32 * i, 24);
-}
-
 void Player::RemoveLife()
 {
 	lives--;
@@ -84,8 +52,8 @@ void Player::RemoveLife()
 
 void Player::Destroy()
 {
-	sprite->destroy();
-	rocket_sprite->destroy();
+	//sprite->destroy();
+	//rocket_sprite->destroy();
 
 	//rockets.Deallocate();
 }

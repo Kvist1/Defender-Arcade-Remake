@@ -30,14 +30,6 @@ bool AvancezLib::init(int width, int height)
 		return false;
 	}
 
-	TTF_Init();
-	font = TTF_OpenFont("data/space_invaders.ttf", 12); //this opens a font style and sets a size
-	if (font == NULL)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "font cannot be created! SDL_Error: %s\n", SDL_GetError());
-		return false;
-	}
-
 	// initialize the keys
 	key.fire = false;	key.left = false;	key.right = false;
 
@@ -60,12 +52,9 @@ void AvancezLib::destroy()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
-	TTF_CloseFont(font);
-
 	TTF_Quit();
 	SDL_Quit();
 }
-
 
 bool AvancezLib::update()
 {
@@ -125,8 +114,25 @@ bool AvancezLib::update()
 	return go_on;
 }
 
+bool Graphics::init()
+{
 
-Sprite * AvancezLib::createSprite(const char * path)
+	TTF_Init();
+	font = TTF_OpenFont("data/space_invaders.ttf", 12); //this opens a font style and sets a size
+	if (font == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "font cannot be created! SDL_Error: %s\n", SDL_GetError());
+		return false;
+	}
+}
+
+Graphics * AvancezLib::createGraphics()
+{
+	Graphics * graphics = new Graphics(renderer);
+	return graphics;
+}
+
+Sprite * Graphics::createImageSprite(const char * path)
 {
 	SDL_Surface* surf = SDL_LoadBMP(path);
 	if (surf == NULL)
@@ -146,18 +152,24 @@ Sprite * AvancezLib::createSprite(const char * path)
 	//Get rid of old loaded surface
 	SDL_FreeSurface(surf);
 
-	Sprite * sprite = new Sprite(renderer, texture);
+	Sprite * sprite = new Sprite(texture);
 
 	return sprite;
 }
 
-Graphics * AvancezLib::createGraphics()
+float AvancezLib::getElapsedTime()
 {
-	Graphics * graphics = new Graphics(renderer);
-	return graphics;
+	return SDL_GetTicks() / 1000.f;
 }
 
-void AvancezLib::drawText(int x, int y, const char * msg)
+void AvancezLib::getKeyStatus(KeyStatus & keys)
+{
+	keys.fire = key.fire;
+	keys.left = key.left;
+	keys.right = key.right;
+}
+
+void Graphics::drawText(int x, int y, const char * msg)
 {
 	SDL_Color black = { 0, 0, 0 };  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
 
@@ -176,27 +188,15 @@ void AvancezLib::drawText(int x, int y, const char * msg)
 	SDL_FreeSurface(surf);
 }
 
-float AvancezLib::getElapsedTime()
-{
-	return SDL_GetTicks() / 1000.f;
-}
-
-void AvancezLib::getKeyStatus(KeyStatus & keys)
-{
-	keys.fire = key.fire;
-	keys.left = key.left;
-	keys.right = key.right;
-}
 
 
-Sprite::Sprite(SDL_Renderer * renderer, SDL_Texture * texture)
+Sprite::Sprite(SDL_Texture * texture)
 {
-	this->renderer = renderer;
 	this->texture = texture;
 }
 
 
-void Sprite::draw(int x, int y)
+void Sprite::draw(SDL_Renderer * renderer, int x, int y)
 {
 	SDL_Rect rect;
 
@@ -222,10 +222,10 @@ Graphics::Graphics(SDL_Renderer * renderer)
 
 void Graphics::destroy()
 {
-	SDL_DestroyRenderer(renderer);
+	TTF_CloseFont(font);
 }
 
-void Graphics::draw(Sprite sprite, int x, int y)
+void Graphics::drawSprite(Sprite sprite, int x, int y)
 {
-	sprite.draw(x, y);
+	sprite.draw(renderer, x, y);
 }

@@ -11,6 +11,6 @@ public:
 private:
 	SDL_Rect boundingBox_;
 	float lastTime;
-	float currentTime;
+	float newTime;
 	float dt;
 };
