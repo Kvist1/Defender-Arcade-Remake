@@ -150,20 +150,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="avancezlib.cpp" />
-    <ClCompile Include="GraphicsComponent.cpp" />
-    <ClCompile Include="InputComponent.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="PlayerGraphicsComponent.cpp" />
+    <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="invaders.cpp" />
-    <ClCompile Include="PhysicsComponent.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerPhysicsComponent.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avancezlib.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="GraphicsComponent.h" />
+    <ClInclude Include="PlayerGraphicsComponent.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="PhysicsComponent.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerInputComponent.h" />
+    <ClInclude Include="PlayerPhysicsComponent.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

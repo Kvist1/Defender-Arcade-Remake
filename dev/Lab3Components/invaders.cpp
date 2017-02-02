@@ -29,8 +29,12 @@ float game_speed = 1.f;
 //#include "bomb.h"
 //#include "alien.h"
 
-#include "player.h"
+#include "GameObject.h"
 //#include "aliens.h"
+
+#include "PlayerInputComponent.h"
+#include "PlayerGraphicsComponent.h"
+#include "PlayerPhysicsComponent.h"
 
 int main(int argc, char** argv)
 {
@@ -47,8 +51,12 @@ int main(int argc, char** argv)
 
 	World world;
 
-	Player player;
-	player.Init(&system);
+	GameObject* player = new GameObject(
+		new PlayerInputComponent(), 
+		new PlayerPhysicsComponent(), 
+		new PlayerGraphicsComponent()
+	);
+	player->Init(&system);
 
 	//Aliens aliens;
 	//aliens.Init(&system);
@@ -64,7 +72,7 @@ int main(int argc, char** argv)
 		if (game_over)
 			dt = 0.f;
 
-		player.Update(world, graphics);
+		player->Update(world, graphics);
 		//aliens.Update(dt);
 
 		// bad encapsulation: however in this case it is the most practical approach
@@ -108,7 +116,7 @@ int main(int argc, char** argv)
 	}
 
 	//aliens.Destroy();
-	player.Destroy();
+	player->Destroy();
 	system.destroy();
 
 	return 0;

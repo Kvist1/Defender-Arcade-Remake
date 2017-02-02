@@ -1,16 +1,9 @@
 #pragma once
-#include "avancezlib.h"
-class Player;
+class GameObject;
 
 class GraphicsComponent
 {
 public:
-	void update(Player& player, Graphics& graphics);
-
-private:
-	// TODO: find some way to create sprites from here, factory?
-
-	//Sprite spriteHover_;
-	//Sprite spriteFlyLeft_;
-	//Sprite spriteFlyRight_;
+	virtual ~GraphicsComponent() {}
+	virtual void update(GameObject& obj, Graphics& graphics) = 0;
 };

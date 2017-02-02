@@ -1,10 +1,10 @@
 #pragma once
 #include "avancezlib.h"
-class Player;
+class GameObject;
 
 class InputComponent
-{	
-
+{
 public:
-	void update(AvancezLib* system, Player& player);
+	virtual ~InputComponent() {}
+	virtual void update(AvancezLib* system, GameObject& obj) = 0;
 };

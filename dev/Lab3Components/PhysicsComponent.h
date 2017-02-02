@@ -1,16 +1,10 @@
 #pragma once
 #include "World.h"
-#include "avancezlib.h"
-class Player;
+class GameObject;
 
 class PhysicsComponent
 {
 public:
-	void update(AvancezLib* system, Player& player, World& world);
-
-private:
-	SDL_Rect boundingBox_;
-	float lastTime;
-	float newTime;
-	float dt;
+	virtual ~PhysicsComponent() {}
+	virtual void update(AvancezLib* system, GameObject& obj, World& world) = 0;
 };
