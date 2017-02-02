@@ -126,10 +126,10 @@ bool Graphics::init()
 	}
 }
 
-Graphics * AvancezLib::createGraphics()
+Graphics& AvancezLib::createGraphics()
 {
-	Graphics * graphics = new Graphics(renderer);
-	return graphics;
+	Graphics *graphics = new Graphics(renderer);
+	return *graphics;
 }
 
 Sprite * Graphics::createImageSprite(const char * path)

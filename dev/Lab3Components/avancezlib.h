@@ -59,7 +59,7 @@ public:
 	// since the last update call.
 	// If update returns false, the application should terminate.
 	bool update();
-	Graphics* createGraphics();
+	Graphics& createGraphics();
 
 
 	// Return the total time spent in the game, in seconds.

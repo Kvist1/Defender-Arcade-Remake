@@ -42,7 +42,8 @@ int main(int argc, char** argv)
 
 	AvancezLib system;
 	system.init(640, 480);
-	Graphics graphics = *system.createGraphics();
+	Graphics graphics = system.createGraphics();
+	graphics.init();
 
 	World world;
 
@@ -75,7 +76,7 @@ int main(int argc, char** argv)
 		//aliens.Draw();
 
 		char msg[1024];
-		sprintf(msg, "%07d", player.score);
+		sprintf(msg, "%07d", 50);
 		graphics.drawText(300, 32, msg);
 		sprintf(msg, "bonus: %.1fX", game_speed);
 		graphics.drawText(510, 32, msg);
