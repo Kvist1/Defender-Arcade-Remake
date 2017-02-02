@@ -22,6 +22,18 @@ public:
 	void draw(int x, int y);
 };
 
+class Graphics
+{
+	SDL_Renderer * renderer;
+
+public:
+	Graphics(SDL_Renderer * renderer);
+
+	void destroy();
+
+	void draw(Sprite sprite, int x, int y);
+};
+
 
 class AvancezLib
 {
@@ -40,6 +52,8 @@ public:
 	// Create a sprite given a string.
 	// All sprites are 32*32 pixels.
 	Sprite* createSprite(const char* name);
+
+	Graphics* createGraphics();
 
 	// Draws the given text.
 	void drawText(int x, int y, const char* msg);

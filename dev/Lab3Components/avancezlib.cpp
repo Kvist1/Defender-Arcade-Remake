@@ -151,6 +151,12 @@ Sprite * AvancezLib::createSprite(const char * path)
 	return sprite;
 }
 
+Graphics * AvancezLib::createGraphics()
+{
+	Graphics * graphics = new Graphics(renderer);
+	return graphics;
+}
+
 void AvancezLib::drawText(int x, int y, const char * msg)
 {
 	SDL_Color black = { 0, 0, 0 };  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
@@ -209,3 +215,17 @@ void Sprite::destroy()
 	SDL_DestroyTexture(texture);
 }
 
+Graphics::Graphics(SDL_Renderer * renderer)
+{
+	this->renderer = renderer;
+}
+
+void Graphics::destroy()
+{
+	SDL_DestroyRenderer(renderer);
+}
+
+void Graphics::draw(Sprite sprite, int x, int y)
+{
+	sprite.draw(x, y);
+}

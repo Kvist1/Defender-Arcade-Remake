@@ -42,6 +42,7 @@ int main(int argc, char** argv)
 
 	AvancezLib system;
 	system.init(640, 480);
+	Graphics* graphics = system.createGraphics();
 
 	World world;
 
