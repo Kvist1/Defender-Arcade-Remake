@@ -1,5 +1,7 @@
 #pragma once
 #include "InputComponent.h"
+#include "PhysicsComponent.h"
+#include "World.h"
 
 // the main player
 class Player
@@ -21,7 +23,7 @@ public:
 	void Init(AvancezLib* system);
 
 
-	void Update(float dt);
+	void Update(World& world);
 
 	// move the player left or right, param move depends on the time, 
 	// so the player moves always at the same speed on any computer
@@ -38,4 +40,5 @@ public:
 
 private:
 	InputComponent input_;
+	PhysicsComponent physics_;
 };

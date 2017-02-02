@@ -18,7 +18,7 @@ void Player::Init(AvancezLib* system)
 }
 
 
-void Player::Update(float dt)
+void Player::Update(World& world)
 {
 	/*AvancezLib::KeyStatus keys;
 	system->getKeyStatus(keys);
@@ -29,6 +29,7 @@ void Player::Update(float dt)
 	else if (keys.fire)
 	Fire();*/
 	input_.update(system_, *this);
+	physics_.update(system_, *this, world);
 
 	//rockets.Update(dt);
 

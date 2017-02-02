@@ -152,12 +152,15 @@
     <ClCompile Include="avancezlib.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="invaders.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avancezlib.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

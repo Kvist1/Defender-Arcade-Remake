@@ -43,6 +43,8 @@ int main(int argc, char** argv)
 	AvancezLib system;
 	system.init(640, 480);
 
+	World world;
+
 	Player player;
 	player.Init(&system);
 
@@ -60,7 +62,7 @@ int main(int argc, char** argv)
 		if (game_over)
 			dt = 0.f;
 
-		player.Update(dt);
+		player.Update(world);
 		//aliens.Update(dt);
 
 		// bad encapsulation: however in this case it is the most practical approach
