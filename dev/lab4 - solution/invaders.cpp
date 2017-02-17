@@ -46,6 +46,7 @@ int main(int argc, char** argv)
 {
 
 	AvancezLib system;
+	AvancezLib::SystemState gameStates;
 
 	system.init(640, 480);
 
@@ -56,14 +57,24 @@ int main(int argc, char** argv)
 	float lastTime = system.getElapsedTime();
 	while (system.update())
 	{
+		
 		float newTime = system.getElapsedTime();
 		float dt = newTime - lastTime;
 		dt = dt * game_speed;
 		lastTime = newTime;
 
-		game.Update(dt);
+		//system.getSystemState(gameStates);
+		//if (!gameStates.isPaused)
+			game.Update(dt);
 
 		game.Draw();
+
+		//if (gameStates.isPaused)
+		//{
+		//	//SDL_Delay(500);
+		//	SDL_Log("game paused");
+		//}
+
 	}
 
 	// clean up

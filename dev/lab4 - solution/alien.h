@@ -54,14 +54,20 @@ public:
 
 	virtual void Update(float dt)
 	{
-		Alien * alien = (Alien *)go;
+		AvancezLib::SystemState gameStates;
+		system->getSystemState(gameStates);
+		if (!gameStates.isPaused)
+		{
+			Alien * alien = (Alien *)go;
 
-		alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
+			alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
 
-		if ((alien->direction == 1) && (alien->horizontalPosition > (640 - 32)))
-			*(alien->change_direction) = true;
+			if ((alien->direction == 1) && (alien->horizontalPosition > (640 - 32)))
+				*(alien->change_direction) = true;
 
-		if ((alien->direction == -1) && (alien->horizontalPosition < 0))
-			*(alien->change_direction) = true;
+			if ((alien->direction == -1) && (alien->horizontalPosition < 0))
+				*(alien->change_direction) = true;
+
+		}
 	}
 };

@@ -63,9 +63,11 @@ public:
 
 	struct SystemState
 	{
-		bool running;
-		bool paused;
+		bool isRunning;
+		bool isPaused;
 	};
+
+	void getSystemState(SystemState& states);
 
 private:
 	SDL_Window * window;
@@ -74,6 +76,7 @@ private:
 	TTF_Font* font;
 
 	KeyStatus key;
+	SystemState state;
 };
 
 

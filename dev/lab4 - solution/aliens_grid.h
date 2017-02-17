@@ -34,28 +34,34 @@ public:
 
 	virtual void Update(float dt)
 	{
-		// check is one of tha aliens wants to change direction becase it reached the edge of the window 
-		if (change_direction)
-			for (auto alien = aliens_pool->pool.begin(); alien != aliens_pool->pool.end(); alien++)
-				if ((*alien)->enabled)
-					(*alien)->ChangeDirection();
-
-		// is enough time passed from the last bomb, shoot another bomb from a random active alien
-		if (CanFire())
+		AvancezLib::SystemState gameStates;
+		system->getSystemState(gameStates);
+		if (!gameStates.isPaused) 
 		{
-			Bomb * bomb = bombs_pool->FirstAvailable();
-			if (bomb != NULL)
+
+			// check is one of tha aliens wants to change direction becase it reached the edge of the window 
+			if (change_direction)
+				for (auto alien = aliens_pool->pool.begin(); alien != aliens_pool->pool.end(); alien++)
+					if ((*alien)->enabled)
+						(*alien)->ChangeDirection();
+
+			// is enough time passed from the last bomb, shoot another bomb from a random active alien
+			if (CanFire())
 			{
-				Alien * alien = aliens_pool->SelectRandom();
-				if (alien != NULL)
+				Bomb * bomb = bombs_pool->FirstAvailable();
+				if (bomb != NULL)
 				{
-					bomb->Init(alien->horizontalPosition, alien->verticalPosition + 32);
-					game_objects->insert(bomb);
+					Alien * alien = aliens_pool->SelectRandom();
+					if (alien != NULL)
+					{
+						bomb->Init(alien->horizontalPosition, alien->verticalPosition + 32);
+						game_objects->insert(bomb);
+					}
 				}
 			}
-		}
 
-		change_direction = false;
+			change_direction = false;
+		}
 	}
 
 	// return true if enough time has passed from the previous bomb

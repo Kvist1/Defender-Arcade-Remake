@@ -43,6 +43,10 @@ bool AvancezLib::init(int width, int height)
 	key.down = false;	key.up = false; 
 	key.pause = false;	key.restart = false;
 
+	// initialize the system states
+	state.isRunning = true;
+	state.isPaused = false;
+
 	//Initialize renderer color
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
@@ -104,7 +108,7 @@ bool AvancezLib::update()
 				key.down = true;
 				break;
 			case SDLK_p:
-				key.pause = true;
+				state.isPaused = !state.isPaused;
 				break;
 			case SDLK_r:
 				key.restart = true;
@@ -131,9 +135,9 @@ bool AvancezLib::update()
 			case SDLK_DOWN:
 				key.down = false;
 				break;
-			case SDLK_p:
+			/*case SDLK_p:
 				key.pause = false;
-				break;
+				break;*/
 			case SDLK_r:
 				key.restart = false;
 				break;
@@ -211,6 +215,12 @@ void AvancezLib::getKeyStatus(KeyStatus & keys)
 	keys.down = key.down;
 	keys.pause = key.pause;
 	keys.restart = key.restart;
+}
+
+void AvancezLib::getSystemState(SystemState & states)
+{
+	states.isRunning = state.isRunning;
+	states.isPaused = state.isPaused;
 }
 
 

@@ -5,10 +5,15 @@ public:
 
 	void Update(float dt)
 	{
-		go->verticalPosition -= ROCKET_SPEED * dt; // rocket_speed * time
+		AvancezLib::SystemState gameStates;
+		system->getSystemState(gameStates);
+		if (!gameStates.isPaused)
+		{
+			go->verticalPosition -= ROCKET_SPEED * dt; // rocket_speed * time
 
-		if (go->verticalPosition < 0) // When the rocket reaches the top of the screen, it disappears.
-			go->enabled = false;
+			if (go->verticalPosition < 0) // When the rocket reaches the top of the screen, it disappears.
+				go->enabled = false;
+		}
 	}
 };
 
