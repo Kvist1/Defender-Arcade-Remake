@@ -27,10 +27,14 @@ public:
 		AvancezLib::KeyStatus keys;
 		system->getKeyStatus(keys);
 		if (keys.right)
-			Move(dt * PLAYER_SPEED);
+			MoveHorizontal(dt * PLAYER_SPEED);
 		else if (keys.left)
-			Move(-dt * PLAYER_SPEED);
-		else if (keys.fire)
+			MoveHorizontal(-dt * PLAYER_SPEED);
+		if (keys.up)
+			MoveVertical(-dt * PLAYER_SPEED);
+		else if (keys.down)
+			MoveVertical(dt * PLAYER_SPEED);
+		if (keys.fire)
 		{
 			if (CanFire())
 			{
@@ -38,7 +42,7 @@ public:
 				Rocket * rocket = rockets_pool->FirstAvailable();
 				if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
 				{
-					rocket->Init(go->horizontalPosition);
+					rocket->Init(go->horizontalPosition, go->verticalPosition);
 					game_objects->insert(rocket);
 				}
 			}
@@ -48,7 +52,7 @@ public:
 
 	// move the player left or right
 	// param move depends on the time, so the player moves always at the same speed on any computer
-	void Move(float move)
+	void MoveHorizontal(float move)
 	{
 		go->horizontalPosition += move;
 
@@ -57,6 +61,19 @@ public:
 			
 		if (go->horizontalPosition < 0)
 			go->horizontalPosition = 0;
+	}
+
+	// move the player up or down
+	// param move depends on the time, so the player moves always at the same speed on any computer
+	void MoveVertical(float move)
+	{
+		go->verticalPosition += move;
+
+		if (go->verticalPosition >(482 - 32))
+			go->verticalPosition = 482 - 32;
+
+		if (go->verticalPosition < 50)
+			go->verticalPosition = 50;
 	}
 
 	// return true if enough time has passed from the previous rocket

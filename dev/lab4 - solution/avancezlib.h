@@ -52,10 +52,20 @@ public:
 		bool fire; // space
 		bool left; // left arrow
 		bool right; // right arrow
+		bool up; 
+		bool down;
+		bool pause;
+		bool restart;
 	};
 
 	// Returns the keyboard status. If a flag is set, the corresponding key is being held down.
 	void getKeyStatus(KeyStatus& keys);
+
+	struct SystemState
+	{
+		bool running;
+		bool paused;
+	};
 
 private:
 	SDL_Window * window;

@@ -19,13 +19,13 @@ class Rocket : public GameObject
 
 public:
 
-	virtual void Init(double xPos)
+	virtual void Init(double xPos, double yPos)
 	{
 		SDL_Log("Rocket::Init");
 		GameObject::Init();
 
 		horizontalPosition = xPos;
-		verticalPosition = 480 - 52;
+		verticalPosition = yPos;
 	}
 
 	virtual void Receive(Message m)
