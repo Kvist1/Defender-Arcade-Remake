@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+### IGNORE ttf and sdl lib
+SDL2_ttf-devel-2.0.14-VC/
+SDL2-2.0.5/
+
 # User-specific files
 *.suo
 *.user
