@@ -24,34 +24,28 @@ public:
 
 	virtual void Update(float dt)
 	{
-		AvancezLib::SystemState gameStates;
-		system->getSystemState(gameStates);
-		if (!gameStates.isPaused)
+		AvancezLib::KeyStatus keys;
+		system->getKeyStatus(keys);
+		if (keys.right)
+			MoveHorizontal(dt * PLAYER_SPEED);
+		else if (keys.left)
+			MoveHorizontal(-dt * PLAYER_SPEED);
+		if (keys.up)
+			MoveVertical(-dt * PLAYER_SPEED);
+		else if (keys.down)
+			MoveVertical(dt * PLAYER_SPEED);
+		if (keys.fire)
 		{
-			AvancezLib::KeyStatus keys;
-			system->getKeyStatus(keys);
-			if (keys.right)
-				MoveHorizontal(dt * PLAYER_SPEED);
-			else if (keys.left)
-				MoveHorizontal(-dt * PLAYER_SPEED);
-			if (keys.up)
-				MoveVertical(-dt * PLAYER_SPEED);
-			else if (keys.down)
-				MoveVertical(dt * PLAYER_SPEED);
-			if (keys.fire)
+			if (CanFire())
 			{
-				if (CanFire())
+				// fetches a rocket from the pool and use it in game_objects
+				Rocket * rocket = rockets_pool->FirstAvailable();
+				if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
 				{
-					// fetches a rocket from the pool and use it in game_objects
-					Rocket * rocket = rockets_pool->FirstAvailable();
-					if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
-					{
-						rocket->Init(go->horizontalPosition, go->verticalPosition);
-						game_objects->insert(rocket);
-					}
+					rocket->Init(go->horizontalPosition, go->verticalPosition);
+					game_objects->insert(rocket);
 				}
 			}
-
 		}
 	}
 

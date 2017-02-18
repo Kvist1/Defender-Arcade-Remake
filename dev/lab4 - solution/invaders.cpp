@@ -17,7 +17,7 @@ const unsigned int	POINTS_PER_ALIEN = 100;
 const float			FIRE_TIME_INTERVAL = .5f;
 const float			BOMB_TIME_INTERVAL = 1.25f;
 const float			PLAYER_SPEED = 260.0f;
-const float			ROCKET_SPEED = 160.0f;
+const float			ROCKET_SPEED = 260.0f;
 const float			ALIEN_SPEED = 40.0f;
 const float			BOMB_SPEED = 120.0f;
 
@@ -63,18 +63,13 @@ int main(int argc, char** argv)
 		dt = dt * game_speed;
 		lastTime = newTime;
 
-		//system.getSystemState(gameStates);
-		//if (!gameStates.isPaused)
+		system.getSystemState(gameStates);
+		if (gameStates.isPaused)
+			game.Update(0);
+		else
 			game.Update(dt);
 
 		game.Draw();
-
-		//if (gameStates.isPaused)
-		//{
-		//	//SDL_Delay(500);
-		//	SDL_Log("game paused");
-		//}
-
 	}
 
 	// clean up

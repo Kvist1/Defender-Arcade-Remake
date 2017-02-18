@@ -3,15 +3,10 @@ class BombBehaviourComponent : public Component
 public:
 	virtual void Update(float dt)
 	{
-		AvancezLib::SystemState gameStates;
-		system->getSystemState(gameStates);
-		if (!gameStates.isPaused)
-		{
-			go->verticalPosition += BOMB_SPEED * dt;
+		go->verticalPosition += BOMB_SPEED * dt;
 
-			if (go->verticalPosition > 480) // When a bomb reaches the bottom of the screen, it disappears.
-				go->enabled = false;
-		}
+		if (go->verticalPosition > 480) // When a bomb reaches the bottom of the screen, it disappears.
+			go->enabled = false;
 	}
 };
 
