@@ -31,7 +31,7 @@ public:
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
 		RenderComponent * player_render = new RenderComponent();
-		player_render->Create(system, player, &game_objects, "data/player.bmp");
+		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp");
 		CollideComponent * player_bomb_collision = new CollideComponent();
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();
@@ -51,7 +51,7 @@ public:
 			RocketBehaviourComponent * behaviour = new RocketBehaviourComponent();
 			behaviour->Create(system, *rocket, &game_objects);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *rocket, &game_objects, "data/rocket.bmp");
+			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp");
 			(*rocket)->Create();
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
@@ -94,7 +94,7 @@ public:
 			(*bomb)->AddComponent(bomb_render);
 		}
 
-		life_sprite = system->createSprite("data/player.bmp");
+		life_sprite = system->createSprite("data/player_left.bmp");
 		score = 0;
 	}
 

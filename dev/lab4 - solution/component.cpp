@@ -16,13 +16,23 @@ void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<Game
 	sprite = system->createSprite(sprite_name);
 }
 
+void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name, const char * sprite2_name)
+{
+	Component::Create(system, go, game_objects);
+
+	sprite = system->createSprite(sprite_name);
+	sprite2 = system->createSprite(sprite2_name);
+}
+
 void RenderComponent::Update(float dt)
 {
 	if (!go->enabled)
 		return;
 
-	if (sprite)
+	if (sprite && go->facingDirection == GameObject::FacingDirection::left)
 		sprite->draw(int(go->horizontalPosition), int(go->verticalPosition));
+	else if (sprite2 && go->facingDirection == GameObject::FacingDirection::right)
+		sprite2->draw(int(go->horizontalPosition), int(go->verticalPosition));
 }
 
 void RenderComponent::Destroy()
@@ -30,6 +40,9 @@ void RenderComponent::Destroy()
 	if (sprite != NULL)
 		sprite->destroy();
 	sprite = NULL;
+	if (sprite2 != NULL)
+		sprite2->destroy();
+	sprite2 = NULL;
 }
 
 
