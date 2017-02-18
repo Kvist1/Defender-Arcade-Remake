@@ -54,7 +54,7 @@ public:
 	// param move depends on the time, so the player moves always at the same speed on any computer
 	void MoveHorizontal(float move)
 	{
-		if (move > 0)
+		if (move >= 0)
 			go->facingDirection = GameObject::FacingDirection::right;
 		else
 			go->facingDirection = GameObject::FacingDirection::left;
