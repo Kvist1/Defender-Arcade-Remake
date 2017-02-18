@@ -42,7 +42,7 @@ public:
 				Rocket * rocket = rockets_pool->FirstAvailable();
 				if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
 				{
-					rocket->Init(go->horizontalPosition, go->verticalPosition);
+					rocket->Init(go->horizontalPosition, go->verticalPosition, go->facingDirection);
 					game_objects->insert(rocket);
 				}
 			}
@@ -54,6 +54,11 @@ public:
 	// param move depends on the time, so the player moves always at the same speed on any computer
 	void MoveHorizontal(float move)
 	{
+		if (move > 0)
+			go->facingDirection = GameObject::FacingDirection::right;
+		else
+			go->facingDirection = GameObject::FacingDirection::left;
+
 		go->horizontalPosition += move;
 
 		if (go->horizontalPosition > (640 - 32))
@@ -105,6 +110,7 @@ public:
 		SDL_Log("Player::Init");
 		GameObject::Init();
 		lives = NUM_LIVES;
+		facingDirection = left;
 	}
 
 	virtual void Receive(Message m) 

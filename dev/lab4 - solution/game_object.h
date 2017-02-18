@@ -15,6 +15,12 @@ public:
 	double horizontalPosition;
 	double verticalPosition;
 	bool enabled;
+	enum FacingDirection
+	{
+		left,
+		right
+	};
+	FacingDirection facingDirection;
 
 	virtual ~GameObject();
 
