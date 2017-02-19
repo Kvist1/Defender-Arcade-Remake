@@ -33,9 +33,9 @@ public:
 		else if (keys.left)
 			MoveHorizontal(-dt * PLAYER_SPEED);
 		if (keys.up)
-			MoveVertical(-dt * PLAYER_SPEED);
+			MoveVertical(-dt * PLAYER_SPEED/2);
 		else if (keys.down)
-			MoveVertical(dt * PLAYER_SPEED);
+			MoveVertical(dt * PLAYER_SPEED/2);
 		if (keys.fire)
 		{
 			if (CanFire())
@@ -111,7 +111,7 @@ public:
 		system->getKeyStatus(keys);
 		if (keys.right)
 		{
-			SDL_Log("Slide right");
+			//SDL_Log("Slide right");
 			if (left_speed > 0)
 			{
 				MoveHorizontal(-dt * left_speed*2);
@@ -125,7 +125,7 @@ public:
 		}
 		else if (keys.left)
 		{
-			SDL_Log("Slide left");
+			//SDL_Log("Slide left");
 			if (right_speed > 0)
 			{
 				MoveHorizontal(dt * right_speed*2);
