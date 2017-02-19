@@ -30,6 +30,8 @@ public:
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
+		PlayerSlideComponent * player_slide = new PlayerSlideComponent();
+		player_slide->Create(system, player, &game_objects);
 		RenderComponent * player_render = new RenderComponent();
 		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp");
 		CollideComponent * player_bomb_collision = new CollideComponent();
@@ -39,6 +41,7 @@ public:
 
 		player->Create();
 		player->AddComponent(player_behaviour);
+		player->AddComponent(player_slide);
 		player->AddComponent(player_render);
 		player->AddComponent(player_bomb_collision);
 		player->AddComponent(player_alien_collision);
