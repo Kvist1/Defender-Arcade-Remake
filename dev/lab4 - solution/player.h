@@ -20,16 +20,44 @@ public:
 		go->verticalPosition = 480 - 32;
 
 		time_fire_pressed = -10000.f;
+		test_speed = 0.f;
 	}
 
+	float test_speed;
 	virtual void Update(float dt)
 	{
 		AvancezLib::KeyStatus keys;
 		system->getKeyStatus(keys);
 		if (keys.right)
-			MoveHorizontal(dt * PLAYER_SPEED);
+		{
+			if (test_speed < PLAYER_SPEED)
+			{
+				MoveHorizontal(dt * test_speed);
+				test_speed += 0.2f;
+			}
+			else
+				MoveHorizontal(dt * PLAYER_SPEED);
+		}
 		else if (keys.left)
-			MoveHorizontal(-dt * PLAYER_SPEED);
+			if (test_speed < PLAYER_SPEED)
+			{
+				MoveHorizontal(-dt * test_speed);
+				test_speed += 0.2f;
+			}
+			else
+				MoveHorizontal(-dt * PLAYER_SPEED);
+
+		else if (test_speed > 0 && go->facingDirection == GameObject::FacingDirection::right)
+		{
+			MoveHorizontal(dt * test_speed);
+			test_speed -= 0.2f;
+		}
+		else if (test_speed > 0 && go->facingDirection == GameObject::FacingDirection::left)
+		{
+			MoveHorizontal(-dt * test_speed);
+			test_speed -= 0.2f;
+		}
+
 		if (keys.up)
 			MoveVertical(-dt * PLAYER_SPEED);
 		else if (keys.down)
@@ -48,7 +76,6 @@ public:
 			}
 		}
 	}
-
 
 	// move the player left or right
 	// param move depends on the time, so the player moves always at the same speed on any computer
