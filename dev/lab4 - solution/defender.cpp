@@ -44,7 +44,7 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 
 int main(int argc, char** argv)
 {
-
+	
 	AvancezLib system;
 	AvancezLib::SystemState gameStates;
 
