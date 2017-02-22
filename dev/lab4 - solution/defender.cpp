@@ -40,7 +40,7 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 #include "player.h"
 
 #include "game.h"
-
+#include "Box2D\Box2D.h"
 
 int main(int argc, char** argv)
 {
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 	AvancezLib::SystemState gameStates;
 
 	system.init(640, 480);
-
+	
 	Game game;
 	game.Create(&system);
 	game.Init();
