@@ -59,10 +59,10 @@ public:
 
 		alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
 
-		if ((alien->direction == 1) && (alien->horizontalPosition > (640 - 32)))
+		if ((alien->direction == 1) && (alien->horizontalPosition > (640*2 - 32)))
 			*(alien->change_direction) = true;
 
-		if ((alien->direction == -1) && (alien->horizontalPosition < 0))
+		if ((alien->direction == -1) && (alien->horizontalPosition < -640))
 			*(alien->change_direction) = true;
 	}
 };
