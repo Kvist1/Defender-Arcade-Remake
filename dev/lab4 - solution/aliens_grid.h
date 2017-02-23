@@ -32,7 +32,7 @@ public:
 		change_direction = false;
 	}
 
-	virtual void Update(float dt)
+	virtual void Update(float dt, int camX, int camY)
 	{
 		// check is one of tha aliens wants to change direction becase it reached the edge of the window 
 		if (change_direction)

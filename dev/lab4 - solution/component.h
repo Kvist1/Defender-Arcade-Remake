@@ -18,7 +18,7 @@ public:
 	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects);
 
 	virtual void Init() {}
-	virtual void Update(float dt) = 0;
+	virtual void Update(float dt, int camX, int camY) = 0;
 	virtual void Receive(int message) {}
 	virtual void Destroy() {}
 };
@@ -33,7 +33,7 @@ public:
 
 	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, const char * sprite_name);
 	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, const char * sprite_name, const char * sprite2_name);
-	virtual void Update(float dt);
+	virtual void Update(float dt, int camX, int camY);
 	virtual void Destroy();
 
 	Sprite * GetSprite() { return sprite; }
@@ -47,6 +47,6 @@ class CollideComponent : public Component
 
 public:
 	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects);
-	virtual void Update(float dt);
+	virtual void Update(float dt, int camX, int camY);
 };
 

@@ -24,7 +24,7 @@ void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<Game
 	sprite2 = system->createSprite(sprite2_name);
 }
 
-void RenderComponent::Update(float dt)
+void RenderComponent::Update(float dt, int camX, int camY)
 {
 	if (!go->enabled)
 		return;
@@ -53,7 +53,7 @@ void CollideComponent::Create(AvancezLib* system, GameObject * go, std::set<Game
 }
 
 
-void CollideComponent::Update(float dt)
+void CollideComponent::Update(float dt, int camX, int camY)
 {
 	for (auto i = 0; i < coll_objects->pool.size(); i++)
 	{

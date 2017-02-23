@@ -25,13 +25,13 @@ void GameObject::Init()
 	enabled = true;
 }
 
-void GameObject::Update(float dt)
+void GameObject::Update(float dt, int camX, int camY)
 {
 	if (!enabled)
 		return;
 
 	for (auto it = components.begin(); it != components.end(); it++)
-		(*it)->Update(dt);
+		(*it)->Update(dt, camX, camY);
 }
 
 void GameObject::Destroy()

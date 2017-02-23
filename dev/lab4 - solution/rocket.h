@@ -3,7 +3,7 @@ class RocketBehaviourComponent : public Component
 {
 public:
 
-	void Update(float dt)
+	void Update(float dt, int camX, int camY)
 	{
 		if (go->facingDirection == GameObject::FacingDirection::right)
 			go->horizontalPosition += ROCKET_SPEED * dt; // rocket_speed * time

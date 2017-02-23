@@ -24,7 +24,7 @@ public:
 	}
 
 	float acceleration_speed;
-	virtual void Update(float dt)
+	virtual void Update(float dt, int camX, int camY)
 	{
 		AvancezLib::KeyStatus keys;
 		system->getKeyStatus(keys);
@@ -105,7 +105,7 @@ private:
 
 public:
 
-	void Update(float dt)
+	void Update(float dt, int camX, int camY)
 	{
 		AvancezLib::KeyStatus keys;
 		system->getKeyStatus(keys);

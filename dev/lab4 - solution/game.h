@@ -19,6 +19,10 @@ class Game : public GameObject
 
 	unsigned int score = 0;
 
+	Sprite * backgorund_sprite;
+	//The camera area
+	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+
 public:
 
 	virtual void Create(AvancezLib* system)
@@ -26,6 +30,8 @@ public:
 		SDL_Log("Game::Create");
 
 		this->system = system;
+
+		backgorund_sprite = system->createSprite("data/test_background.bmp");
 
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
@@ -112,11 +118,13 @@ public:
 
 	virtual void Update(float dt)
 	{
+		backgorund_sprite->draw(-1080, 0);
+
 		if (IsGameOver())
 			dt = 0.f;
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
-			(*go)->Update(dt);
+			(*go)->Update(dt, camera.x, camera.y);
 
 		// check if there are still active aliens
 		// if not, send a message to re-init the level

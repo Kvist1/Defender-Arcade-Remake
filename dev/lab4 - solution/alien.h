@@ -52,7 +52,7 @@ class AlienBehaviourComponent : public Component
 public:
 	virtual ~AlienBehaviourComponent() {}
 
-	virtual void Update(float dt)
+	virtual void Update(float dt, int camX, int camY)
 	{
 		
 		Alien * alien = (Alien *)go;

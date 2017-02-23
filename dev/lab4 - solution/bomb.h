@@ -1,7 +1,7 @@
 class BombBehaviourComponent : public Component
 {
 public:
-	virtual void Update(float dt)
+	virtual void Update(float dt, int camX, int camY)
 	{
 		go->verticalPosition += BOMB_SPEED * dt;
 

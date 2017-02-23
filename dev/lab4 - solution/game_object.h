@@ -28,7 +28,7 @@ public:
 	virtual void AddComponent(Component * component);
 
 	virtual void Init();
-	virtual void Update(float dt);
+	virtual void Update(float dt, int camX, int camY);
 	virtual void Destroy();
 	virtual void AddReceiver(GameObject *go);
 	virtual void Receive(Message m) {}
