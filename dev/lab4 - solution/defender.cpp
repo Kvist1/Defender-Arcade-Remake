@@ -6,7 +6,8 @@
 
 #include <set>
 
-
+const int WINDOW_WIDTH = 640;
+const int WINDOW_HEIGHT = 480;
 
 const unsigned int	MAX_NUM_GAME_OBJECTS = 10000;
 const unsigned int	NUM_LIVES = 2;
@@ -47,7 +48,7 @@ int main(int argc, char** argv)
 	AvancezLib system;
 	AvancezLib::SystemState gameStates;
 
-	system.init(640, 480);
+	system.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	
 	Game game;
 	game.Create(&system);
