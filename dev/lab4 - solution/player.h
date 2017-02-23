@@ -62,11 +62,11 @@ public:
 
 		go->horizontalPosition += move;
 
-		if (go->horizontalPosition > (640 - 32))
-			go->horizontalPosition = 640 - 32;
+		if (go->horizontalPosition > (LEVEL_WIDTH - 32))
+			go->horizontalPosition = LEVEL_WIDTH - 32;
 			
-		if (go->horizontalPosition < 0)
-			go->horizontalPosition = 0;
+		if (go->horizontalPosition < -640)
+			go->horizontalPosition = -640;
 	}
 
 	// move the player up or down
@@ -93,89 +93,6 @@ public:
 
 		SDL_Log("fire!");
 		return true;
-	}
-};
-
-class PlayerSlideComponent : public Component
-{
-
-private:
-	float right_speed = 0.f;
-	float left_speed = 0.f;
-
-public:
-
-	void Update(float dt, int camX, int camY)
-	{
-		AvancezLib::KeyStatus keys;
-		system->getKeyStatus(keys);
-		if (keys.right)
-		{
-			//SDL_Log("Slide right");
-			if (left_speed > 0)
-			{
-				MoveHorizontal(-dt * left_speed*2);
-				left_speed -= 0.5f;
-			} 
-			else if (right_speed < PLAYER_SPEED)
-			{
-				//MoveHorizontal(dt * test_speed); // slow acceleration, add later somewhere...
-				right_speed += 0.9f;
-			}
-		}
-		else if (keys.left)
-		{
-			//SDL_Log("Slide left");
-			if (right_speed > 0)
-			{
-				MoveHorizontal(dt * right_speed*2);
-				right_speed -= 0.5f;
-			} 
-			else if (left_speed < PLAYER_SPEED)
-			{
-				//MoveHorizontal(-dt * test_speed); // slow acceleration, add later somewhere...
-				left_speed += 0.9f;
-			}
-		}
-
-		else if (right_speed > 0 && go->facingDirection == GameObject::FacingDirection::right)
-		{
-			MoveHorizontal(dt * right_speed);
-			right_speed -= 0.1f;
-		}
-		else if (right_speed > 0 && go->facingDirection == GameObject::FacingDirection::left)
-		{
-			MoveHorizontal(dt * right_speed );
-			right_speed -= 0.5f;
-		}
-		else if (left_speed > 0 && go->facingDirection == GameObject::FacingDirection::right)
-		{
-			MoveHorizontal(-dt * left_speed );
-			left_speed -= 0.5f;
-		}
-		else if (left_speed > 0 && go->facingDirection == GameObject::FacingDirection::left)
-		{
-			MoveHorizontal(-dt * left_speed);
-			left_speed -= 0.1f;
-		}
-	}
-
-	// move the player left or right
-	// param move depends on the time, so the player moves always at the same speed on any computer
-	void MoveHorizontal(float move)
-	{
-		/*if (move > 0)
-			go->facingDirection = GameObject::FacingDirection::right;
-		else if (move < 0)
-			go->facingDirection = GameObject::FacingDirection::left;*/
-
-		go->horizontalPosition += move;
-
-		if (go->horizontalPosition >(640 - 32))
-			go->horizontalPosition = 640 - 32;
-
-		if (go->horizontalPosition < 0)
-			go->horizontalPosition = 0;
 	}
 };
 

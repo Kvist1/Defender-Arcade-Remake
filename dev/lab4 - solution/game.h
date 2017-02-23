@@ -36,8 +36,6 @@ public:
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
-		PlayerSlideComponent * player_slide = new PlayerSlideComponent();
-		player_slide->Create(system, player, &game_objects);
 		RenderComponent * player_render = new RenderComponent();
 		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp");
 		CollideComponent * player_bomb_collision = new CollideComponent();
@@ -47,7 +45,6 @@ public:
 
 		player->Create();
 		player->AddComponent(player_behaviour);
-		player->AddComponent(player_slide);
 		player->AddComponent(player_render);
 		player->AddComponent(player_bomb_collision);
 		player->AddComponent(player_alien_collision);
@@ -118,10 +115,11 @@ public:
 
 	virtual void Update(float dt)
 	{
-		backgorund_sprite->draw(-1080, 0);
-
 		if (IsGameOver())
 			dt = 0.f;
+
+		UpdateBackground(camera.x, camera.y);
+		UpdateCamera();
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
 			(*go)->Update(dt, camera.x, camera.y);
@@ -136,6 +134,37 @@ public:
 			// level win!
 			game_speed += 0.4f;
 			aliens_grid->Init();
+		}
+	}
+
+	virtual void UpdateBackground(int camX, int camY)
+	{
+		backgorund_sprite->draw(-640 - camX, 0);
+
+	}
+
+	virtual void UpdateCamera()
+	{
+		//Center the camera over the palyer. 32/2 is the with of the player sprite
+		camera.x = (player->horizontalPosition + 32 / 2) - WINDOW_WIDTH / 2;
+		camera.y = (player->verticalPosition + 32 / 2) - WINDOW_HEIGHT / 2;
+
+		//Keep the camera in bounds
+		if (camera.x < -640)
+		{
+			camera.x = -640;
+		}
+		if (camera.y < 0)
+		{
+			camera.y = 0;
+		}
+		if (camera.x > LEVEL_WIDTH - camera.w)
+		{
+			camera.x = LEVEL_WIDTH - camera.w;
+		}
+		if (camera.y > LEVEL_HEIGHT - camera.h)
+		{
+			camera.y = LEVEL_HEIGHT - camera.h;
 		}
 	}
 

@@ -30,9 +30,9 @@ void RenderComponent::Update(float dt, int camX, int camY)
 		return;
 
 	if (sprite && go->facingDirection == GameObject::FacingDirection::left)
-		sprite->draw(int(go->horizontalPosition), int(go->verticalPosition));
+		sprite->draw(int(go->horizontalPosition - camX), int(go->verticalPosition - camY));
 	else if (sprite2 && go->facingDirection == GameObject::FacingDirection::right)
-		sprite2->draw(int(go->horizontalPosition), int(go->verticalPosition));
+		sprite2->draw(int(go->horizontalPosition - camX), int(go->verticalPosition - camY));
 }
 
 void RenderComponent::Destroy()

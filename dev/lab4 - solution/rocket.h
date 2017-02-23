@@ -10,7 +10,7 @@ public:
 		else
 			go->horizontalPosition -= ROCKET_SPEED * dt; // rocket_speed * time
 
-		if (go->horizontalPosition < 0 || go->horizontalPosition > 640) // When the rocket reaches the sides of the screen, it disappears.
+		if (go->horizontalPosition < -640 || go->horizontalPosition > 640*2) // When the rocket reaches the sides of the screen, it disappears.
 			go->enabled = false;
 	}
 };

@@ -9,7 +9,7 @@
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
-const int LEVEL_WIDTH = 640 * 3;
+const int LEVEL_WIDTH = 640*2;
 const int LEVEL_HEIGHT = WINDOW_HEIGHT;
 
 const unsigned int	MAX_NUM_GAME_OBJECTS = 10000;
