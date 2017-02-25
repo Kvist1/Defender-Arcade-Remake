@@ -141,16 +141,6 @@ public:
 
 	virtual void UpdateBackground(int camX, int camY)
 	{
-		/*bgScrollingOffset = camX;
-		if (bgScrollingOffset < 0)
-			bgScrollingOffset = LEVEL_WIDTH;
-		else if (bgScrollingOffset > LEVEL_WIDTH)
-			bgScrollingOffset = 0;*/
-
-		/*bg_sprite->draw(0 - camX, 0);
-		bg_sprite->draw(-LEVEL_WIDTH - camX, 0);*/
-		//bg_sprite->draw(-640 - camX, 0);
-
 		if (camX > LEVEL_WIDTH)
 			camX = 0;
 		else if (camX < -camera.w)
@@ -159,7 +149,6 @@ public:
 		bg_sprite->draw(-camX - LEVEL_WIDTH, 0);
 		bg_sprite->draw(-camX, 0);
 		bg_sprite->draw(-camX + LEVEL_WIDTH, 0);
-
 	}
 
 	virtual void UpdateCamera()
