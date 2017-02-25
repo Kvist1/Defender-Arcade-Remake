@@ -20,10 +20,8 @@ public:
 		go->verticalPosition = 480 - 32;
 
 		time_fire_pressed = -10000.f;
-		acceleration_speed = 0.f;
 	}
 
-	float acceleration_speed;
 	virtual void Update(float dt, int camX, int camY)
 	{
 		AvancezLib::KeyStatus keys;
