@@ -59,12 +59,12 @@ public:
 			go->facingDirection = GameObject::FacingDirection::left;
 
 		go->horizontalPosition += move;
-
-		if (go->horizontalPosition > (LEVEL_WIDTH - 32))
-			go->horizontalPosition = LEVEL_WIDTH - 32;
+		SDL_Log("%d : xPos", (int)go->horizontalPosition);
+		if (go->horizontalPosition > LEVEL_WIDTH)
+			go->horizontalPosition = 0;
 			
-		if (go->horizontalPosition < -640)
-			go->horizontalPosition = -640;
+		if (go->horizontalPosition < 0)
+			go->horizontalPosition = LEVEL_WIDTH;
 	}
 
 	// move the player up or down

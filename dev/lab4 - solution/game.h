@@ -19,9 +19,10 @@ class Game : public GameObject
 
 	unsigned int score = 0;
 
-	Sprite * backgorund_sprite;
+	Sprite * bg_sprite;
 	//The camera area
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+	int bgScrollingOffset = 0;
 
 public:
 
@@ -31,7 +32,7 @@ public:
 
 		this->system = system;
 
-		backgorund_sprite = system->createSprite("data/test_background.bmp");
+		bg_sprite = system->createSprite("data/test_background.bmp");
 
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
@@ -135,11 +136,29 @@ public:
 			game_speed += 0.4f;
 			aliens_grid->Init();
 		}
+
 	}
 
 	virtual void UpdateBackground(int camX, int camY)
 	{
-		backgorund_sprite->draw(-640 - camX, 0);
+		/*bgScrollingOffset = camX;
+		if (bgScrollingOffset < 0)
+			bgScrollingOffset = LEVEL_WIDTH;
+		else if (bgScrollingOffset > LEVEL_WIDTH)
+			bgScrollingOffset = 0;*/
+
+		/*bg_sprite->draw(0 - camX, 0);
+		bg_sprite->draw(-LEVEL_WIDTH - camX, 0);*/
+		//bg_sprite->draw(-640 - camX, 0);
+
+		if (camX > LEVEL_WIDTH)
+			camX = 0;
+		else if (camX < -camera.w)
+			camX = LEVEL_WIDTH - camera.w;
+
+		bg_sprite->draw(-camX - LEVEL_WIDTH, 0);
+		bg_sprite->draw(-camX, 0);
+		bg_sprite->draw(-camX + LEVEL_WIDTH, 0);
 
 	}
 
@@ -150,18 +169,18 @@ public:
 		camera.y = (player->verticalPosition + 32 / 2) - WINDOW_HEIGHT / 2;
 
 		//Keep the camera in bounds
-		if (camera.x < -640)
+		/*if (camera.x < -640)
 		{
 			camera.x = -640;
-		}
+		}*/
 		if (camera.y < 0)
 		{
 			camera.y = 0;
 		}
-		if (camera.x > LEVEL_WIDTH - camera.w)
+		/*if (camera.x > LEVEL_WIDTH - camera.w)
 		{
 			camera.x = LEVEL_WIDTH - camera.w;
-		}
+		}*/
 		if (camera.y > LEVEL_HEIGHT - camera.h)
 		{
 			camera.y = LEVEL_HEIGHT - camera.h;
