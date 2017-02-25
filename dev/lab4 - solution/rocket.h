@@ -10,8 +10,11 @@ public:
 		else
 			go->horizontalPosition -= ROCKET_SPEED * dt; // rocket_speed * time
 
-		if (go->horizontalPosition < -640 || go->horizontalPosition > 640*2) // When the rocket reaches the sides of the screen, it disappears.
+		if (go->horizontalPosition < camX - WINDOW_WIDTH || go->horizontalPosition > camX + WINDOW_WIDTH * 2) // When the rocket reaches the sides of the screen, it disappears.
+		{
 			go->enabled = false;
+			SDL_Log("ROCKET DISABLED");
+		}
 	}
 };
 

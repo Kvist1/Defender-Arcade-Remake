@@ -59,7 +59,7 @@ public:
 			go->facingDirection = GameObject::FacingDirection::left;
 
 		go->horizontalPosition += move;
-		SDL_Log("%d : xPos", (int)go->horizontalPosition);
+
 		if (go->horizontalPosition > LEVEL_WIDTH)
 			go->horizontalPosition = 0;
 			
