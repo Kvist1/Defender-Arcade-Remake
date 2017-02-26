@@ -42,7 +42,7 @@ public:
 
 		// is enough time passed from the last bomb, shoot another bomb from a random active alien
 		// dt = 0 means that game has been paused
-		if (CanFire() && dt != 0)
+		if (dt != 0 && CanFire())
 		{
 			Bomb * bomb = bombs_pool->FirstAvailable();
 			if (bomb != NULL)
