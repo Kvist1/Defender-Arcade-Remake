@@ -2,6 +2,9 @@
 #include "game_object.h"
 #include "avancezlib.h"
 #include "GlobalVariables.h"
+#include <typeinfo>
+
+class Player;
 
 void Component::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects)
 {
@@ -46,6 +49,17 @@ void RenderComponent::Update(float dt, int camX, int camY)
 	else if (sprite2 && go->facingDirection == GameObject::FacingDirection::right)
 	{
 		sprite2->draw(int(go->horizontalPosition - camX), int(go->verticalPosition - camY));
+		
+		if (typeid(*go) != typeid(Player)) {
+			if (go->horizontalPosition < WINDOW_WIDTH && go->horizontalPosition > 0)
+			{
+				sprite->draw(int(go->horizontalPosition - camX + LEVEL_WIDTH), int(go->verticalPosition - camY));
+			}
+			else if (go->horizontalPosition < LEVEL_WIDTH && go->horizontalPosition > LEVEL_WIDTH - WINDOW_WIDTH)
+			{
+				sprite->draw(int(go->horizontalPosition - camX - LEVEL_WIDTH), int(go->verticalPosition - camY));
+			}
+		}
 	}
 }
 

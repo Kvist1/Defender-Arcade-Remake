@@ -62,8 +62,7 @@ public:
 
 		if (go->horizontalPosition > LEVEL_WIDTH)
 			go->horizontalPosition = 0;
-			
-		if (go->horizontalPosition < 0)
+		else if (go->horizontalPosition < 0)
 			go->horizontalPosition = LEVEL_WIDTH;
 	}
 
