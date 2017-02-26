@@ -10,6 +10,7 @@ class Game : public GameObject
 	ObjectPool<Rocket> rockets_pool;	// used to instantiate rockets
 	ObjectPool<Alien> aliens_pool;
 	ObjectPool<Bomb> bombs_pool;
+	ObjectPool<Human> humans_pool;
 
 	Player * player;
 	AliensGrid * aliens_grid;
@@ -31,7 +32,6 @@ public:
 		SDL_Log("Game::Create");
 
 		this->system = system;
-
 		bg_sprite = system->createSprite("data/test_background.bmp");
 
 		player = new Player();
@@ -63,6 +63,19 @@ public:
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
 		}
+
+		humans_pool.Create(15);
+		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
+		{
+			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
+			behaviour->Create(system, *human, &game_objects);
+			RenderComponent * render = new RenderComponent();
+			render->Create(system, *human, &game_objects, "data/human.bmp", "data/human.bmp");
+			(*human)->AddComponent(behaviour);
+			(*human)->AddComponent(render);
+			game_objects.insert(*human);
+		}
+
 
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
@@ -109,6 +122,8 @@ public:
 	{
 		player->Init();
 		aliens_grid->Init();
+		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++) 
+			(*human)->Init();
 
 		enabled = true;
 		game_over = false;

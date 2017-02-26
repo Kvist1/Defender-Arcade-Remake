@@ -16,8 +16,8 @@ public:
 
 	virtual void Init()
 	{
-		go->horizontalPosition = 320;
-		go->verticalPosition = 480 - 32;
+		go->horizontalPosition = 0;
+		go->verticalPosition = WINDOW_HEIGHT/2;
 
 		time_fire_pressed = -10000.f;
 	}

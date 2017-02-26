@@ -23,7 +23,7 @@ const float			FIRE_TIME_INTERVAL = .4f;
 const float			BOMB_TIME_INTERVAL = 1.25f;
 const float			PLAYER_SPEED = 350.0f;
 const float			ROCKET_SPEED = 1000.0f;
-const float			ALIEN_SPEED = 140.0f;
+const float			ALIEN_SPEED = 40.0f;
 const float			BOMB_SPEED = 120.0f;
 const float			HUMAN_SPEED = 20.0f;
 
