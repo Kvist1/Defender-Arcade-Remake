@@ -65,6 +65,11 @@ public:
 
 		human->horizontalPosition += human->direction * HUMAN_SPEED * dt; // direction * speed * time
 
+		if (human->horizontalPosition > LEVEL_WIDTH)
+			human->horizontalPosition = 0;
+		else if (human->horizontalPosition < 0)
+			human->horizontalPosition = LEVEL_WIDTH;
+
 		/*if ((human->direction == 1) && (human->horizontalPosition > (LEVEL_WIDTH - 32)))
 			*(human->change_direction) = true;
 
