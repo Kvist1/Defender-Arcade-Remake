@@ -37,6 +37,9 @@
     <ClCompile Include="game_object.cpp" />
     <ClCompile Include="defender.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DCF126AD-C9D0-4AC4-992B-8BF72FCB5E4B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
