@@ -34,7 +34,7 @@ public:
 			MoveVertical(-dt * PLAYER_SPEED/2);
 		else if (keys.down)
 			MoveVertical(dt * PLAYER_SPEED/2);
-		if (keys.fire)
+		if (keys.fire && dt != 0)
 		{
 			if (CanFire())
 			{
@@ -73,7 +73,7 @@ public:
 	{
 		go->verticalPosition += move;
 
-		if (go->verticalPosition >(482 - 32))
+		if (go->verticalPosition >(LEVEL_HEIGHT - 30))
 			go->verticalPosition = 482 - 32;
 
 		if (go->verticalPosition < 50)
