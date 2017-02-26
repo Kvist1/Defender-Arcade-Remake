@@ -71,21 +71,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AlienBehaviourComponent" Collapsed="true">
-    <Position X="8.5" Y="2.75" Width="1.5" />
+    <Position X="8.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>alien.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AliensGridBehaviourComponent" Collapsed="true">
-    <Position X="10.5" Y="2.75" Width="1.5" />
+    <Position X="10" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAgQBgAAABAAAAAAAAAAAAAAAAEAEAAACAAAAAAA=</HashCode>
       <FileName>aliens_grid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AliensGrid" Collapsed="true">
-    <Position X="8.25" Y="5.75" Width="1.5" />
+    <Position X="7.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>aliens_grid.h</FileName>
@@ -100,18 +100,6 @@
   </Class>
   <Class Name="AvancezLib" Collapsed="true">
     <Position X="14" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="AvancezLib::KeyStatus" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>avancezlib.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-      <Struct Name="AvancezLib::SystemState" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>avancezlib.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AQIAgAAAAAAAAAAAAAAEAFgAAAAAAAJMAAAAAAAEgAA=</HashCode>
       <FileName>avancezlib.h</FileName>
@@ -125,21 +113,35 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerBehaviourComponent" Collapsed="true">
-    <Position X="12.25" Y="2.75" Width="1.5" />
+    <Position X="11.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAEAQAAACAAAAAAAkAEAAACQAAAAAA=</HashCode>
       <FileName>player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Player" Collapsed="true">
-    <Position X="10.25" Y="5.75" Width="1.5" />
+    <Position X="9.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAQAAACAAAAABA=</HashCode>
       <FileName>player.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="HumanBehaviourComponent" Collapsed="true">
+    <Position X="13.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>human.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Human" Collapsed="true">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAIAAAAAAAAAAAAAAAACAQAAACAAAAAAA=</HashCode>
+      <FileName>human.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="Message">
-    <Position X="12.25" Y="4.75" Width="1.5" />
+    <Position X="13.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAACAIAQAAAAAAAAAAAACAAAAAAAgAA=</HashCode>
       <FileName>game_object.h</FileName>

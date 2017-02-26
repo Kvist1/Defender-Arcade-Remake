@@ -25,6 +25,7 @@ const float			PLAYER_SPEED = 350.0f;
 const float			ROCKET_SPEED = 1000.0f;
 const float			ALIEN_SPEED = 140.0f;
 const float			BOMB_SPEED = 120.0f;
+const float			HUMAN_SPEED = 20.0f;
 
 
 float game_speed = 1.f;		// speed of the game; it is increased each time all the aliens are hit
@@ -43,7 +44,7 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 #include "alien.h"
 #include "aliens_grid.h"
 #include "player.h"
-
+#include "human.h"
 #include "game.h"
 
 int main(int argc, char** argv)

@@ -17,3 +17,4 @@ extern const float			PLAYER_SPEED;
 extern const float			ROCKET_SPEED;
 extern const float			ALIEN_SPEED;
 extern const float			BOMB_SPEED;
+extern const float			HUMAN_SPEED;

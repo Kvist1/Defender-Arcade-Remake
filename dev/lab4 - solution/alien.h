@@ -1,7 +1,5 @@
 
 
-
-
 class Alien : public GameObject
 {
 
@@ -46,7 +44,6 @@ public:
 };
 
 
-
 class AlienBehaviourComponent : public Component
 {
 public:
@@ -54,7 +51,7 @@ public:
 
 	virtual void Update(float dt, int camX, int camY)
 	{
-		
+
 		Alien * alien = (Alien *)go;
 
 		alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
