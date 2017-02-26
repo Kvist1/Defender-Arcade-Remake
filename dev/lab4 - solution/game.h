@@ -64,15 +64,18 @@ public:
 			(*rocket)->AddComponent(render);
 		}
 
-		humans_pool.Create(15);
+		humans_pool.Create(4);
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 		{
 			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
 			behaviour->Create(system, *human, &game_objects);
 			RenderComponent * render = new RenderComponent();
 			render->Create(system, *human, &game_objects, "data/human.bmp", "data/human.bmp");
+			CollideComponent * rocket_coll = new CollideComponent();
+			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*human)->AddComponent(behaviour);
 			(*human)->AddComponent(render);
+			(*human)->AddComponent(rocket_coll);
 			game_objects.insert(*human);
 		}
 
@@ -150,6 +153,16 @@ public:
 			// level win!
 			game_speed += 0.4f;
 			aliens_grid->Init();
+		}
+
+		// check if all humans are dead
+		// if they are, game over
+		bool humans_are_still_alive = false;
+		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
+			humans_are_still_alive |= (*human)->enabled;
+		if (!humans_are_still_alive)
+		{
+			game_over = true;
 		}
 
 	}
