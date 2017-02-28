@@ -2,7 +2,9 @@
 #include "component.h"
 #include "avancezlib.h"
 
-void GameObject::Create()
+class b2World;
+
+void GameObject::Create(b2World * b2_world)
 {
 	SDL_Log("GameObject::Create");
 

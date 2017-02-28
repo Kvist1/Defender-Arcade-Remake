@@ -25,6 +25,14 @@ class Game : public GameObject
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	int bgScrollingOffset = 0;
 
+	//Box2D
+	b2World * b2_world;
+	float32 timeStep = 1.0f / 60.0f;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+	b2Body* body;
+	Sprite* box2d_sprite;
+
 public:
 
 	virtual void Create(AvancezLib* system)
@@ -32,8 +40,67 @@ public:
 		SDL_Log("Game::Create");
 
 		this->system = system;
+
+		// Box2D TEST #####################################################################
+		box2d_sprite = system->createSprite("data/player_left.bmp");
+		//create box2D world 
+
+		// Define the gravity vector.
+		b2Vec2 gravity(0.0f, 9.8f);
+
+		// Construct a world object, which will hold and simulate the rigid bodies.
+		b2_world = new b2World(gravity);
+
+		// Define the ground body.
+		b2BodyDef groundBodyDef;
+		groundBodyDef.position.Set(0.0f, 480.0f);
+
+		// Call the body factory which allocates memory for the ground body
+		// from a pool and creates the ground box shape (also from a pool).
+		// The body is also added to the world.
+		b2Body* groundBody = b2_world->CreateBody(&groundBodyDef);
+
+		// Define the ground box shape.
+		b2PolygonShape groundBox;
+
+		// The extents are the half-widths of the box.
+		groundBox.SetAsBox(1000.0f, 13.0f);
+
+		// Add the ground fixture to the ground body.
+		groundBody->CreateFixture(&groundBox, 0.0f);
+
+		// Define the dynamic body. We set its position and call the body factory.
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(50.0f, 4.0f);
+		body = b2_world->CreateBody(&bodyDef);
+
+		// Define another box shape for our dynamic body.
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox(16.0f, 16.0f);
+
+		// Define the dynamic body fixture.
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+
+		// Set the box density to be non-zero, so it will be dynamic.
+		fixtureDef.density = 1.0f;
+
+		// Override the default friction.
+		fixtureDef.friction = 0.3f;
+
+		// bouncy
+		fixtureDef.restitution = 0.8f;
+
+		// Add the shape to the body.
+		body->CreateFixture(&fixtureDef);
+
+		// Box2D TEST #####################################################################
+
+		//create background
 		bg_sprite = system->createSprite("data/test_background.bmp");
 
+		//create entities
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
@@ -44,7 +111,7 @@ public:
 		CollideComponent * player_alien_collision = new CollideComponent();
 		player_alien_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&aliens_pool);
 
-		player->Create();
+		player->Create(b2_world);
 		player->AddComponent(player_behaviour);
 		player->AddComponent(player_render);
 		player->AddComponent(player_bomb_collision);
@@ -59,7 +126,7 @@ public:
 			behaviour->Create(system, *rocket, &game_objects);
 			RenderComponent * render = new RenderComponent();
 			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp");
-			(*rocket)->Create();
+			(*rocket)->Create(b2_world);
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
 		}
@@ -83,7 +150,7 @@ public:
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
 		aliensgrid_behaviour->Create(system, aliens_grid, &game_objects, &aliens_pool, &bombs_pool);
-		aliens_grid->Create();
+		aliens_grid->Create(b2_world);
 		aliens_grid->AddComponent(aliensgrid_behaviour);
 		game_objects.insert(aliens_grid);
 
@@ -97,7 +164,7 @@ public:
 			alien_render->Create(system, *alien, &game_objects, "data/enemy_0.bmp");
 			CollideComponent * alien_coll = new CollideComponent();
 			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
-			(*alien)->Create();
+			(*alien)->Create(b2_world);
 			(*alien)->AddComponent(alien_behaviour);
 			(*alien)->AddComponent(alien_render);
 			(*alien)->AddComponent(alien_coll);
@@ -112,7 +179,7 @@ public:
 			RenderComponent * bomb_render = new RenderComponent();
 			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp");
 
-			(*bomb)->Create();
+			(*bomb)->Create(b2_world);
 			(*bomb)->AddComponent(bomb_behaviour);
 			(*bomb)->AddComponent(bomb_render);
 		}
@@ -139,6 +206,7 @@ public:
 
 		UpdateBackground(camera.x, camera.y);
 		UpdateCamera();
+		UpdateBox2dWorld();
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
 			(*go)->Update(dt, camera.x, camera.y);
@@ -165,6 +233,23 @@ public:
 			game_over = true;
 		}
 
+	}
+
+	virtual void UpdateBox2dWorld()
+	{
+		// Instruct the world to perform a single step of simulation.
+		b2_world->Step(timeStep, velocityIterations, positionIterations);
+
+		// Now print the position and angle of the body.
+		b2Vec2 position = body->GetPosition();
+		float32 angle = body->GetAngle();
+
+		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+
+		if (position.y > 640)
+			SDL_Log("hmm");
+
+		box2d_sprite->draw((int)position.x - camera.x, (int)position.y);
 	}
 
 	virtual void UpdateBackground(int camX, int camY)

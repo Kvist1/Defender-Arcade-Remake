@@ -47,6 +47,7 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 #include "player.h"
 #include "human.h"
 #include "game.h"
+#include "Box2D\Box2D.h"
 
 int main(int argc, char** argv)
 {
