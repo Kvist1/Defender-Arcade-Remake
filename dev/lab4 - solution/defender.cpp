@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "avancezlib.h"
 #include "object_pool.h"
+#include "Box2D\Box2D.h"
 
 #include <set>
 
