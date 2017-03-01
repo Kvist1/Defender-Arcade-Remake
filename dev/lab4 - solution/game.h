@@ -27,10 +27,14 @@ class Game : public GameObject
 
 	//Box2D
 	b2World * b2_world;
-	float32 timeStep = 1.0f / 60.0f;
+	b2Body* body;
+	//Box2D timestep stuff
+	float32 UPDATE_INTERVAL = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
-	b2Body* body;
+	float32 MAX_CYCLES_PER_FRAME = 5;
+	float32 timeAccumulator = 0;
+	//Box2D test sprite
 	Sprite* box2d_sprite;
 
 public:
@@ -90,7 +94,7 @@ public:
 		fixtureDef.friction = 0.3f;
 
 		// bouncy
-		fixtureDef.restitution = 0.8f;
+		fixtureDef.restitution = 0.6f;
 
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
@@ -206,7 +210,7 @@ public:
 
 		UpdateBackground(camera.x, camera.y);
 		UpdateCamera();
-		UpdateBox2dWorld();
+		UpdateBox2dWorld(dt);
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
 			(*go)->Update(dt, camera.x, camera.y);
@@ -235,10 +239,22 @@ public:
 
 	}
 
-	virtual void UpdateBox2dWorld()
+	virtual void UpdateBox2dWorld(float dt)
 	{
-		// Instruct the world to perform a single step of simulation.
-		b2_world->Step(timeStep, velocityIterations, positionIterations);
+		//*
+		timeAccumulator += dt;
+		if (timeAccumulator > (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL))
+			timeAccumulator = UPDATE_INTERVAL;
+
+		while (timeAccumulator >= UPDATE_INTERVAL)
+		{
+			timeAccumulator -= UPDATE_INTERVAL;
+			// Instruct the world to perform a single step of simulation.
+			b2_world->Step(UPDATE_INTERVAL, velocityIterations, positionIterations);
+		}
+		//*/
+
+		//b2_world->Step(UPDATE_INTERVAL, velocityIterations, positionIterations);
 
 		// Now print the position and angle of the body.
 		b2Vec2 position = body->GetPosition();
@@ -247,7 +263,7 @@ public:
 		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
 		if (position.y > 640)
-			SDL_Log("hmm");
+			SDL_Log("ground doesn't work?");
 
 		box2d_sprite->draw((int)position.x - camera.x, (int)position.y);
 	}

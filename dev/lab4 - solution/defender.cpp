@@ -24,7 +24,7 @@ const float			FIRE_TIME_INTERVAL = .4f;
 const float			BOMB_TIME_INTERVAL = 1.25f;
 const float			PLAYER_SPEED = 350.0f;
 const float			ROCKET_SPEED = 1000.0f;
-const float			ALIEN_SPEED = 40.0f;
+const float			ALIEN_SPEED = 70.0f;
 const float			BOMB_SPEED = 120.0f;
 const float			HUMAN_SPEED = 120.0f;
 
@@ -51,6 +51,11 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 
 int main(int argc, char** argv)
 {
+	// fps counter
+	int num_frames = 0;
+	float avg_fps = 0;
+	float sum_delta = 0;
+	float MAX_FPS = 71.0f;
 	
 	AvancezLib system;
 	AvancezLib::SystemState gameStates;
@@ -64,7 +69,6 @@ int main(int argc, char** argv)
 	float lastTime = system.getElapsedTime();
 	while (system.update())
 	{
-		
 		float newTime = system.getElapsedTime();
 		float dt = newTime - lastTime;
 		dt = dt * game_speed;
@@ -77,6 +81,28 @@ int main(int argc, char** argv)
 			game.Update(dt);
 
 		game.Draw();
+
+
+
+		// check fps 
+		num_frames++;
+		sum_delta += dt / game_speed;
+		if (sum_delta > 1)
+		{
+			avg_fps = ((float)num_frames / sum_delta);
+			num_frames = 0;
+			sum_delta = 0;
+		}
+		char msg[1024];
+		sprintf(msg, "%.1f fps", avg_fps);
+		system.drawText(12, 12, msg);
+
+		// delay on the loop if needed
+		float frameTicks = system.getElapsedTime() - lastTime;
+		if (1000.0f / MAX_FPS > frameTicks)
+		{
+			SDL_Delay(1000.0f / MAX_FPS - frameTicks);
+		}
 	}
 
 	// clean up
