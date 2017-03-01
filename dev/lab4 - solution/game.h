@@ -35,7 +35,7 @@ public:
 
 		this->system = system;
 		bg_sprite = system->createSprite("data/test_background.bmp");
-		bgMini_sprite = system->createSprite("data/test_background_small2.bmp");
+		bgMini_sprite = system->createSprite("data/test_background_small.bmp");
 
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
@@ -190,7 +190,16 @@ public:
 		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX, 0);
 		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX + MINIMAP_WIDTH, 0);
 
-		SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + player->horizontalPosition / 6 - miniMapCamX + 16/6, player->verticalPosition / 6 + 16/6);
+		// 53 is the downScaled CameraWidth / 2.  16 is half the width and height of the player
+		SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH/2 - 53 + player->horizontalPosition/scaling - miniMapCamX + 16/scaling, player->verticalPosition/scaling + 16/scaling);
+
+		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
+			if ((*human)->enabled)
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + (*human)->horizontalPosition/scaling - miniMapCamX + 16/scaling, (*human)->verticalPosition/scaling + 16/scaling);
+
+		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
+			if ((*alien)->enabled)
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + (*alien)->horizontalPosition / scaling - miniMapCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling);
 	}
 
 	virtual void UpdateCamera()
