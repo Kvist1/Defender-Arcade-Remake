@@ -181,7 +181,16 @@ public:
 		bg_sprite->draw(-camX, 0);
 		bg_sprite->draw(-camX + LEVEL_WIDTH, 0);
 
-		bgMini_sprite->draw(WINDOW_WIDTH/2 - MINIMAP_WIDTH/2, 0);
+		float scaling = LEVEL_WIDTH / MINIMAP_WIDTH;
+		float miniMapCamX = (float)camX / scaling;
+		/*bgMini_sprite->draw(WINDOW_WIDTH / 2 - MINIMAP_WIDTH / 2 - miniMapCamX - MINIMAP_WIDTH, 0);
+		bgMini_sprite->draw(WINDOW_WIDTH/2 - MINIMAP_WIDTH/2 - miniMapCamX, 0);
+		bgMini_sprite->draw(WINDOW_WIDTH / 2 - MINIMAP_WIDTH / 2 - miniMapCamX + MINIMAP_WIDTH, 0);*/
+		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX - MINIMAP_WIDTH, 0);
+		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX, 0);
+		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX + MINIMAP_WIDTH, 0);
+
+		SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + player->horizontalPosition / 6 - miniMapCamX + 16/6, player->verticalPosition / 6 + 16/6);
 	}
 
 	virtual void UpdateCamera()
