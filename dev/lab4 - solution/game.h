@@ -57,7 +57,7 @@ public:
 
 		// Define the ground body.
 		b2BodyDef groundBodyDef;
-		groundBodyDef.position.Set(0.0f, 480.0f);
+		groundBodyDef.position.Set(LEVEL_WIDTH/2, 480.0f);
 
 		// Call the body factory which allocates memory for the ground body
 		// from a pool and creates the ground box shape (also from a pool).
@@ -76,7 +76,8 @@ public:
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
-		bodyDef.position.Set(50.0f, 4.0f);
+		bodyDef.position.Set(0.0f, 200.0f);
+		bodyDef.linearVelocity.Set(70.0f, 0.0f);
 		body = b2_world->CreateBody(&bodyDef);
 
 		// Define another box shape for our dynamic body.
@@ -94,7 +95,7 @@ public:
 		fixtureDef.friction = 0.3f;
 
 		// bouncy
-		fixtureDef.restitution = 0.6f;
+		fixtureDef.restitution = 0.8f;
 
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
@@ -107,13 +108,13 @@ public:
 		//create entities
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
-		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
+		player_behaviour->Create(system, player, &game_objects, &rockets_pool, b2_world);
 		RenderComponent * player_render = new RenderComponent();
-		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp");
+		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp", b2_world);
 		CollideComponent * player_bomb_collision = new CollideComponent();
-		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
+		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool, b2_world);
 		CollideComponent * player_alien_collision = new CollideComponent();
-		player_alien_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&aliens_pool);
+		player_alien_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&aliens_pool, b2_world);
 
 		player->Create(b2_world);
 		player->AddComponent(player_behaviour);
@@ -127,9 +128,9 @@ public:
 		for (auto rocket = rockets_pool.pool.begin(); rocket != rockets_pool.pool.end(); rocket++)
 		{
 			RocketBehaviourComponent * behaviour = new RocketBehaviourComponent();
-			behaviour->Create(system, *rocket, &game_objects);
+			behaviour->Create(system, *rocket, &game_objects, b2_world);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp");
+			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp", b2_world);
 			(*rocket)->Create(b2_world);
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
@@ -139,11 +140,11 @@ public:
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 		{
 			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
-			behaviour->Create(system, *human, &game_objects);
+			behaviour->Create(system, *human, &game_objects, b2_world);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *human, &game_objects, "data/human.bmp", "data/human.bmp");
+			render->Create(system, *human, &game_objects, "data/human.bmp", "data/human.bmp", b2_world);
 			CollideComponent * rocket_coll = new CollideComponent();
-			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
+			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool, b2_world);
 			(*human)->AddComponent(behaviour);
 			(*human)->AddComponent(render);
 			(*human)->AddComponent(rocket_coll);
@@ -153,7 +154,7 @@ public:
 
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
-		aliensgrid_behaviour->Create(system, aliens_grid, &game_objects, &aliens_pool, &bombs_pool);
+		aliensgrid_behaviour->Create(system, aliens_grid, &game_objects, &aliens_pool, &bombs_pool, b2_world);
 		aliens_grid->Create(b2_world);
 		aliens_grid->AddComponent(aliensgrid_behaviour);
 		game_objects.insert(aliens_grid);
@@ -163,11 +164,11 @@ public:
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 		{
 			AlienBehaviourComponent * alien_behaviour = new AlienBehaviourComponent();
-			alien_behaviour->Create(system, *alien, &game_objects);
+			alien_behaviour->Create(system, *alien, &game_objects, b2_world);
 			RenderComponent * alien_render = new RenderComponent();
-			alien_render->Create(system, *alien, &game_objects, "data/enemy_0.bmp");
+			alien_render->Create(system, *alien, &game_objects, "data/enemy_0.bmp", b2_world);
 			CollideComponent * alien_coll = new CollideComponent();
-			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
+			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool, b2_world);
 			(*alien)->Create(b2_world);
 			(*alien)->AddComponent(alien_behaviour);
 			(*alien)->AddComponent(alien_render);
@@ -179,9 +180,9 @@ public:
 		for (auto bomb = bombs_pool.pool.begin(); bomb != bombs_pool.pool.end(); bomb++)
 		{
 			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();
-			bomb_behaviour->Create(system, *bomb, &game_objects);
+			bomb_behaviour->Create(system, *bomb, &game_objects, b2_world);
 			RenderComponent * bomb_render = new RenderComponent();
-			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp");
+			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp", b2_world);
 
 			(*bomb)->Create(b2_world);
 			(*bomb)->AddComponent(bomb_behaviour);
@@ -241,7 +242,7 @@ public:
 
 	virtual void UpdateBox2dWorld(float dt)
 	{
-		//*
+		/*
 		timeAccumulator += dt;
 		if (timeAccumulator > (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL))
 			timeAccumulator = UPDATE_INTERVAL;
@@ -254,7 +255,7 @@ public:
 		}
 		//*/
 
-		//b2_world->Step(UPDATE_INTERVAL, velocityIterations, positionIterations);
+		b2_world->Step(UPDATE_INTERVAL, velocityIterations, positionIterations);
 
 		// Now print the position and angle of the body.
 		b2Vec2 position = body->GetPosition();
@@ -264,6 +265,12 @@ public:
 
 		if (position.y > 640)
 			SDL_Log("ground doesn't work?");
+
+		if (position.x > 200)
+		{
+			b2Vec2 newPosition(0, position.y);
+			body->SetTransform(newPosition, angle);
+		}
 
 		box2d_sprite->draw((int)position.x - camera.x, (int)position.y);
 	}

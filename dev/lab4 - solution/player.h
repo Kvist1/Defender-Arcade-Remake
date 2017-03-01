@@ -8,9 +8,9 @@ class PlayerBehaviourComponent : public Component
 public:
 	virtual ~PlayerBehaviourComponent() {}
 
-	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<Rocket> * rockets_pool)
+	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<Rocket> * rockets_pool, b2World * b2_world)
 	{
-		Component::Create(system, go, game_objects);
+		Component::Create(system, go, game_objects, b2_world);
 		this->rockets_pool = rockets_pool;
 	}
 

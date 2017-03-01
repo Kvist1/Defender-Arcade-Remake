@@ -6,23 +6,24 @@
 
 class Player;
 
-void Component::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects)
+void Component::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, b2World * b2_world)
 {
 	this->go = go;
 	this->system = system;
 	this->game_objects = game_objects;
+	this->b2_world = b2_world;
 }
 
-void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name)
+void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name, b2World * b2_world)
 {
-	Component::Create(system, go, game_objects);
+	Component::Create(system, go, game_objects, b2_world);
 
 	sprite = system->createSprite(sprite_name);
 }
 
-void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name, const char * sprite2_name)
+void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name, const char * sprite2_name, b2World * b2_world)
 {
-	Component::Create(system, go, game_objects);
+	Component::Create(system, go, game_objects, b2_world);
 
 	sprite = system->createSprite(sprite_name);
 	sprite2 = system->createSprite(sprite2_name);
@@ -74,9 +75,9 @@ void RenderComponent::Destroy()
 }
 
 
-void CollideComponent::Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects)
+void CollideComponent::Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects, b2World * b2_world)
 {
-	Component::Create(system, go, game_objects);
+	Component::Create(system, go, game_objects, b2_world);
 	this->coll_objects = coll_objects;
 }
 

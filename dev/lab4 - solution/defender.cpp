@@ -56,6 +56,7 @@ int main(int argc, char** argv)
 	float avg_fps = 0;
 	float sum_delta = 0;
 	float MAX_FPS = 71.0f;
+	bool checkFPS = false;
 	
 	AvancezLib system;
 	AvancezLib::SystemState gameStates;
@@ -85,23 +86,26 @@ int main(int argc, char** argv)
 
 
 		// check fps 
-		num_frames++;
-		sum_delta += dt / game_speed;
-		if (sum_delta > 1)
+		if (checkFPS)
 		{
-			avg_fps = ((float)num_frames / sum_delta);
-			num_frames = 0;
-			sum_delta = 0;
-		}
-		char msg[1024];
-		sprintf(msg, "%.1f fps", avg_fps);
-		system.drawText(12, 12, msg);
+			num_frames++;
+			sum_delta += dt / game_speed;
+			if (sum_delta > 1)
+			{
+				avg_fps = ((float)num_frames / sum_delta);
+				num_frames = 0;
+				sum_delta = 0;
+			}
+			char msg[1024];
+			sprintf(msg, "%.1f fps", avg_fps);
+			system.drawText(12, 12, msg);
 
-		// delay on the loop if needed
-		float frameTicks = system.getElapsedTime() - lastTime;
-		if (1000.0f / MAX_FPS > frameTicks)
-		{
-			SDL_Delay(1000.0f / MAX_FPS - frameTicks);
+			// delay on the loop if needed
+			float frameTicks = system.getElapsedTime() - lastTime;
+			if (1000.0f / MAX_FPS > frameTicks)
+			{
+				SDL_Delay(1000.0f / MAX_FPS - frameTicks);
+			}
 		}
 	}
 

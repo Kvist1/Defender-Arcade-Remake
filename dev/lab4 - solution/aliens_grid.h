@@ -9,9 +9,9 @@ class AliensGridBehaviourComponent : public Component
 public:
 	virtual ~AliensGridBehaviourComponent() {}
 
-	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool)
+	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool, b2World * b2_world)
 	{
-		Component::Create(system, go, game_objects);
+		Component::Create(system, go, game_objects, b2_world);
 
 		this->aliens_pool = aliens_pool;
 		this->bombs_pool = bombs_pool;
