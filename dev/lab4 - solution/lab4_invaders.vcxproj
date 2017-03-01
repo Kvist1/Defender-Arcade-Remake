@@ -28,7 +28,6 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="human.h" />
-    <ClInclude Include="mini_map.h" />
     <ClInclude Include="object_pool.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="rocket.h" />

@@ -40,18 +40,6 @@ public:
 	Sprite * GetSprite2() { return sprite2; }
 };
 
-class RenderMiniMapComponent : public Component
-{
-	Sprite *human_sprite, *player_sprite, *alien_sprite;
-
-public:
-
-	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, const char * sprite_name);
-	virtual void Update(float dt, int camX, int camY);
-	virtual void Destroy();
-};
-
-
 class CollideComponent : public Component
 {
 	ObjectPool<GameObject> * coll_objects; // collision will be tested with these objects
