@@ -75,8 +75,8 @@ public:
 		if (go->verticalPosition >(LEVEL_HEIGHT - 30))
 			go->verticalPosition = 482 - 32;
 
-		if (go->verticalPosition < 50)
-			go->verticalPosition = 50;
+		if (go->verticalPosition < MINIMAP_HEIGHT)
+			go->verticalPosition = MINIMAP_HEIGHT;
 	}
 
 	// return true if enough time has passed from the previous rocket

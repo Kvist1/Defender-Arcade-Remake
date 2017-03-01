@@ -2,6 +2,9 @@
 extern const int WINDOW_WIDTH;
 extern const int WINDOW_HEIGHT;
 
+extern const int MINIMAP_WIDTH;
+extern const int MINIMAP_HEIGHT;
+
 extern const int LEVEL_WIDTH;
 extern const int LEVEL_HEIGHT;
 

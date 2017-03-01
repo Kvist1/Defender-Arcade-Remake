@@ -20,7 +20,8 @@ class Game : public GameObject
 
 	unsigned int score = 0;
 
-	Sprite * bg_sprite;
+	// bg 1920*480px, mini 344*85px
+	Sprite *bg_sprite, *bgMini_sprite;
 	//The camera area
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	int bgScrollingOffset = 0;
@@ -33,6 +34,7 @@ public:
 
 		this->system = system;
 		bg_sprite = system->createSprite("data/test_background.bmp");
+		bgMini_sprite = system->createSprite("data/test_background_small2.bmp");
 
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
@@ -177,6 +179,8 @@ public:
 		bg_sprite->draw(-camX - LEVEL_WIDTH, 0);
 		bg_sprite->draw(-camX, 0);
 		bg_sprite->draw(-camX + LEVEL_WIDTH, 0);
+
+		bgMini_sprite->draw(WINDOW_WIDTH/2 - MINIMAP_WIDTH/2, 0);
 	}
 
 	virtual void UpdateCamera()
@@ -207,10 +211,10 @@ public:
 	virtual void Draw()
 	{
 		char msg[1024];
-		sprintf(msg, "%07d", Score());
-		system->drawText(300, 32, msg);
-		sprintf(msg, "bonus: %.1fX", game_speed);
-		system->drawText(510, 32, msg);
+		sprintf(msg, "Score: %07d", Score());
+		system->drawText(510, 16, msg);
+		sprintf(msg, "Bonus: %.1fX", game_speed);
+		system->drawText(510, 40, msg);
 
 		for (int i = 0; i < player->lives; i++)
 			life_sprite->draw(i*36+20, 16);
@@ -218,7 +222,7 @@ public:
 		if (IsGameOver())
 		{
 			sprintf(msg, "*** G A M E  O V E R ***");
-			system->drawText(250, 8, msg);
+			system->drawText(250, 250, msg);
 		}
 	}
 

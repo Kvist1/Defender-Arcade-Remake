@@ -10,6 +10,9 @@
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
+const int MINIMAP_WIDTH = 344;
+const int MINIMAP_HEIGHT = 85;
+
 const int LEVEL_WIDTH = 1920;
 const int LEVEL_HEIGHT = WINDOW_HEIGHT;
 
