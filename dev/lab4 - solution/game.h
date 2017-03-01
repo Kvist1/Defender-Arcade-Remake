@@ -140,7 +140,8 @@ public:
 		if (IsGameOver())
 			dt = 0.f;
 
-		UpdateBackground(camera.x, camera.y);
+		DrawBackground(camera.x, camera.y);
+		DrawMiniMap(camera.x, camera.y);
 		UpdateCamera();
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
@@ -170,7 +171,7 @@ public:
 
 	}
 
-	virtual void UpdateBackground(int camX, int camY)
+	virtual void DrawBackground(int camX, int camY)
 	{
 		if (camX > LEVEL_WIDTH)
 			camX = 0;
@@ -180,26 +181,33 @@ public:
 		bg_sprite->draw(-camX - LEVEL_WIDTH, 0);
 		bg_sprite->draw(-camX, 0);
 		bg_sprite->draw(-camX + LEVEL_WIDTH, 0);
+	}
 
+	virtual void DrawMiniMap(int camX, int camY)
+	{
 		float scaling = LEVEL_WIDTH / MINIMAP_WIDTH;
 		float miniMapCamX = (float)camX / scaling;
-		/*bgMini_sprite->draw(WINDOW_WIDTH / 2 - MINIMAP_WIDTH / 2 - miniMapCamX - MINIMAP_WIDTH, 0);
-		bgMini_sprite->draw(WINDOW_WIDTH/2 - MINIMAP_WIDTH/2 - miniMapCamX, 0);
-		bgMini_sprite->draw(WINDOW_WIDTH / 2 - MINIMAP_WIDTH / 2 - miniMapCamX + MINIMAP_WIDTH, 0);*/
 		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX - MINIMAP_WIDTH, 0);
 		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX, 0);
 		bgMini_sprite->draw(WINDOW_WIDTH / 2 - 53 - miniMapCamX + MINIMAP_WIDTH, 0);
 
 		// 53 is the downScaled CameraWidth / 2.  16 is half the width and height of the player
-		SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH/2 - 53 + player->horizontalPosition/scaling - miniMapCamX + 16/scaling, player->verticalPosition/scaling + 16/scaling);
+		SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + player->horizontalPosition / scaling - miniMapCamX + 16 / scaling, player->verticalPosition / scaling + 16 / scaling);
 
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 			if ((*human)->enabled)
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + (*human)->horizontalPosition/scaling - miniMapCamX + 16/scaling, (*human)->verticalPosition/scaling + 16/scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + (*human)->horizontalPosition / scaling - miniMapCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling);
 
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 			if ((*alien)->enabled)
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - 53 + (*alien)->horizontalPosition / scaling - miniMapCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling);
+	
+		SDL_Rect rect = { 0, 0, 160, 80 };
+		SDL_Rect rect2 = { 160+320, 0, 160, 80 };
+		SDL_SetRenderDrawColor(system->renderer, 188, 188, 188, 255);
+		SDL_RenderFillRect(system->renderer, &rect);
+		SDL_RenderFillRect(system->renderer, &rect2);
+		SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
 	}
 
 	virtual void UpdateCamera()
