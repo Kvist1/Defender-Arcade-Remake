@@ -25,6 +25,7 @@ class Game : public GameObject
 	//The camera area
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	int bgScrollingOffset = 0;
+	int showGameOverBlink = 0;
 
 public:
 
@@ -222,7 +223,18 @@ public:
 		if (IsGameOver())
 		{
 			sprintf(msg, "*** G A M E  O V E R ***");
-			system->drawText(250, 250, msg);
+
+			if (showGameOverBlink == 0)
+			{
+				system->drawText(250, 250, msg);
+				SDL_Delay(600.0f);
+				showGameOverBlink = 1;
+			} 
+			else if (showGameOverBlink == 1)
+			{
+				SDL_Delay(800.0f);
+				showGameOverBlink = 0;
+			}
 		}
 	}
 
