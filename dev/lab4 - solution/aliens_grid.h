@@ -1,3 +1,5 @@
+#include <ctime>
+
 class AliensGridBehaviourComponent : public Component
 {
 	float time_bomb_launched;
@@ -21,13 +23,20 @@ public:
 	{
 		time_bomb_launched = -10000.f;	// time fromthe last time a bomb was dropped by one of the aliens
 
-		for (auto i = 0; i < 5; i++)
-			for (auto j = 0; j < 11; j++)
-			{
-				Alien * alien = aliens_pool->FirstAvailable();
-				alien->Init(&change_direction, j * 38 + 111, i * 32 + 32 * 2);
-				game_objects->insert(alien);
-			}
+		double random_xPos;
+		double random_yPos;
+		srand(time(NULL));
+
+		for (int i = 0; i < 5; i++)
+		{
+			random_xPos = rand() % (LEVEL_WIDTH/10);
+			//generates random number  MINIMAP_HEIGHT <= yPos <= LEVEL_HEIGHT-32
+			random_yPos = rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT-32) + MINIMAP_HEIGHT;
+
+			Alien * alien = aliens_pool->FirstAvailable();
+			alien->Init(&change_direction, random_xPos*10, random_yPos);
+			game_objects->insert(alien);
+		}
 
 		change_direction = false;
 	}
@@ -35,10 +44,10 @@ public:
 	virtual void Update(float dt, int camX, int camY)
 	{
 		// check is one of tha aliens wants to change direction becase it reached the edge of the window 
-		if (change_direction)
+		/*if (change_direction)
 			for (auto alien = aliens_pool->pool.begin(); alien != aliens_pool->pool.end(); alien++)
 				if ((*alien)->enabled)
-					(*alien)->ChangeDirection();
+					(*alien)->ChangeDirection();*/
 
 		// is enough time passed from the last bomb, shoot another bomb from a random active alien
 		// dt = 0 means that game has been paused

@@ -56,10 +56,9 @@ public:
 
 		alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
 
-		if ((alien->direction == 1) && (alien->horizontalPosition > (LEVEL_WIDTH - 32)))
-			*(alien->change_direction) = true;
-
-		if ((alien->direction == -1) && (alien->horizontalPosition < 0))
-			*(alien->change_direction) = true;
+		if (alien->horizontalPosition > LEVEL_WIDTH)
+			alien->horizontalPosition = 0;
+		else if (alien->horizontalPosition < 0)
+			alien->horizontalPosition = LEVEL_WIDTH;
 	}
 };

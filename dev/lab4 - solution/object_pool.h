@@ -44,7 +44,7 @@ public:
 			if (!(**it).enabled)
 				return (*it);
 
-		// if it reaches this point, there is no available rocket in the pool
+		// if it reaches this point, there is no available element in the pool
 		return NULL;
 	}
 
