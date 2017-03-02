@@ -9,7 +9,8 @@ extern const int LEVEL_WIDTH;
 extern const int LEVEL_HEIGHT;
 
 extern const unsigned int	MAX_NUM_GAME_OBJECTS;
-extern const unsigned int	NUM_LIVES;;
+extern const unsigned int	NUM_LIVES;
+extern const unsigned int	NUM_PLAYER_BOMBS;
 
 extern const unsigned int	MAX_NUM_ROCKETS;
 extern const unsigned int	MAX_NUM_BOMBS;

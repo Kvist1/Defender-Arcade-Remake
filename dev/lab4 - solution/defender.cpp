@@ -18,6 +18,7 @@ const int LEVEL_HEIGHT = WINDOW_HEIGHT;
 
 const unsigned int	MAX_NUM_GAME_OBJECTS = 10000;
 const unsigned int	NUM_LIVES = 2;
+const unsigned int	NUM_PLAYER_BOMBS = 3;
 
 const unsigned int	MAX_NUM_ROCKETS = 32;
 const unsigned int	MAX_NUM_BOMBS = 32;

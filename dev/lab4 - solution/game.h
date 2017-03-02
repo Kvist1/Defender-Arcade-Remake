@@ -16,6 +16,7 @@ class Game : public GameObject
 	AliensGrid * aliens_grid;
 
 	Sprite * life_sprite;
+	Sprite * bomb_count_sprite;
 	bool game_over;
 
 	unsigned int score = 0;
@@ -121,6 +122,7 @@ public:
 		}
 
 		life_sprite = system->createSprite("data/player_left.bmp");
+		bomb_count_sprite = system->createSprite("data/player_bomb.bmp");
 		score = 0;
 	}
 
@@ -219,7 +221,7 @@ public:
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 			if ((*human)->enabled)
 			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH/2 - mWindowWidth/2 + (*human)->horizontalPosition/scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling+1, (*human)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling-1, (*human)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling+1);
@@ -230,7 +232,7 @@ public:
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 			if ((*alien)->enabled)
 			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH/2 - mWindowWidth/2 + (*alien)->horizontalPosition/scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling+1, (*alien)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling-1, (*alien)->verticalPosition / scaling + 16 / scaling);
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling+1);
@@ -280,7 +282,10 @@ public:
 		system->drawText(510, 40, msg);
 
 		for (int i = 0; i < player->lives; i++)
-			life_sprite->draw(i*36+20, 16);
+			life_sprite->draw(i*36+20, 5);
+
+		for (int i = 0; i < player->bombs; i++)
+			bomb_count_sprite->draw(i * 36 + 20, 40);
 
 		if (IsGameOver())
 		{

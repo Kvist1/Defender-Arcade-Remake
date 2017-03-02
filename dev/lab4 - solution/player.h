@@ -99,6 +99,7 @@ class Player : public GameObject
 public:
 
 	int lives;	// it's game over when goes below zero 
+	int bombs;
 
 	virtual ~Player()	{		SDL_Log("Player::~Player");	}
 
@@ -107,6 +108,7 @@ public:
 		SDL_Log("Player::Init");
 		GameObject::Init();
 		lives = NUM_LIVES;
+		bombs = NUM_PLAYER_BOMBS;
 		facingDirection = left;
 	}
 
@@ -120,6 +122,11 @@ public:
 			if (lives < 0)
 				Send(GAME_OVER);
 		}
+	}
+
+	void RemoveBomb()
+	{
+		bombs--;
 	}
 
 	void RemoveLife()
