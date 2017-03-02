@@ -42,6 +42,7 @@ bool AvancezLib::init(int width, int height)
 	key.fire = false;	key.left = false;	key.right = false; 
 	key.down = false;	key.up = false; 
 	key.pause = false;	key.restart = false;
+	key.dropBomb = false;
 
 	// initialize the system states
 	state.isRunning = true;
@@ -113,6 +114,9 @@ bool AvancezLib::update()
 			case SDLK_r:
 				key.restart = true;
 				break;
+			case SDLK_s:
+				key.dropBomb = true;
+				break;
 			}
 		}
 
@@ -141,10 +145,11 @@ bool AvancezLib::update()
 			case SDLK_r:
 				key.restart = false;
 				break;
+			case SDLK_s:
+				key.dropBomb = false;
+				break;
 			}
-
 		}
-
 	}
 
 	//Update screen
@@ -215,6 +220,7 @@ void AvancezLib::getKeyStatus(KeyStatus & keys)
 	keys.down = key.down;
 	keys.pause = key.pause;
 	keys.restart = key.restart;
+	keys.dropBomb = key.dropBomb;
 }
 
 void AvancezLib::getSystemState(SystemState & states)

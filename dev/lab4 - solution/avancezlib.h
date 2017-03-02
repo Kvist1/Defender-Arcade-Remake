@@ -56,6 +56,7 @@ public:
 		bool down;
 		bool pause;
 		bool restart;
+		bool dropBomb;
 	};
 
 	// Returns the keyboard status. If a flag is set, the corresponding key is being held down.

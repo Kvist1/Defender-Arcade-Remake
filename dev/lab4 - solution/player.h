@@ -1,9 +1,56 @@
 
+// the main player
+class Player : public GameObject
+{
+public:
+
+	int lives;	// it's game over when goes below zero 
+	int bombs;
+
+	virtual ~Player() { SDL_Log("Player::~Player"); }
+
+	virtual void Init()
+	{
+		SDL_Log("Player::Init");
+		GameObject::Init();
+		lives = NUM_LIVES;
+		bombs = NUM_PLAYER_BOMBS;
+		facingDirection = left;
+	}
+
+	virtual void Receive(Message m)
+	{
+		if (m == HIT)
+		{
+			SDL_Log("Player::Hit!");
+			RemoveLife();
+
+			if (lives < 0)
+				Send(GAME_OVER);
+		}
+	}
+
+	void DropBomb()
+	{
+		if (bombs > 0) {
+			bombs--;
+			Send(PLAYER_BOMB_DROPPED);
+		}
+	}
+
+	void RemoveLife()
+	{
+		lives--;
+		SDL_Log("remaining lives %d", lives);
+	}
+};
+
 
 class PlayerBehaviourComponent : public Component
 {
 	float time_fire_pressed;	// time from the last time the fire button was pressed
 	ObjectPool<Rocket> * rockets_pool;
+	float time_bomb_pressed;	// time from the last time the bomb button was pressed
 
 public:
 	virtual ~PlayerBehaviourComponent() {}
@@ -45,6 +92,14 @@ public:
 					rocket->Init(go->horizontalPosition, go->verticalPosition, go->facingDirection);
 					game_objects->insert(rocket);
 				}
+			}
+		}
+		if (keys.dropBomb)
+		{
+			if (CanDropBomb())
+			{
+				Player * player = (Player *)go;
+				player->DropBomb();
 			}
 		}
 	}
@@ -91,47 +146,16 @@ public:
 		SDL_Log("fire!");
 		return true;
 	}
-};
 
-// the main player
-class Player : public GameObject
-{
-public:
-
-	int lives;	// it's game over when goes below zero 
-	int bombs;
-
-	virtual ~Player()	{		SDL_Log("Player::~Player");	}
-
-	virtual void Init()
+	bool CanDropBomb()
 	{
-		SDL_Log("Player::Init");
-		GameObject::Init();
-		lives = NUM_LIVES;
-		bombs = NUM_PLAYER_BOMBS;
-		facingDirection = left;
-	}
+		// shoot just if enough time passed by
+		if ((system->getElapsedTime() - time_bomb_pressed) < (PLAYER_BOMB_TIME_INTERVAL / game_speed))
+			return false;
 
-	virtual void Receive(Message m) 
-	{
-		if (m == HIT)
-		{ 
-			SDL_Log("Player::Hit!");
-			RemoveLife();
+		time_bomb_pressed = system->getElapsedTime();
 
-			if (lives < 0)
-				Send(GAME_OVER);
-		}
-	}
-
-	void RemoveBomb()
-	{
-		bombs--;
-	}
-
-	void RemoveLife()
-	{
-		lives--;
-		SDL_Log("remaining lives %d", lives);
+		SDL_Log("Nuke!");
+		return true;
 	}
 };

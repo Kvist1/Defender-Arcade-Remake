@@ -312,8 +312,21 @@ public:
 
 		if (m == ALIEN_HIT)
 			score += POINTS_PER_ALIEN * game_speed;
+
+		if (m == PLAYER_BOMB_DROPPED)
+			KillAllAliensInRange();
 	}
 
+	void KillAllAliensInRange()
+	{
+		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
+			if (	(*alien)->enabled 
+				&&	(*alien)->horizontalPosition >= camera.x 
+				&&	(*alien)->horizontalPosition <= camera.x + camera.w )
+			{
+				(*alien)->Receive(HIT);
+			}
+	}
 
 	bool IsGameOver()
 	{
@@ -333,10 +346,14 @@ public:
 			(*go)->Destroy();
 
 		life_sprite->destroy();
+		bg_sprite->destroy();
+		bgMini_sprite->destroy();
+		bomb_count_sprite->destroy();
 	
 		rockets_pool.Destroy();
 		aliens_pool.Destroy();
 		bombs_pool.Destroy();
+		humans_pool.Destroy();
 
 		delete aliens_grid;
 		delete player;

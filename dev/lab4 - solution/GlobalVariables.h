@@ -16,6 +16,7 @@ extern const unsigned int	MAX_NUM_ROCKETS;
 extern const unsigned int	MAX_NUM_BOMBS;
 extern const unsigned int	POINTS_PER_ALIEN;
 extern const float			FIRE_TIME_INTERVAL;
+extern const float			PLAYER_BOMB_TIME_INTERVAL;
 extern const float			BOMB_TIME_INTERVAL;
 extern const float			PLAYER_SPEED;
 extern const float			ROCKET_SPEED;
