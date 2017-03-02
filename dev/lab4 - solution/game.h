@@ -250,23 +250,15 @@ public:
 
 	virtual void UpdateCamera()
 	{
-		//Center the camera over the palyer. 32/2 is the with of the player sprite
+		//Center the camera over the player. 32/2 is the with of the player sprite
 		camera.x = (player->horizontalPosition + 32 / 2) - WINDOW_WIDTH / 2;
 		camera.y = (player->verticalPosition + 32 / 2) - WINDOW_HEIGHT / 2;
 
 		//Keep the camera in bounds
-		/*if (camera.x < -640)
-		{
-			camera.x = -640;
-		}*/
 		if (camera.y < 0)
 		{
 			camera.y = 0;
 		}
-		/*if (camera.x > LEVEL_WIDTH - camera.w)
-		{
-			camera.x = LEVEL_WIDTH - camera.w;
-		}*/
 		if (camera.y > LEVEL_HEIGHT - camera.h)
 		{
 			camera.y = LEVEL_HEIGHT - camera.h;
