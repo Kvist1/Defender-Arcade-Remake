@@ -5,12 +5,9 @@ class Human : public GameObject
 
 public:
 	int direction;
-	bool * change_direction;
 
 	virtual void Init()
 	{
-		// bool * change_direction, double xPos, double yPos
-
 		SDL_Log("Human::Init");
 		
 		int random_xPos = rand() % LEVEL_WIDTH; 
@@ -18,7 +15,6 @@ public:
 
 		this->horizontalPosition = random_xPos;
 		this->verticalPosition = 480 - 32;
-		//this->change_direction = change_direction;
 
 		if (random_direction == 0)
 			direction = -1;
@@ -69,11 +65,5 @@ public:
 			human->horizontalPosition = 0;
 		else if (human->horizontalPosition < 0)
 			human->horizontalPosition = LEVEL_WIDTH;
-
-		/*if ((human->direction == 1) && (human->horizontalPosition > (LEVEL_WIDTH - 32)))
-			*(human->change_direction) = true;
-
-		if ((human->direction == -1) && (human->horizontalPosition < 0))
-			*(human->change_direction) = true;*/
 	}
 };

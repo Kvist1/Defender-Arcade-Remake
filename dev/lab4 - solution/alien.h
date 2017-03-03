@@ -4,17 +4,26 @@ class Alien : public GameObject
 {
 
 public:
-	int direction;
-	bool * change_direction;
+	int xDirection, yDirection;
 
 	virtual void Init(bool * change_direction, double xPos, double yPos)
 	{
 		SDL_Log("Alien::Init");
+		GameObject::Init();
 		this->horizontalPosition = xPos;
 		this->verticalPosition = yPos;
-		this->change_direction = change_direction;
 
-		direction = 1;
+		xDirection = rand() % 2;
+		if (xDirection == 0)
+			xDirection = -1;
+		else
+			xDirection = 1;
+
+		yDirection = rand() % 2;
+		if (yDirection == 0)
+			yDirection = -1;
+		else
+			yDirection = 1;
 
 		enabled = true;
 	}
@@ -34,7 +43,7 @@ public:
 
 	void ChangeDirection()
 	{
-		direction *= -1;
+		xDirection *= -1;
 		verticalPosition += 32;
 
 		if (verticalPosition > (480 - 32))
@@ -46,19 +55,81 @@ public:
 
 class AlienBehaviourComponent : public Component
 {
+private:
+	int randomTime; // to make the alien move uncontinous. milliseconds
+	float timeAccumulator;
+	enum AlienMove
+	{
+		horizontal,
+		//vertical,
+		diagonal
+	};
+
+	AlienMove alienMove;
+
 public:
 	virtual ~AlienBehaviourComponent() {}
+
+	virtual void Init()
+	{
+		randomTime = rand() % 5; // random time between 0 - 5s 
+		alienMove = GetRandomMovement();
+		timeAccumulator = 0;
+	}
 
 	virtual void Update(float dt, int camX, int camY)
 	{
 
 		Alien * alien = (Alien *)go;
 
-		alien->horizontalPosition += alien->direction * ALIEN_SPEED * dt; // direction * speed * time
+		if (TimeToChangeMovement(dt))
+			alienMove = GetRandomMovement();
 
+		if (alienMove == AlienMove::horizontal)
+		{
+			alien->horizontalPosition += alien->xDirection * ALIEN_SPEED * dt; // direction * speed * time
+		} 
+		/*else if (alienMove == AlienMove::vertical)
+		{
+			alien->verticalPosition += alien->yDirection * ALIEN_SPEED * dt;
+		}*/
+		else if (alienMove == AlienMove::diagonal)
+		{
+			alien->horizontalPosition += alien->xDirection * ALIEN_SPEED * dt;
+			alien->verticalPosition += alien->yDirection * ALIEN_SPEED * dt;
+		}
+
+		// keep in bounds of level
 		if (alien->horizontalPosition > LEVEL_WIDTH)
 			alien->horizontalPosition = 0;
 		else if (alien->horizontalPosition < 0)
 			alien->horizontalPosition = LEVEL_WIDTH;
+
+		if (go->verticalPosition >(LEVEL_HEIGHT - 30))
+			go->verticalPosition = 482 - 32;
+		else if (go->verticalPosition < MINIMAP_HEIGHT)
+			go->verticalPosition = MINIMAP_HEIGHT;
+	}
+
+	AlienMove GetRandomMovement()
+	{
+		return (AlienMove)(rand() % 2); // random move pattern
+	}
+
+	bool TimeToChangeMovement(float dt)
+	{
+		timeAccumulator += dt;
+		SDL_Log("time=%f, alienmove=%d", timeAccumulator, alienMove);
+		if (timeAccumulator > randomTime)
+		{
+			timeAccumulator = 0;
+
+			Alien * alien = (Alien *)go;
+			alien->yDirection *= -1;
+			randomTime = rand() % 5;
+			return true;
+		}
+
+		return false;
 	}
 };
