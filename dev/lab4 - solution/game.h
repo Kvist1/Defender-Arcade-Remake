@@ -242,9 +242,25 @@ public:
 	
 		SDL_Rect rect = { 0, 0, 160, 80 };
 		SDL_Rect rect2 = { 160+320, 0, 160, 80 };
+
+		SDL_Rect camera_left_edge = { 320-54, 5, 1, 70 };
+		SDL_Rect camera_left_edge_top_wing = { 320 - 54, 5, 10, 1 };
+		SDL_Rect camera_left_edge_bottom_wing = { 320 - 54, 75, 10, 1 };
+
+		SDL_Rect camera_right_edge = { 320+54, 5, 1, 70 };
+		SDL_Rect camera_right_edge_top_wing = { 320 + 44, 5, 10, 1 };
+		SDL_Rect camera_right_edge_bottom_wing = { 320 + 45, 75, 10, 1 };
+
 		SDL_SetRenderDrawColor(system->renderer, 188, 188, 188, 255);
+
 		SDL_RenderFillRect(system->renderer, &rect);
 		SDL_RenderFillRect(system->renderer, &rect2);
+		SDL_RenderFillRect(system->renderer, &camera_left_edge);
+		SDL_RenderFillRect(system->renderer, &camera_left_edge_top_wing);
+		SDL_RenderFillRect(system->renderer, &camera_left_edge_bottom_wing);
+		SDL_RenderFillRect(system->renderer, &camera_right_edge);
+		SDL_RenderFillRect(system->renderer, &camera_right_edge_top_wing);
+		SDL_RenderFillRect(system->renderer, &camera_right_edge_bottom_wing);
 		SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
 	}
 
