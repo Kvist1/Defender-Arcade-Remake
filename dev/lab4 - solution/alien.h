@@ -59,6 +59,7 @@ public:
 
 class AlienBehaviourComponent : public Component
 {
+	float time_bomb_launched;
 private:
 	int randomTime; // to make the alien move uncontinous. milliseconds
 	float timeAccumulator;
@@ -75,6 +76,7 @@ public:
 
 	virtual void Init()
 	{
+		time_bomb_launched = -10000.f;	// time from the last dropped bomb
 		randomTime = rand() % 6; // random time between 0 - 5s 
 		alienMove = GetRandomMovement();
 		timeAccumulator = 0;
@@ -113,7 +115,7 @@ public:
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
 
-		if (PlayerInRange())
+		if (PlayerInRange() && CanFire())
 			fire(dt);
 	}
 
@@ -162,5 +164,22 @@ public:
 		}
 
 		return false;
+	}
+
+	// return true if enough time has passed from the previous bomb
+	bool CanFire()
+	{
+		// shoot just if enough time passed by
+		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / GAME_SPEED))
+			return false;
+
+		// drop the bomb with 3% chance
+		if ((rand() / (float)RAND_MAX) < 0.97f)
+			return false;
+
+		time_bomb_launched = system->getElapsedTime();
+
+		SDL_Log("AlienGrid::bomb!");
+		return true;
 	}
 };

@@ -137,7 +137,7 @@ public:
 	bool CanFire()
 	{
 		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_fire_pressed) < (FIRE_TIME_INTERVAL / game_speed))
+		if ((system->getElapsedTime() - time_fire_pressed) < (FIRE_TIME_INTERVAL / GAME_SPEED))
 			return false;
 
 		time_fire_pressed = system->getElapsedTime();
@@ -149,7 +149,7 @@ public:
 	bool CanDropBomb()
 	{
 		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_bomb_pressed) < (PLAYER_BOMB_TIME_INTERVAL / game_speed))
+		if ((system->getElapsedTime() - time_bomb_pressed) < (PLAYER_BOMB_TIME_INTERVAL / GAME_SPEED))
 			return false;
 
 		time_bomb_pressed = system->getElapsedTime();

@@ -74,7 +74,7 @@ public:
 	bool CanFire()
 	{
 		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / game_speed))
+		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / GAME_SPEED))
 			return false;
 
 		// drop the bomb with 3% chance

@@ -157,7 +157,7 @@ public:
 		if (!are_aliens_still_there)
 		{
 			// level win!
-			game_speed += 0.4f;
+			GAME_SPEED += 0.4f;
 			aliens_grid->Init();
 		}
 
@@ -286,7 +286,7 @@ public:
 		char msg[1024];
 		sprintf(msg, "Score: %07d", Score());
 		system->drawText(510, 16, msg);
-		sprintf(msg, "Bonus: %.1fX", game_speed);
+		sprintf(msg, "Bonus: %.1fX", GAME_SPEED);
 		system->drawText(510, 40, msg);
 
 		for (int i = 0; i < player->lives; i++)
@@ -319,7 +319,7 @@ public:
 			game_over = true;
 
 		if (m == ALIEN_HIT)
-			score += POINTS_PER_ALIEN * game_speed;
+			score += POINTS_PER_ALIEN * GAME_SPEED;
 
 		if (m == PLAYER_BOMB_DROPPED)
 			KillAllAliensInRange();

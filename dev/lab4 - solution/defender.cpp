@@ -25,7 +25,7 @@ const unsigned int	MAX_NUM_BOMBS = 32;
 const unsigned int	POINTS_PER_ALIEN = 100;
 const float			FIRE_TIME_INTERVAL = .4f;
 const float			PLAYER_BOMB_TIME_INTERVAL = 2.0f;
-const float			BOMB_TIME_INTERVAL = 1.25f;
+const float			BOMB_TIME_INTERVAL = 3.25f;
 const float			ALIEN_RANGE = 250.0f;
 const float			PLAYER_SPEED = 350.0f;
 const float			ROCKET_SPEED = 1000.0f;
@@ -34,7 +34,7 @@ const float			BOMB_SPEED = 120.0f;
 const float			HUMAN_SPEED = 120.0f;
 
 
-float game_speed = 1.f;		// speed of the game; it is increased each time all the aliens are hit
+float GAME_SPEED = 1.f;		// speed of the game; it is increased each time all the aliens are hit
 							// it is also the score multiplier
 
 
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
 		
 		float newTime = system.getElapsedTime();
 		float dt = newTime - lastTime;
-		dt = dt * game_speed;
+		dt = dt * GAME_SPEED;
 		lastTime = newTime;
 
 		system.getSystemState(gameStates);
