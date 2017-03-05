@@ -29,7 +29,7 @@ public:
 		float random_yPos;
 		srand(time(NULL));
 
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			random_xPos = rand() % (LEVEL_WIDTH/10);
 			//generates random number  MINIMAP_HEIGHT <= yPos <= LEVEL_HEIGHT-32

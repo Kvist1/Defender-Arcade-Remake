@@ -147,7 +147,10 @@ public:
 		Bomb * bomb = alien->bombs_pool->FirstAvailable();
 		if (bomb != NULL)
 		{
-			bomb->Init(alien->position + glm::vec2(0, 32));
+			// direction = (starting point - target point) / ||distance||
+			float distance = glm::distance(alien->position, alien->player->position);
+			glm::vec2 direction = (alien->player->position - alien->position) / distance;
+			bomb->Init(alien->position, direction, distance);
 			game_objects->insert(bomb);
 		}
 	}
@@ -159,7 +162,7 @@ public:
 
 		if (distance <= ALIEN_RANGE)
 		{
-			SDL_Log("Alien:: Player in range!");
+			//SDL_Log("Alien:: Player in range!");
 			return true;
 		}
 
@@ -179,7 +182,7 @@ public:
 
 		time_bomb_launched = system->getElapsedTime();
 
-		SDL_Log("AlienGrid::bomb!");
+		SDL_Log("Alien::bomb!");
 		return true;
 	}
 };

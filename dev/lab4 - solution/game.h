@@ -114,7 +114,7 @@ public:
 			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();
 			bomb_behaviour->Create(system, *bomb, &game_objects);
 			RenderComponent * bomb_render = new RenderComponent();
-			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp");
+			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp", "data/bomb.bmp");
 
 			(*bomb)->Create();
 			(*bomb)->AddComponent(bomb_behaviour);
