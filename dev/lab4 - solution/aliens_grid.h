@@ -4,6 +4,7 @@ class AliensGridBehaviourComponent : public Component
 {
 	float time_bomb_launched;
 	bool change_direction;
+	Player *player;
 
 	ObjectPool<Alien> * aliens_pool;
 	ObjectPool<Bomb> * bombs_pool;
@@ -11,12 +12,13 @@ class AliensGridBehaviourComponent : public Component
 public:
 	virtual ~AliensGridBehaviourComponent() {}
 
-	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool)
+	virtual void Create(AvancezLib* system, GameObject * go, Player * player,std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool)
 	{
 		Component::Create(system, go, game_objects);
 
 		this->aliens_pool = aliens_pool;
 		this->bombs_pool = bombs_pool;
+		this->player = player;
 	}
 
 	virtual void Init()
@@ -34,7 +36,7 @@ public:
 			random_yPos = rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT-32) + MINIMAP_HEIGHT;
 
 			Alien * alien = aliens_pool->FirstAvailable();
-			alien->Init(&change_direction, random_xPos*10, random_yPos);
+			alien->Init(&change_direction, random_xPos*10, random_yPos, player);
 			game_objects->insert(alien);
 		}
 

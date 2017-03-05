@@ -1,12 +1,13 @@
-
+class Player;
 
 class Alien : public GameObject
 {
 
 public:
 	int xDirection, yDirection;
+	Player * player;
 
-	virtual void Init(bool * change_direction, double xPos, double yPos)
+	virtual void Init(bool * change_direction, double xPos, double yPos, Player * player)
 	{
 		SDL_Log("Alien::Init");
 		GameObject::Init();
@@ -26,6 +27,8 @@ public:
 			yDirection = 1;
 
 		enabled = true;
+
+		this->player = player;
 	}
 
 	virtual void Receive(Message m)
@@ -61,7 +64,6 @@ private:
 	enum AlienMove
 	{
 		horizontal,
-		//vertical,
 		diagonal
 	};
 
@@ -72,7 +74,7 @@ public:
 
 	virtual void Init()
 	{
-		randomTime = rand() % 5; // random time between 0 - 5s 
+		randomTime = rand() % 6; // random time between 0 - 5s 
 		alienMove = GetRandomMovement();
 		timeAccumulator = 0;
 	}
@@ -119,7 +121,6 @@ public:
 	bool TimeToChangeMovement(float dt)
 	{
 		timeAccumulator += dt;
-		SDL_Log("time=%f, alienmove=%d", timeAccumulator, alienMove);
 		if (timeAccumulator > randomTime)
 		{
 			timeAccumulator = 0;
