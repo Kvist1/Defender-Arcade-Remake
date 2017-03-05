@@ -26,6 +26,7 @@ const unsigned int	POINTS_PER_ALIEN = 100;
 const float			FIRE_TIME_INTERVAL = .4f;
 const float			PLAYER_BOMB_TIME_INTERVAL = 2.0f;
 const float			BOMB_TIME_INTERVAL = 1.25f;
+const float			ALIEN_RANGE = 250.0f;
 const float			PLAYER_SPEED = 350.0f;
 const float			ROCKET_SPEED = 1000.0f;
 const float			ALIEN_SPEED = 40.0f;
@@ -45,9 +46,9 @@ float game_speed = 1.f;		// speed of the game; it is increased each time all the
 
 #include "rocket.h"
 #include "bomb.h"
+#include "player.h"
 #include "alien.h"
 #include "aliens_grid.h"
-#include "player.h"
 #include "human.h"
 #include "game.h"
 

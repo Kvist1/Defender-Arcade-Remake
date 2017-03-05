@@ -108,7 +108,7 @@ public:
 			(*alien)->AddReceiver(this);
 		}
 
-		bombs_pool.Create(55);
+		bombs_pool.Create(100);
 		for (auto bomb = bombs_pool.pool.begin(); bomb != bombs_pool.pool.end(); bomb++)
 		{
 			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();

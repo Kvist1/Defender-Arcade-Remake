@@ -1,4 +1,3 @@
-class Player;
 
 class Alien : public GameObject
 {
@@ -6,8 +5,9 @@ class Alien : public GameObject
 public:
 	int xDirection, yDirection;
 	Player * player;
+	ObjectPool<Bomb> * bombs_pool;
 
-	virtual void Init(bool * change_direction, float xPos, float yPos, Player * player)
+	virtual void Init(bool * change_direction, float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool)
 	{
 		SDL_Log("Alien::Init");
 		GameObject::Init();
@@ -28,6 +28,7 @@ public:
 
 		enabled = true;
 
+		this->bombs_pool = bombs_pool;
 		this->player = player;
 	}
 
@@ -111,6 +112,9 @@ public:
 			go->position.y = 482 - 32;
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
+
+		if (PlayerInRange())
+			fire(dt);
 	}
 
 	AlienMove GetRandomMovement()
@@ -134,11 +138,28 @@ public:
 		return false;
 	}
 
+	void fire(float dt)
+	{
+		Alien * alien = (Alien *)go;
+
+		Bomb * bomb = alien->bombs_pool->FirstAvailable();
+		if (bomb != NULL)
+		{
+			bomb->Init(alien->position + glm::vec2(0, 32));
+			game_objects->insert(bomb);
+		}
+	}
+
 	bool PlayerInRange()
 	{
 		Alien * alien = (Alien *)go;
-		//alien->player->horizontalPosition;
-		//alien->player->verticalPosition;
+		float distance = glm::distance(alien->position, alien->player->position);
+
+		if (distance <= ALIEN_RANGE)
+		{
+			SDL_Log("Alien:: Player in range!");
+			return true;
+		}
 
 		return false;
 	}

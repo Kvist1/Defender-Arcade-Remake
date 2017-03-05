@@ -21,13 +21,12 @@ class Bomb : public GameObject
 public:
 	glm::vec2 direction;
 
-	virtual void Init(float xPos, float yPos)
+	virtual void Init(glm::vec2 position)
 	{
-		SDL_Log("Bomb::Init");
+		//SDL_Log("Bomb::Init");
 		GameObject::Init();
 
-		position.x = xPos;
-		position.y = yPos;
+		this->position = position;
 	}
 
 

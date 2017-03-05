@@ -36,7 +36,7 @@ public:
 			random_yPos = rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT-32) + MINIMAP_HEIGHT;
 
 			Alien * alien = aliens_pool->FirstAvailable();
-			alien->Init(&change_direction, random_xPos*10, random_yPos, player);
+			alien->Init(&change_direction, random_xPos*10, random_yPos, player, bombs_pool);
 			game_objects->insert(alien);
 		}
 
@@ -53,7 +53,7 @@ public:
 
 		// is enough time passed from the last bomb, shoot another bomb from a random active alien
 		// dt = 0 means that game has been paused
-		if (dt != 0 && CanFire())
+		/*if (dt != 0 && CanFire())
 		{
 			Bomb * bomb = bombs_pool->FirstAvailable();
 			if (bomb != NULL)
@@ -65,7 +65,7 @@ public:
 					game_objects->insert(bomb);
 				}
 			}
-		}
+		}*/
 
 		change_direction = false;
 	}
@@ -83,7 +83,7 @@ public:
 
 		time_bomb_launched = system->getElapsedTime();
 
-		SDL_Log("bomb!");
+		SDL_Log("AlienGrid::bomb!");
 		return true;
 	}
 };
