@@ -1,5 +1,6 @@
 // GameObject represents objects which moves are drawn
 #include <vector>
+#include "glm\glm.hpp"
 
 enum Message { HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
 
@@ -14,6 +15,7 @@ protected:
 public:
 	double horizontalPosition;
 	double verticalPosition;
+	glm::vec2 position;
 	bool enabled;
 	enum FacingDirection
 	{

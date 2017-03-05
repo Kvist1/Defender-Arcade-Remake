@@ -133,4 +133,13 @@ public:
 
 		return false;
 	}
+
+	bool PlayerInRange()
+	{
+		Alien * alien = (Alien *)go;
+		//alien->player->horizontalPosition;
+		//alien->player->verticalPosition;
+
+		return false;
+	}
 };

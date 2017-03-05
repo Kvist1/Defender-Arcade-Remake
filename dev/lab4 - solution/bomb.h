@@ -1,3 +1,5 @@
+#include "glm\glm.hpp"
+
 class BombBehaviourComponent : public Component
 {
 public:
@@ -17,6 +19,8 @@ public:
 class Bomb : public GameObject
 {
 public:
+	glm::vec2 direction;
+
 	virtual void Init(double xPos, double yPos)
 	{
 		SDL_Log("Bomb::Init");
