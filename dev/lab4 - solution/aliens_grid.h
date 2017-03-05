@@ -25,8 +25,8 @@ public:
 	{
 		time_bomb_launched = -10000.f;	// time fromthe last time a bomb was dropped by one of the aliens
 
-		double random_xPos;
-		double random_yPos;
+		float random_xPos;
+		float random_yPos;
 		srand(time(NULL));
 
 		for (int i = 0; i < 15; i++)
@@ -61,7 +61,7 @@ public:
 				Alien * alien = aliens_pool->SelectRandom();
 				if (alien != NULL)
 				{
-					bomb->Init(alien->horizontalPosition, alien->verticalPosition + 32);
+					bomb->Init(alien->position.x, alien->position.y + 32);
 					game_objects->insert(bomb);
 				}
 			}

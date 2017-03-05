@@ -207,8 +207,8 @@ public:
 		bgMini_sprite->draw( mini_map_x_position + MINIMAP_WIDTH, 0);
 
 		int halfSpriteSize = 32/2; // the sprites are 32px
-		int mXPos = WINDOW_WIDTH / 2 - mWindowWidth / 2 + player->horizontalPosition / scaling - mCamX + halfSpriteSize / scaling;
-		int mYPos = player->verticalPosition / scaling + halfSpriteSize / scaling;
+		int mXPos = WINDOW_WIDTH / 2 - mWindowWidth / 2 + player->position.x / scaling - mCamX + halfSpriteSize / scaling;
+		int mYPos = player->position.y / scaling + halfSpriteSize / scaling;
 		SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
 		SDL_RenderDrawPoint(system->renderer, mXPos, mYPos);
 		SDL_RenderDrawPoint(system->renderer, mXPos+1, mYPos);
@@ -221,22 +221,22 @@ public:
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 			if ((*human)->enabled)
 			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling+1, (*human)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling-1, (*human)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling+1);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->horizontalPosition / scaling - mCamX + 16 / scaling, (*human)->verticalPosition / scaling + 16 / scaling-1);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling+1, (*human)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling-1, (*human)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling+1);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling-1);
 			}
 		
 		SDL_SetRenderDrawColor(system->renderer, 255, 0, 0, 255);
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 			if ((*alien)->enabled)
 			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling+1, (*alien)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling-1, (*alien)->verticalPosition / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling+1);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->horizontalPosition / scaling - mCamX + 16 / scaling, (*alien)->verticalPosition / scaling + 16 / scaling-1);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling+1, (*alien)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling-1, (*alien)->position.y / scaling + 16 / scaling);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling+1);
+				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling-1);
 
 			}
 	
@@ -267,8 +267,8 @@ public:
 	virtual void UpdateCamera()
 	{
 		//Center the camera over the player. 32/2 is the with of the player sprite
-		camera.x = (player->horizontalPosition + 32 / 2) - WINDOW_WIDTH / 2;
-		camera.y = (player->verticalPosition + 32 / 2) - WINDOW_HEIGHT / 2;
+		camera.x = (player->position.x + 32 / 2) - WINDOW_WIDTH / 2;
+		camera.y = (player->position.y + 32 / 2) - WINDOW_HEIGHT / 2;
 
 		//Keep the camera in bounds
 		if (camera.y < 0)
@@ -329,8 +329,8 @@ public:
 	{
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 			if (	(*alien)->enabled 
-				&&	(*alien)->horizontalPosition >= camera.x 
-				&&	(*alien)->horizontalPosition <= camera.x + camera.w )
+				&&	(*alien)->position.x >= camera.x
+				&&	(*alien)->position.x <= camera.x + camera.w )
 			{
 				(*alien)->Receive(HIT);
 			}

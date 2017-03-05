@@ -7,12 +7,12 @@ public:
 	int xDirection, yDirection;
 	Player * player;
 
-	virtual void Init(bool * change_direction, double xPos, double yPos, Player * player)
+	virtual void Init(bool * change_direction, float xPos, float yPos, Player * player)
 	{
 		SDL_Log("Alien::Init");
 		GameObject::Init();
-		this->horizontalPosition = xPos;
-		this->verticalPosition = yPos;
+		this->position.x = xPos;
+		this->position.y = yPos;
 
 		xDirection = rand() % 2;
 		if (xDirection == 0)
@@ -47,9 +47,9 @@ public:
 	void ChangeDirection()
 	{
 		xDirection *= -1;
-		verticalPosition += 32;
+		position.y += 32;
 
-		if (verticalPosition > (480 - 32))
+		if (position.y > (480 - 32))
 			Send(GAME_OVER);
 	}
 
@@ -89,7 +89,7 @@ public:
 
 		if (alienMove == AlienMove::horizontal)
 		{
-			alien->horizontalPosition += alien->xDirection * ALIEN_SPEED * dt; // direction * speed * time
+			alien->position.x += alien->xDirection * ALIEN_SPEED * dt; // direction * speed * time
 		} 
 		/*else if (alienMove == AlienMove::vertical)
 		{
@@ -97,20 +97,20 @@ public:
 		}*/
 		else if (alienMove == AlienMove::diagonal)
 		{
-			alien->horizontalPosition += alien->xDirection * ALIEN_SPEED * dt;
-			alien->verticalPosition += alien->yDirection * ALIEN_SPEED * dt;
+			alien->position.x += alien->xDirection * ALIEN_SPEED * dt;
+			alien->position.y += alien->yDirection * ALIEN_SPEED * dt;
 		}
 
 		// keep in bounds of level
-		if (alien->horizontalPosition > LEVEL_WIDTH)
-			alien->horizontalPosition = 0;
-		else if (alien->horizontalPosition < 0)
-			alien->horizontalPosition = LEVEL_WIDTH;
+		if (alien->position.x > LEVEL_WIDTH)
+			alien->position.x = 0;
+		else if (alien->position.x < 0)
+			alien->position.x = LEVEL_WIDTH;
 
-		if (go->verticalPosition >(LEVEL_HEIGHT - 30))
-			go->verticalPosition = 482 - 32;
-		else if (go->verticalPosition < MINIMAP_HEIGHT)
-			go->verticalPosition = MINIMAP_HEIGHT;
+		if (go->position.y >(LEVEL_HEIGHT - 30))
+			go->position.y = 482 - 32;
+		else if (go->position.y < MINIMAP_HEIGHT)
+			go->position.y = MINIMAP_HEIGHT;
 	}
 
 	AlienMove GetRandomMovement()

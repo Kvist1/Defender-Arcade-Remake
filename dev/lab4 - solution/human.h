@@ -13,8 +13,8 @@ public:
 		int random_xPos = rand() % LEVEL_WIDTH; 
 		int random_direction = rand() % 2;
 
-		this->horizontalPosition = random_xPos;
-		this->verticalPosition = 480 - 32;
+		this->position.x = random_xPos;
+		this->position.y = 480 - 32;
 
 		if (random_direction == 0)
 			direction = -1;
@@ -40,9 +40,9 @@ public:
 	void ChangeDirection()
 	{
 		direction *= -1;
-		verticalPosition += 32;
+		position.y += 32;
 
-		if (verticalPosition > (480 - 32))
+		if (position.y > (480 - 32))
 			Send(GAME_OVER);
 	}
 
@@ -59,11 +59,11 @@ public:
 
 		Human * human = (Human *)go;
 
-		human->horizontalPosition += human->direction * HUMAN_SPEED * dt; // direction * speed * time
+		human->position.x += human->direction * HUMAN_SPEED * dt; // direction * speed * time
 
-		if (human->horizontalPosition > LEVEL_WIDTH)
-			human->horizontalPosition = 0;
-		else if (human->horizontalPosition < 0)
-			human->horizontalPosition = LEVEL_WIDTH;
+		if (human->position.x > LEVEL_WIDTH)
+			human->position.x = 0;
+		else if (human->position.x < 0)
+			human->position.x = LEVEL_WIDTH;
 	}
 };

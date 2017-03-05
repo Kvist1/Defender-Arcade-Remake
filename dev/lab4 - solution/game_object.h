@@ -13,8 +13,6 @@ protected:
 	std::vector<Component*> components;
 
 public:
-	double horizontalPosition;
-	double verticalPosition;
 	glm::vec2 position;
 	bool enabled;
 	enum FacingDirection

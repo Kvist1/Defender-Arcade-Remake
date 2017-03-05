@@ -63,8 +63,7 @@ public:
 
 	virtual void Init()
 	{
-		go->horizontalPosition = 0;
-		go->verticalPosition = WINDOW_HEIGHT/2;
+		go->position = glm::vec2(0, WINDOW_HEIGHT / 2);
 
 		time_fire_pressed = -10000.f;
 	}
@@ -89,7 +88,7 @@ public:
 				Rocket * rocket = rockets_pool->FirstAvailable();
 				if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
 				{
-					rocket->Init(go->horizontalPosition, go->verticalPosition, go->facingDirection);
+					rocket->Init(go->position.x, go->position.y, go->facingDirection);
 					game_objects->insert(rocket);
 				}
 			}
@@ -113,25 +112,25 @@ public:
 		else if (move < 0)
 			go->facingDirection = GameObject::FacingDirection::left;
 
-		go->horizontalPosition += move;
+		go->position.x += move;
 
-		if (go->horizontalPosition > LEVEL_WIDTH)
-			go->horizontalPosition = 0;
-		else if (go->horizontalPosition < 0)
-			go->horizontalPosition = LEVEL_WIDTH;
+		if (go->position.x > LEVEL_WIDTH)
+			go->position.x = 0;
+		else if (go->position.x < 0)
+			go->position.x = LEVEL_WIDTH;
 	}
 
 	// move the player up or down
 	// param move depends on the time, so the player moves always at the same speed on any computer
 	void MoveVertical(float move)
 	{
-		go->verticalPosition += move;
+		go->position.y += move;
 
-		if (go->verticalPosition >(LEVEL_HEIGHT - 30))
-			go->verticalPosition = 482 - 32;
+		if (go->position.y >(LEVEL_HEIGHT - 30))
+			go->position.y = 482 - 32;
 
-		if (go->verticalPosition < MINIMAP_HEIGHT)
-			go->verticalPosition = MINIMAP_HEIGHT;
+		if (go->position.y < MINIMAP_HEIGHT)
+			go->position.y = MINIMAP_HEIGHT;
 	}
 
 	// return true if enough time has passed from the previous rocket

@@ -35,29 +35,29 @@ void RenderComponent::Update(float dt, int camX, int camY)
 
 	if (sprite && go->facingDirection == GameObject::FacingDirection::left) 
 	{
-		sprite->draw(int(go->horizontalPosition - camX), int(go->verticalPosition - camY));
+		sprite->draw(int(go->position.x - camX), int(go->position.y - camY));
 
-		if (go->horizontalPosition < WINDOW_WIDTH && go->horizontalPosition > 0)
+		if (go->position.x < WINDOW_WIDTH && go->position.x > 0)
 		{
-			sprite->draw(int(go->horizontalPosition - camX + LEVEL_WIDTH), int(go->verticalPosition - camY));
+			sprite->draw(int(go->position.x - camX + LEVEL_WIDTH), int(go->position.y - camY));
 		} 
-		else if (go->horizontalPosition < LEVEL_WIDTH && go->horizontalPosition > LEVEL_WIDTH - WINDOW_WIDTH)
+		else if (go->position.x < LEVEL_WIDTH && go->position.x > LEVEL_WIDTH - WINDOW_WIDTH)
 		{
-			sprite->draw(int(go->horizontalPosition - camX - LEVEL_WIDTH), int(go->verticalPosition - camY));
+			sprite->draw(int(go->position.x - camX - LEVEL_WIDTH), int(go->position.y - camY));
 		}
 	}
 	else if (sprite2 && go->facingDirection == GameObject::FacingDirection::right)
 	{
-		sprite2->draw(int(go->horizontalPosition - camX), int(go->verticalPosition - camY));
+		sprite2->draw(int(go->position.x - camX), int(go->position.y - camY));
 		
 		if (typeid(*go) != typeid(Player)) {
-			if (go->horizontalPosition < WINDOW_WIDTH && go->horizontalPosition > 0)
+			if (go->position.x < WINDOW_WIDTH && go->position.x > 0)
 			{
-				sprite->draw(int(go->horizontalPosition - camX + LEVEL_WIDTH), int(go->verticalPosition - camY));
+				sprite->draw(int(go->position.x - camX + LEVEL_WIDTH), int(go->position.y - camY));
 			}
-			else if (go->horizontalPosition < LEVEL_WIDTH && go->horizontalPosition > LEVEL_WIDTH - WINDOW_WIDTH)
+			else if (go->position.x < LEVEL_WIDTH && go->position.x > LEVEL_WIDTH - WINDOW_WIDTH)
 			{
-				sprite->draw(int(go->horizontalPosition - camX - LEVEL_WIDTH), int(go->verticalPosition - camY));
+				sprite->draw(int(go->position.x - camX - LEVEL_WIDTH), int(go->position.y - camY));
 			}
 		}
 	}
@@ -88,10 +88,10 @@ void CollideComponent::Update(float dt, int camX, int camY)
 		GameObject * go0 = coll_objects->pool[i];
 		if (go0->enabled)
 		{
-			if ((go0->horizontalPosition > go->horizontalPosition - 10) &&
-				(go0->horizontalPosition < go->horizontalPosition + 10) &&
-				(go0->verticalPosition   > go->verticalPosition - 10) &&
-				(go0->verticalPosition   < go->verticalPosition + 10))
+			if ((go0->position.x > go->position.x - 10) &&
+				(go0->position.x < go->position.x + 10) &&
+				(go0->position.y   > go->position.y - 10) &&
+				(go0->position.y   < go->position.y + 10))
 			{
 				go->Receive(HIT);
 				go0->Receive(HIT);

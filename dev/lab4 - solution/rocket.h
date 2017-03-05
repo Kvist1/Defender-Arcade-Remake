@@ -10,23 +10,23 @@ public:
 	void Update(float dt, int camX, int camY)
 	{
 		if (go->facingDirection == GameObject::FacingDirection::right)
-			go->horizontalPosition += ROCKET_SPEED * dt; // rocket_speed * time
+			go->position.x += ROCKET_SPEED * dt; // rocket_speed * time
 		else
-			go->horizontalPosition -= ROCKET_SPEED * dt; // rocket_speed * time
+			go->position.x -= ROCKET_SPEED * dt; // rocket_speed * time
 
-		if (go->horizontalPosition > LEVEL_WIDTH)
+		if (go->position.x > LEVEL_WIDTH)
 		{
-			go->horizontalPosition = 0;
+			go->position.x = 0;
 			passedLevelWidthRight = true;
 		}
-		else if (go->horizontalPosition < 0)
+		else if (go->position.x < 0)
 		{
-			go->horizontalPosition = LEVEL_WIDTH;
+			go->position.x = LEVEL_WIDTH;
 			passedLevelWidthLeft = true;
 		}
 
 		// When the rocket reaches a bit behind the sides of the screen, it disappears.
-		if ( (go->horizontalPosition < camX - WINDOW_WIDTH || go->horizontalPosition > camX + WINDOW_WIDTH * 2)
+		if ( (go->position.x < camX - WINDOW_WIDTH || go->position.x > camX + WINDOW_WIDTH * 2)
 			&& !passedLevelWidthLeft
 			&& !passedLevelWidthRight) 
 		{
@@ -35,7 +35,7 @@ public:
 		} 
 		else if (passedLevelWidthRight) // special case if firing a rocket and it goes through the end of the level
 		{
-			if (go->horizontalPosition > WINDOW_WIDTH)
+			if (go->position.x > WINDOW_WIDTH)
 			{
 				go->enabled = false;
 				SDL_Log("ROCKET DISABLED");
@@ -45,7 +45,7 @@ public:
 		}
 		else if (passedLevelWidthLeft)
 		{
-			if (go->horizontalPosition < LEVEL_WIDTH - WINDOW_WIDTH)
+			if (go->position.x < LEVEL_WIDTH - WINDOW_WIDTH)
 			{
 				go->enabled = false;
 				SDL_Log("ROCKET DISABLED");
@@ -63,13 +63,13 @@ class Rocket : public GameObject
 
 public:
 
-	virtual void Init(double xPos, double yPos, GameObject::FacingDirection fDirection)
+	virtual void Init(float xPos, float yPos, GameObject::FacingDirection fDirection)
 	{
 		SDL_Log("Rocket::Init");
 		GameObject::Init();
 
-		horizontalPosition = xPos;
-		verticalPosition = yPos;
+		position.x = xPos;
+		position.y = yPos;
 		facingDirection = fDirection;
 	}
 

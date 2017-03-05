@@ -5,9 +5,9 @@ class BombBehaviourComponent : public Component
 public:
 	virtual void Update(float dt, int camX, int camY)
 	{
-		go->verticalPosition += BOMB_SPEED * dt;
+		go->position.y += BOMB_SPEED * dt;
 
-		if (go->verticalPosition > 480) // When a bomb reaches the bottom of the screen, it disappears.
+		if (go->position.y > 480) // When a bomb reaches the bottom of the screen, it disappears.
 			go->enabled = false;
 	}
 };
@@ -21,13 +21,13 @@ class Bomb : public GameObject
 public:
 	glm::vec2 direction;
 
-	virtual void Init(double xPos, double yPos)
+	virtual void Init(float xPos, float yPos)
 	{
 		SDL_Log("Bomb::Init");
 		GameObject::Init();
 
-		horizontalPosition = xPos;
-		verticalPosition = yPos;
+		position.x = xPos;
+		position.y = yPos;
 	}
 
 
