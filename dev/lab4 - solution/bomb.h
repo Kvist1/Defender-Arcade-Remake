@@ -34,10 +34,6 @@ class BombBehaviourComponent : public Component
 {
 	float distance; // distance flying towards target (player)
 
-private:
-	bool passedLevelWidthRight = false;
-	bool passedLevelWidthLeft = false;
-
 public:
 	virtual void Init()
 	{
@@ -51,8 +47,17 @@ public:
 		distance += dt * BOMB_SPEED;
 		bomb->position = bomb->startPosition + (bomb->direction * distance);
 
+		if (bomb->position.x > LEVEL_WIDTH)
+		{
+			bomb->startPosition.x -= LEVEL_WIDTH; // new imaginary starting point
+		}
+		else if (bomb->position.x < 0)
+		{
+			bomb->startPosition.x += LEVEL_WIDTH; // new imaginary starting point
+		}
+
 		// When a bomb reaches a certain distance from starting point, it disappears.
-		if (bomb->position.y < 0 || bomb->position.y > 480)
+		if (bomb->position.y < 0+80 || bomb->position.y > 480)
 		{
 			go->enabled = false;
 			SDL_Log("BOMB DISABLED");
