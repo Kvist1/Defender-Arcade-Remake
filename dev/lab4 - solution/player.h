@@ -101,6 +101,8 @@ public:
 				player->DropBomb();
 			}
 		}
+
+		//SDL_Log("playerPos: %0.1f", go->position.x);
 	}
 
 	// move the player left or right

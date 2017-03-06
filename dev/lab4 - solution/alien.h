@@ -121,6 +121,8 @@ public:
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
 
+		//SDL_Log("Alien->playerPos: %0.1f", alien->player->position.x);
+
 		if (PlayerInRange() && CanFire())
 			fire(dt);
 	}
@@ -152,7 +154,7 @@ public:
 
 		Bomb * bomb = alien->bombs_pool->FirstAvailable();
 
-		// direction = (starting point - target point) / ||distance||
+		// direction = (target point - starting point) / ||distance||
 		glm::vec2 direction;
 
 		if (bomb != NULL)
@@ -163,16 +165,19 @@ public:
 				glm::vec2 simulatedPosition(alien->position.x - LEVEL_WIDTH, alien->position.y);
 				direction = (alien->player->position - simulatedPosition) / distanceToPlayer;
 				shootThroughLevelEdgeRight = false;
+				SDL_Log("shootThroughLevelEdgeRight: TRUE");
 			}
 			else if (shootThroughLevelEdgeLeft)
 			{
 				// bomb starting point need to be simulated from aliens position.x
 				glm::vec2 simulatedPosition(alien->position.x + LEVEL_WIDTH, alien->position.y);
 				direction = (alien->player->position - simulatedPosition) / distanceToPlayer;
-				shootThroughLevelEdgeRight = false;
+				shootThroughLevelEdgeLeft = false;
 			}
 			else
+			{
 				direction = (alien->player->position - alien->position) / distanceToPlayer;
+			}
 
 			bomb->Init(alien->position, direction, distanceToPlayer);
 			game_objects->insert(bomb);
@@ -186,17 +191,23 @@ public:
 		// alien close to level end and player close to level start
 		if (alien->position.x + ALIEN_RANGE > LEVEL_WIDTH && alien->player->position.x - ALIEN_RANGE < 0)
 		{
-			distanceToPlayer = glm::distance(alien->position.x - LEVEL_WIDTH, alien->player->position.x);
+			glm::vec2 simulatedPosition(alien->position.x - LEVEL_WIDTH, alien->position.y);
+			distanceToPlayer = glm::distance(simulatedPosition, alien->player->position);
 			shootThroughLevelEdgeRight = true;
 		}
 		// alien close to level start and player close to level end
 		else if (alien->position.x - ALIEN_RANGE < 0 && alien->player->position.x + ALIEN_RANGE > LEVEL_WIDTH)
 		{
-			distanceToPlayer = glm::distance(alien->position.x + LEVEL_WIDTH, alien->player->position.x);
+			glm::vec2 simulatedPosition(alien->position.x + LEVEL_WIDTH, alien->position.y);
+			distanceToPlayer = glm::distance(simulatedPosition, alien->player->position);
 			shootThroughLevelEdgeLeft = true;
 		}
 		else
+		{
 			distanceToPlayer = glm::distance(alien->position, alien->player->position);
+			shootThroughLevelEdgeLeft = false;
+			shootThroughLevelEdgeRight = false;
+		}
 
 		if (distanceToPlayer <= ALIEN_RANGE)
 		{
