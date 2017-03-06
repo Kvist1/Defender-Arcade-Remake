@@ -286,15 +286,19 @@ public:
 	{
 		char msg[1024];
 		sprintf(msg, "Score: %07d", Score());
-		system->drawText(510, 16, msg);
+		system->drawText(1050, 40, msg);
 		sprintf(msg, "Bonus: %.1fX", GAME_SPEED);
-		system->drawText(510, 40, msg);
+		system->drawText(1050, 80, msg);
 
+		sprintf(msg, "Lives: ", GAME_SPEED);
+		system->drawText(50, 40, msg);
+		sprintf(msg, "Bombs: ", GAME_SPEED);
+		system->drawText(50, 80, msg);
 		for (int i = 0; i < player->lives; i++)
-			life_sprite->draw(i*36+20, 5);
+			life_sprite->draw(i * 36 + 110, 40-10);
 
 		for (int i = 0; i < player->bombs; i++)
-			bomb_count_sprite->draw(i * 36 + 20, 40);
+			bomb_count_sprite->draw(i * 36 + 110, 80-10);
 
 		if (IsGameOver())
 		{
