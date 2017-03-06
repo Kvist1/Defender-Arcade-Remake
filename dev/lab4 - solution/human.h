@@ -14,7 +14,7 @@ public:
 		int random_direction = rand() % 2;
 
 		this->position.x = random_xPos;
-		this->position.y = 480 - 32;
+		this->position.y = LEVEL_HEIGHT - 50;
 
 		if (random_direction == 0)
 			direction = -1;

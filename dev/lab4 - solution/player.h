@@ -128,8 +128,8 @@ public:
 	{
 		go->position.y += move;
 
-		if (go->position.y >(LEVEL_HEIGHT - 30))
-			go->position.y = 482 - 32;
+		if (go->position.y >= (LEVEL_HEIGHT - 32))
+			go->position.y = LEVEL_HEIGHT - 32;
 
 		if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;

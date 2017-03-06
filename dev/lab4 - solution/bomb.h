@@ -57,7 +57,7 @@ public:
 		}
 
 		// When a bomb reaches a certain distance from starting point, it disappears.
-		if (bomb->position.y < 0+80 || bomb->position.y > 480)
+		if (bomb->position.y < MINIMAP_HEIGHT || bomb->position.y > LEVEL_HEIGHT)
 		{
 			go->enabled = false;
 			SDL_Log("BOMB DISABLED");

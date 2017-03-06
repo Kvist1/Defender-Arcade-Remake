@@ -48,12 +48,7 @@ public:
 	void ChangeDirection()
 	{
 		xDirection *= -1;
-		position.y += 32;
-
-		if (position.y > (480 - 32))
-			Send(GAME_OVER);
 	}
-
 };
 
 
@@ -116,8 +111,8 @@ public:
 		else if (alien->position.x < 0)
 			alien->position.x = LEVEL_WIDTH;
 
-		if (go->position.y >(LEVEL_HEIGHT - 30))
-			go->position.y = 482 - 32;
+		if (go->position.y >(LEVEL_HEIGHT - 32))
+			go->position.y = LEVEL_HEIGHT - 32;
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
 

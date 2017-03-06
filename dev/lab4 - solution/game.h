@@ -306,7 +306,7 @@ public:
 
 			if (showGameOverBlink == 0)
 			{
-				system->drawText(250, 250, msg);
+				system->drawText(550, 400, msg);
 				SDL_Delay(600.0f);
 				showGameOverBlink = 1;
 			} 
