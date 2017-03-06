@@ -26,11 +26,11 @@ const unsigned int	POINTS_PER_ALIEN = 100;
 const float			FIRE_TIME_INTERVAL = .4f;
 const float			PLAYER_BOMB_TIME_INTERVAL = 2.0f;
 const float			BOMB_TIME_INTERVAL = 3.25f;
-const float			ALIEN_RANGE = 250.0f;
-const float			PLAYER_SPEED = 350.0f;
+const float			ALIEN_RANGE = 400.0f;
+const float			PLAYER_SPEED = 550.0f;
 const float			ROCKET_SPEED = 1000.0f;
-const float			ALIEN_SPEED = 40.0f;
-const float			BOMB_SPEED = 120.0f;
+const float			ALIEN_SPEED = 160.0f;
+const float			BOMB_SPEED = 320.0f;
 const float			HUMAN_SPEED = 120.0f;
 
 
