@@ -253,9 +253,10 @@ public:
 		SDL_Rect camera_right_edge_bottom_wing = { WINDOW_WIDTH/2 + WINDOW_WIDTH/scaling/2 -8, MINIMAP_HEIGHT-5, 10, 2 };
 
 		// Render them
-		SDL_SetRenderDrawColor(system->renderer, 188, 188, 188, 255);
+		SDL_SetRenderDrawColor(system->renderer, 20, 20, 20, 255);
 		SDL_RenderFillRect(system->renderer, &rect);
 		SDL_RenderFillRect(system->renderer, &rect2);
+		SDL_SetRenderDrawColor(system->renderer, 100, 100, 100, 255);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge_top_wing);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge_bottom_wing);
