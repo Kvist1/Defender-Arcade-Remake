@@ -239,20 +239,21 @@ public:
 				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling-1);
 
 			}
-	
-		SDL_Rect rect = { 0, 0, 160, 80 };
-		SDL_Rect rect2 = { 160+320, 0, 160, 80 };
+		// creates the two boxes cowering the "extra level backgrounds"
+		SDL_Rect rect = { 0, 0, WINDOW_WIDTH/4, MINIMAP_HEIGHT };
+		SDL_Rect rect2 = { 3*WINDOW_WIDTH/4, 0, WINDOW_WIDTH / 4, MINIMAP_HEIGHT };
 
-		SDL_Rect camera_left_edge = { 320-54, 5, 1, 70 };
-		SDL_Rect camera_left_edge_top_wing = { 320 - 54, 5, 10, 1 };
-		SDL_Rect camera_left_edge_bottom_wing = { 320 - 54, 75, 10, 1 };
+		// creates a visual of the camera width in the minimap, quite messy but is just drawing  rectangles in correct positions
+		SDL_Rect camera_left_edge = { WINDOW_WIDTH/2 - WINDOW_WIDTH/scaling/2, 5, 2, MINIMAP_HEIGHT-10 };
+		SDL_Rect camera_left_edge_top_wing = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, 5, 10, 2 };
+		SDL_Rect camera_left_edge_bottom_wing = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, MINIMAP_HEIGHT-5, 10, 2 };
 
-		SDL_Rect camera_right_edge = { 320+54, 5, 1, 70 };
-		SDL_Rect camera_right_edge_top_wing = { 320 + 44, 5, 10, 1 };
-		SDL_Rect camera_right_edge_bottom_wing = { 320 + 45, 75, 10, 1 };
+		SDL_Rect camera_right_edge = { WINDOW_WIDTH / 2 + WINDOW_WIDTH/scaling/2, 5, 2, MINIMAP_HEIGHT-10 };
+		SDL_Rect camera_right_edge_top_wing = { WINDOW_WIDTH/2 + WINDOW_WIDTH/scaling/2 -10, 5, 10, 2 };
+		SDL_Rect camera_right_edge_bottom_wing = { WINDOW_WIDTH/2 + WINDOW_WIDTH/scaling/2 -8, MINIMAP_HEIGHT-5, 10, 2 };
 
+		// Render them
 		SDL_SetRenderDrawColor(system->renderer, 188, 188, 188, 255);
-
 		SDL_RenderFillRect(system->renderer, &rect);
 		SDL_RenderFillRect(system->renderer, &rect2);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge);

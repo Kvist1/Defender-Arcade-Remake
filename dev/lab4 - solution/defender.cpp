@@ -7,14 +7,14 @@
 #include <set>
 
 #include "GlobalVariables.h"
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
+const int WINDOW_WIDTH = 1280;
+const int WINDOW_HEIGHT = 720;
 
-const int MINIMAP_WIDTH = 320;
-const int MINIMAP_HEIGHT = 80;
-
-const int LEVEL_WIDTH = 1920;
+const int LEVEL_WIDTH = 3840;
 const int LEVEL_HEIGHT = WINDOW_HEIGHT;
+
+const int MINIMAP_WIDTH = LEVEL_WIDTH/6;
+const int MINIMAP_HEIGHT = LEVEL_HEIGHT/6;
 
 const unsigned int	MAX_NUM_GAME_OBJECTS = 10000;
 const unsigned int	NUM_LIVES = 2;
