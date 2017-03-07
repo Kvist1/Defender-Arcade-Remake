@@ -93,13 +93,13 @@ public:
 		game_objects.insert(aliens_grid);
 
 
-		aliens_pool.Create(55, system->getSurfaceSize("data/enemy_0.bmp") );
+		aliens_pool.Create(55, system->getSurfaceSize("data/Alien_Ship.png") );
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 		{
 			AlienBehaviourComponent * alien_behaviour = new AlienBehaviourComponent();
 			alien_behaviour->Create(system, *alien, &game_objects);
 			RenderComponent * alien_render = new RenderComponent();
-			alien_render->Create(system, *alien, &game_objects, "data/enemy_0.bmp");
+			alien_render->Create(system, *alien, &game_objects, "data/Alien_Ship.png");
 			CollideComponent * alien_coll = new CollideComponent();
 			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*alien)->Create();

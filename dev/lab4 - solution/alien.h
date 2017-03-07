@@ -111,8 +111,8 @@ public:
 		else if (alien->position.x < 0)
 			alien->position.x = LEVEL_WIDTH;
 
-		if (go->position.y >(LEVEL_HEIGHT - 32))
-			go->position.y = LEVEL_HEIGHT - 32;
+		if (go->position.y >(LEVEL_HEIGHT - go->size.y - 90))
+			go->position.y = LEVEL_HEIGHT - go->size.y - 90;
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
 
