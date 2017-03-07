@@ -62,9 +62,9 @@ public:
 			RocketBehaviourComponent * behaviour = new RocketBehaviourComponent();
 			behaviour->Create(system, *rocket, &game_objects);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *rocket, &game_objects, "data/player_rocket.png", "data/player_rocket.png");
+			render->Create(system, *rocket, &game_objects, "data/player_rocket_left.png", "data/player_rocket_right.png");
 			
-			(*rocket)->Create(system->getSurfaceSize("data/player_rocket.png"));
+			(*rocket)->Create(system->getSurfaceSize("data/player_rocket_left.png"));
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
 		}
