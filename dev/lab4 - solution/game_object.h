@@ -14,6 +14,8 @@ protected:
 
 public:
 	glm::vec2 position;
+	// size = width and height
+	glm::vec2 size; 
 	bool enabled;
 	enum FacingDirection
 	{
@@ -25,6 +27,7 @@ public:
 	virtual ~GameObject();
 
 	virtual void Create();
+	virtual void Create(glm::vec2 size); // for objects that need e.g. collision checks
 	virtual void AddComponent(Component * component);
 
 	virtual void Init();

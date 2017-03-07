@@ -3,15 +3,16 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "glm\glm.hpp"
 
 class Sprite
 {
 	SDL_Renderer * renderer;
 	SDL_Texture * texture;
-	int width;
-	int height;
 
 public:
+	int width;
+	int height;
 
 	Sprite(SDL_Renderer * renderer, SDL_Texture * texture, int width, int height);
 
@@ -42,6 +43,9 @@ public:
 	// Create a sprite given a string.
 	// All sprites are 32*32 pixels.
 	Sprite* createSprite(const char* name);
+
+	// get width and height of surface
+	glm::vec2 getSurfaceSize(const char* path);
 
 	// Draws the given text.
 	void drawText(int x, int y, const char* msg);

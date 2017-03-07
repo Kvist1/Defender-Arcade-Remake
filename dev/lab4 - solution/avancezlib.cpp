@@ -1,5 +1,6 @@
 #include "avancezlib.h"
 #include "SDL_image.h"
+#include "glm\glm.hpp"
 
 
 
@@ -195,6 +196,17 @@ Sprite * AvancezLib::createSprite(const char * path)
 
 	Sprite * sprite = new Sprite(renderer, texture, width, height);
 	return sprite;
+}
+
+glm::vec2 AvancezLib::getSurfaceSize(const char * path)
+{
+	SDL_Surface* surf = IMG_Load(path);
+	if (surf == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Unable to load image %s! SDL_image Error: %s\n", path, SDL_GetError());
+	}
+	int width = surf->w, height = surf->h;
+	return glm::vec2(width, height);
 }
 
 void AvancezLib::drawText(int x, int y, const char * msg)

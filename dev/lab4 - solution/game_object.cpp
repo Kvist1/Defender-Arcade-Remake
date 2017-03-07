@@ -2,6 +2,14 @@
 #include "component.h"
 #include "avancezlib.h"
 
+void GameObject::Create(glm::vec2 size)
+{
+	SDL_Log("GameObject::Create");
+
+	this->size = size;
+	enabled = false;
+}
+
 void GameObject::Create()
 {
 	SDL_Log("GameObject::Create");

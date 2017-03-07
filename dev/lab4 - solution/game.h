@@ -47,8 +47,8 @@ public:
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();
 		player_alien_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&aliens_pool);
-
-		player->Create();
+		
+		player->Create(system->getSurfaceSize("data/player_left.png"));
 		player->AddComponent(player_behaviour);
 		player->AddComponent(player_render);
 		player->AddComponent(player_bomb_collision);
@@ -63,12 +63,13 @@ public:
 			behaviour->Create(system, *rocket, &game_objects);
 			RenderComponent * render = new RenderComponent();
 			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp");
-			(*rocket)->Create();
+			
+			(*rocket)->Create(system->getSurfaceSize("data/rocket.bmp"));
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
 		}
 
-		humans_pool.Create(4);
+		humans_pool.Create(4, system->getSurfaceSize("data/human.bmp") );
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 		{
 			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
@@ -92,7 +93,7 @@ public:
 		game_objects.insert(aliens_grid);
 
 
-		aliens_pool.Create(55);
+		aliens_pool.Create(55, system->getSurfaceSize("data/enemy_0.bmp") );
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 		{
 			AlienBehaviourComponent * alien_behaviour = new AlienBehaviourComponent();
@@ -108,7 +109,7 @@ public:
 			(*alien)->AddReceiver(this);
 		}
 
-		bombs_pool.Create(100);
+		bombs_pool.Create(100, system->getSurfaceSize("data/bomb.bmp") );
 		for (auto bomb = bombs_pool.pool.begin(); bomb != bombs_pool.pool.end(); bomb++)
 		{
 			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();
@@ -121,8 +122,8 @@ public:
 			(*bomb)->AddComponent(bomb_render);
 		}
 
-		life_sprite = system->createSprite("data/player_left.bmp");
-		bomb_count_sprite = system->createSprite("data/player_bomb.bmp");
+		life_sprite = system->createSprite("data/player_left.png");
+		bomb_count_sprite = system->createSprite("data/player_bomb.png");
 		score = 0;
 	}
 

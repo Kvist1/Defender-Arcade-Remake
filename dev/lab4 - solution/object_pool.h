@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "glm\glm.hpp"
 
 template <class T>
 class ObjectPool
@@ -15,6 +16,18 @@ public:
 		{
 			T * t = new T();
 			//t->Create(system);
+			pool.push_back(t);
+		}
+	}
+
+	void Create(unsigned int num_objects, glm::vec2 size)
+	{
+		Deallocate();
+
+		for (unsigned int i = 0; i < num_objects; i++)
+		{
+			T * t = new T();
+			t->Create(size);
 			pool.push_back(t);
 		}
 	}
