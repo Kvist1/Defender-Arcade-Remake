@@ -7,7 +7,7 @@ public:
 	Player * player;
 	ObjectPool<Bomb> * bombs_pool;
 
-	virtual void Init(bool * change_direction, float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool)
+	virtual void Init(float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool)
 	{
 		SDL_Log("Alien::Init");
 		GameObject::Init();

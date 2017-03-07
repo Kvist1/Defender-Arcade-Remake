@@ -3,7 +3,6 @@
 class AliensGridBehaviourComponent : public Component
 {
 	float time_bomb_launched;
-	bool change_direction;
 	Player *player;
 
 	ObjectPool<Alien> * aliens_pool;
@@ -36,11 +35,9 @@ public:
 			random_yPos = rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT-32) + MINIMAP_HEIGHT;
 
 			Alien * alien = aliens_pool->FirstAvailable();
-			alien->Init(&change_direction, random_xPos*10, random_yPos, player, bombs_pool);
+			alien->Init(random_xPos*10, random_yPos, player, bombs_pool);
 			game_objects->insert(alien);
 		}
-
-		change_direction = false;
 	}
 
 	virtual void Update(float dt, int camX, int camY)
@@ -66,8 +63,6 @@ public:
 				}
 			}
 		}*/
-
-		change_direction = false;
 	}
 
 	// return true if enough time has passed from the previous bomb
