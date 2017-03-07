@@ -69,13 +69,13 @@ public:
 			(*rocket)->AddComponent(render);
 		}
 
-		humans_pool.Create(4, system->getSurfaceSize("data/human.bmp") );
+		humans_pool.Create(4, system->getSurfaceSize("data/human.png") );
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 		{
 			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
 			behaviour->Create(system, *human, &game_objects);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *human, &game_objects, "data/human.bmp", "data/human.bmp");
+			render->Create(system, *human, &game_objects, "data/human.png", "data/human.png");
 			CollideComponent * rocket_coll = new CollideComponent();
 			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*human)->AddComponent(behaviour);
@@ -122,7 +122,7 @@ public:
 			(*bomb)->AddComponent(bomb_render);
 		}
 
-		life_sprite = system->createSprite("data/player_left.png");
+		life_sprite = system->createSprite("data/player_life.png");
 		bomb_count_sprite = system->createSprite("data/player_bomb.png");
 		score = 0;
 	}
