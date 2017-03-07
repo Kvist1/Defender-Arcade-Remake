@@ -174,6 +174,7 @@ Sprite * AvancezLib::createSprite(const char * path)
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Unable to load image %s! SDL_image Error: %s\n", path, SDL_GetError());
 		return NULL;
 	}
+	int width = surf->w, height = surf->h;
 
 	//Create texture from surface pixels
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surf);
@@ -189,7 +190,10 @@ Sprite * AvancezLib::createSprite(const char * path)
 		return NULL;
 	}
 
-	Sprite * sprite = new Sprite(renderer, texture);
+	//Get rid of old loaded surface
+	SDL_FreeSurface(surf);
+
+	Sprite * sprite = new Sprite(renderer, texture, width, height);
 	return sprite;
 }
 
@@ -236,10 +240,12 @@ void AvancezLib::getSystemState(SystemState & states)
 }
 
 
-Sprite::Sprite(SDL_Renderer * renderer, SDL_Texture * texture)
+Sprite::Sprite(SDL_Renderer * renderer, SDL_Texture * texture, int width, int height)
 {
 	this->renderer = renderer;
 	this->texture = texture;
+	this->width = width;
+	this->height = height;
 }
 
 

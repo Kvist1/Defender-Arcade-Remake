@@ -8,10 +8,12 @@ class Sprite
 {
 	SDL_Renderer * renderer;
 	SDL_Texture * texture;
+	int width;
+	int height;
 
 public:
 
-	Sprite(SDL_Renderer * renderer, SDL_Texture * texture);
+	Sprite(SDL_Renderer * renderer, SDL_Texture * texture, int width, int height);
 
 	// Destroys the sprite instance
 	void destroy();
