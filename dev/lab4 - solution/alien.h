@@ -133,19 +133,17 @@ public:
 		}
 		else if (alienMove == AlienMove::flyingAgainstHuman)
 		{
-			// if alien on lowest height above ground but still not close to human
-			if (alien->position.y == LEVEL_HEIGHT - go->size.y - 90 && alien->position.x != closestHuman->position.x)
+			// direction against walking human, new every update
+			glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
+			// move in that direction
+			alien->position += direction * ALIEN_SPEED * dt;
+			// calculate new distance
+			distanceToHuman = glm::distance(alien->position, closestHuman->position);
+
+			// if close enough, grab with "abduction beam"
+			if (glm::distance(alien->position, closestHuman->position) < 100)
 			{
-				glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
-				alien->position.x += direction.x * ALIEN_SPEED * dt;
-			}
-			else if (alien->position.y == LEVEL_HEIGHT - go->size.y - 90 && alien->position.x == closestHuman->position.x)
-			{
-				alien->position.x = closestHuman->position.x;
-			}
-			else {
-				glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
-				alien->position += direction * ALIEN_SPEED * dt;
+				closestHuman->Receive(ABDUCTION);
 			}
 		}
 

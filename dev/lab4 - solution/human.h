@@ -1,15 +1,21 @@
 
+enum HumanState
+{
+	walking,
+	abduction
+};
 
 class Human : public GameObject
 {
 
 public:
 	int direction;
+	HumanState humanState;
 
 	virtual void Init()
 	{
 		SDL_Log("Human::Init");
-		
+
 		int random_xPos = rand() % LEVEL_WIDTH; 
 		int random_direction = rand() % 2;
 
@@ -22,6 +28,7 @@ public:
 			direction = 1;
 
 		enabled = true;
+		humanState = HumanState::walking;
 	}
 
 	virtual void Receive(Message m)
@@ -34,6 +41,13 @@ public:
 			enabled = false;
 			Send(HUMAN_HIT); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
 			SDL_Log("Human::Hit");
+		}
+
+		if (m == ABDUCTION)
+		{
+			Send(HUMAN_ABDUCTION);
+			SDL_Log("abduction beam start");
+			humanState = HumanState::abduction;
 		}
 	}
 
@@ -51,6 +65,7 @@ public:
 
 class HumanBehaviourComponent : public Component
 {
+
 public:
 	virtual ~HumanBehaviourComponent() {}
 
@@ -59,7 +74,11 @@ public:
 
 		Human * human = (Human *)go;
 
-		human->position.x += human->direction * HUMAN_SPEED * dt; // direction * speed * time
+		if (human->humanState == HumanState::walking)
+			human->position.x += human->direction * HUMAN_SPEED * dt; // direction * speed * time
+
+		else if (human->humanState == HumanState::abduction)
+			human->position.x = human->position.x; // TODO!!!!
 
 		if (human->position.x > LEVEL_WIDTH)
 			human->position.x = 0;

@@ -2,7 +2,7 @@
 #include <vector>
 #include "glm\glm.hpp"
 
-enum Message { HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
+enum Message { HUMAN_ABDUCTION, ABDUCTION, HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
 
 class Component;
 
