@@ -42,7 +42,7 @@ public:
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
 		RenderComponent * player_render = new RenderComponent();
-		player_render->Create(system, player, &game_objects, "data/player_left.bmp", "data/player_right.bmp");
+		player_render->Create(system, player, &game_objects, "data/player_left.png", "data/player_right.png");
 		CollideComponent * player_bomb_collision = new CollideComponent();
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();

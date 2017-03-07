@@ -1,5 +1,5 @@
 #include "avancezlib.h"
-
+#include "SDL_image.h"
 
 
 
@@ -38,6 +38,9 @@ bool AvancezLib::init(int width, int height)
 		return false;
 	}
 
+	// Init png image loading
+	IMG_Init(IMG_INIT_PNG);
+
 	// initialize the keys
 	key.fire = false;	key.left = false;	key.right = false; 
 	key.down = false;	key.up = false; 
@@ -70,6 +73,7 @@ void AvancezLib::destroy()
 	TTF_CloseFont(font);
 
 	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -164,7 +168,7 @@ bool AvancezLib::update()
 
 Sprite * AvancezLib::createSprite(const char * path)
 {
-	SDL_Surface* surf = SDL_LoadBMP(path);
+	SDL_Surface* surf = IMG_Load(path);
 	if (surf == NULL)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Unable to load image %s! SDL_image Error: %s\n", path, SDL_GetError());
@@ -179,11 +183,13 @@ Sprite * AvancezLib::createSprite(const char * path)
 		return NULL;
 	}
 
-	//Get rid of old loaded surface
-	SDL_FreeSurface(surf);
+	if (texture == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+		return NULL;
+	}
 
 	Sprite * sprite = new Sprite(renderer, texture);
-
 	return sprite;
 }
 

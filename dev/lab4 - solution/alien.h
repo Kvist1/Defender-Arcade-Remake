@@ -118,7 +118,7 @@ public:
 
 		//SDL_Log("Alien->playerPos: %0.1f", alien->player->position.x);
 
-		if (PlayerInRange() && CanFire())
+		if (dt != 0 && PlayerInRange() && CanFire())
 			fire(dt);
 	}
 
