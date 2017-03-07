@@ -1,3 +1,4 @@
+class Human;
 
 class Alien : public GameObject
 {
@@ -6,8 +7,11 @@ public:
 	int xDirection, yDirection;
 	Player * player;
 	ObjectPool<Bomb> * bombs_pool;
+	ObjectPool<Human> * human_pool;
+	bool goPickUpHuman;
+	int * abductionCount;
 
-	virtual void Init(float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool)
+	virtual void Init(float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool, ObjectPool<Human> * human_pool, int *abductionCount)
 	{
 		SDL_Log("Alien::Init");
 		GameObject::Init();
@@ -29,7 +33,10 @@ public:
 		enabled = true;
 
 		this->bombs_pool = bombs_pool;
+		this->human_pool = human_pool;
 		this->player = player;
+		this->goPickUpHuman = false;
+		this->abductionCount = abductionCount;
 	}
 
 	virtual void Receive(Message m)
@@ -43,6 +50,11 @@ public:
 			Send(ALIEN_HIT); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
 			SDL_Log("Alien::Hit");
 		}
+	}
+
+	void GoPickUpHuman()
+	{
+		goPickUpHuman = true;
 	}
 
 	void ChangeDirection()
@@ -61,13 +73,17 @@ private:
 	enum AlienMove
 	{
 		horizontal,
-		diagonal
+		diagonal,
+		flyingWithHuman,
+		flyingAgainstHuman,
 	};
 
 	AlienMove alienMove;
 	bool shootThroughLevelEdgeLeft;
 	bool shootThroughLevelEdgeRight;
 	float distanceToPlayer;
+	Human * closestHuman;
+	float distanceToHuman;
 
 public:
 	virtual ~AlienBehaviourComponent() {}
@@ -88,21 +104,49 @@ public:
 
 		Alien * alien = (Alien *)go;
 
-		if (TimeToChangeMovement(dt))
+		if (alienMove != AlienMove::flyingAgainstHuman && TimeToChangeMovement(dt))
 			alienMove = GetRandomMovement();
+
+		if (alien->goPickUpHuman)
+		{
+			closestHuman = findClosestHuman();
+			alienMove = AlienMove::flyingAgainstHuman;
+			alien->abductionCount++;
+			alien->goPickUpHuman = false;
+		}
 
 		if (alienMove == AlienMove::horizontal)
 		{
 			alien->position.x += alien->xDirection * ALIEN_SPEED * dt; // direction * speed * time
 		} 
-		/*else if (alienMove == AlienMove::vertical)
-		{
-			alien->verticalPosition += alien->yDirection * ALIEN_SPEED * dt;
-		}*/
 		else if (alienMove == AlienMove::diagonal)
 		{
 			alien->position.x += alien->xDirection * ALIEN_SPEED * dt;
 			alien->position.y += alien->yDirection * ALIEN_SPEED * dt;
+		}
+		else if (alienMove == AlienMove::flyingWithHuman)
+		{
+			alien->position.y += alien->yDirection * ALIEN_SPEED * dt;
+			/*
+			if reached space with human, disable both human and alien
+			*/
+		}
+		else if (alienMove == AlienMove::flyingAgainstHuman)
+		{
+			// if alien on lowest height above ground but still not close to human
+			if (alien->position.y == LEVEL_HEIGHT - go->size.y - 90 && alien->position.x != closestHuman->position.x)
+			{
+				glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
+				alien->position.x += direction.x * ALIEN_SPEED * dt;
+			}
+			else if (alien->position.y == LEVEL_HEIGHT - go->size.y - 90 && alien->position.x == closestHuman->position.x)
+			{
+				alien->position.x = closestHuman->position.x;
+			}
+			else {
+				glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
+				alien->position += direction * ALIEN_SPEED * dt;
+			}
 		}
 
 		// keep in bounds of level
@@ -116,15 +160,34 @@ public:
 		else if (go->position.y < MINIMAP_HEIGHT)
 			go->position.y = MINIMAP_HEIGHT;
 
-		//SDL_Log("Alien->playerPos: %0.1f", alien->player->position.x);
-
+		// fire against player if possible
 		if (dt != 0 && PlayerInRange() && CanFire())
 			fire(dt);
 	}
 
+	// random move pattern, horizontal or diagonal
 	AlienMove GetRandomMovement()
 	{
-		return (AlienMove)(rand() % 2); // random move pattern
+		return (AlienMove)(rand() % 2); 
+	}
+
+	Human* findClosestHuman()
+	{
+		Alien * alien = (Alien *)go;
+
+		distanceToHuman = 10000.0f; // init value
+		Human * closestHuman = NULL;
+
+		for (auto human = alien->human_pool->pool.begin(); human != alien->human_pool->pool.end(); human++)
+		{
+			float temp = glm::distance(alien->position, (*human)->position);
+			if (temp < distanceToHuman)
+			{
+				distanceToHuman = temp;
+				closestHuman = (*human);
+			}
+		}
+		return closestHuman;
 	}
 
 	bool TimeToChangeMovement(float dt)

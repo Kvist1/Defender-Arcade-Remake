@@ -87,7 +87,7 @@ public:
 
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
-		aliensgrid_behaviour->Create(system, aliens_grid, player, &game_objects, &aliens_pool, &bombs_pool);
+		aliensgrid_behaviour->Create(system, aliens_grid, player, &game_objects, &aliens_pool, &bombs_pool, &humans_pool);
 		aliens_grid->Create();
 		aliens_grid->AddComponent(aliensgrid_behaviour);
 		game_objects.insert(aliens_grid);

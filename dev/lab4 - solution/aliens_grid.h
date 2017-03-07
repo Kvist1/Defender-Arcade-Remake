@@ -2,40 +2,47 @@
 
 class AliensGridBehaviourComponent : public Component
 {
-	float time_bomb_launched;
+	float timeAccumulator;
 	Player *player;
 
 	ObjectPool<Alien> * aliens_pool;
 	ObjectPool<Bomb> * bombs_pool;
+	ObjectPool<Human> * human_pool;
+
+	int abductionCount; // number of abductions going on by different aliens
+	int abductionsAllowed; // allowed at the same time
 
 public:
 	virtual ~AliensGridBehaviourComponent() {}
 
-	virtual void Create(AvancezLib* system, GameObject * go, Player * player, std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool)
+	virtual void Create(AvancezLib* system, GameObject * go, Player * player, std::set<GameObject*> * game_objects, ObjectPool<Alien> * aliens_pool, ObjectPool<Bomb> * bombs_pool, ObjectPool<Human> * human_pool)
 	{
 		Component::Create(system, go, game_objects);
 
 		this->aliens_pool = aliens_pool;
 		this->bombs_pool = bombs_pool;
 		this->player = player;
+		this->human_pool = human_pool;
 	}
 
 	virtual void Init()
 	{
-		time_bomb_launched = -10000.f;	// time fromthe last time a bomb was dropped by one of the aliens
+		timeAccumulator = 0.f;	// time until next abduction try by aliens
+		abductionCount = 0;
+		abductionsAllowed = 1; // could be increased on a harder level
 
 		float random_xPos;
 		float random_yPos;
 		srand(time(NULL));
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			random_xPos = rand() % (LEVEL_WIDTH/10);
 			//generates random number  MINIMAP_HEIGHT <= yPos <= LEVEL_HEIGHT-32
 			random_yPos = rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT-32) + MINIMAP_HEIGHT;
 
 			Alien * alien = aliens_pool->FirstAvailable();
-			alien->Init(random_xPos*10, random_yPos, player, bombs_pool);
+			alien->Init(random_xPos*10, random_yPos, player, bombs_pool, human_pool, &abductionCount);
 			game_objects->insert(alien);
 		}
 	}
@@ -63,23 +70,25 @@ public:
 				}
 			}
 		}*/
+
+		if (abductionCount < abductionsAllowed && IsAbductionTime(dt))
+		{
+			Alien * alien = aliens_pool->SelectRandom();
+			alien->GoPickUpHuman();
+			abductionCount++;
+		}
 	}
 
-	// return true if enough time has passed from the previous bomb
-	bool CanFire()
+	// return true if enough time has passed from the previous abduction
+	bool IsAbductionTime(float dt)
 	{
-		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / GAME_SPEED))
-			return false;
-
-		// drop the bomb with 3% chance
-		if ((rand() / (float)RAND_MAX) < 0.97f)
-			return false;
-
-		time_bomb_launched = system->getElapsedTime();
-
-		SDL_Log("AlienGrid::bomb!");
-		return true;
+		timeAccumulator += dt;
+		if (timeAccumulator > 11)
+		{
+			timeAccumulator = 0;
+			return true;
+		}
+		return false;
 	}
 };
 

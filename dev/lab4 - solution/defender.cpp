@@ -47,9 +47,9 @@ float GAME_SPEED = 1.f;		// speed of the game; it is increased each time all the
 #include "rocket.h"
 #include "bomb.h"
 #include "player.h"
+#include "human.h"
 #include "alien.h"
 #include "aliens_grid.h"
-#include "human.h"
 #include "game.h"
 #include "SDL_image.h"
 
