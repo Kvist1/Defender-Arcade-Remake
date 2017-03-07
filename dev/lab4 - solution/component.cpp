@@ -88,10 +88,10 @@ void CollideComponent::Update(float dt, int camX, int camY)
 		GameObject * go0 = coll_objects->pool[i];
 		if (go0->enabled)
 		{
-			if ((go0->position.x > go->position.x - 10) &&
-				(go0->position.x < go->position.x + 10) &&
-				(go0->position.y   > go->position.y - 10) &&
-				(go0->position.y   < go->position.y + 10))
+			if ((go0->position.x + go0->size.x > go->position.x + go->size.x - 10) &&
+				(go0->position.x + go0->size.x < go->position.x + go->size.x + 10) &&
+				(go0->position.y + go0->size.y > go->position.y + go->size.y - 30) &&
+				(go0->position.y + go0->size.y < go->position.y + go->size.y + 30))
 			{
 				go->Receive(HIT);
 				go0->Receive(HIT);
