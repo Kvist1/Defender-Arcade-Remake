@@ -62,9 +62,9 @@ public:
 			RocketBehaviourComponent * behaviour = new RocketBehaviourComponent();
 			behaviour->Create(system, *rocket, &game_objects);
 			RenderComponent * render = new RenderComponent();
-			render->Create(system, *rocket, &game_objects, "data/rocket.bmp", "data/rocket.bmp");
+			render->Create(system, *rocket, &game_objects, "data/player_rocket.png", "data/player_rocket.png");
 			
-			(*rocket)->Create(system->getSurfaceSize("data/rocket.bmp"));
+			(*rocket)->Create(system->getSurfaceSize("data/player_rocket.png"));
 			(*rocket)->AddComponent(behaviour);
 			(*rocket)->AddComponent(render);
 		}
@@ -109,13 +109,13 @@ public:
 			(*alien)->AddReceiver(this);
 		}
 
-		bombs_pool.Create(100, system->getSurfaceSize("data/bomb.bmp") );
+		bombs_pool.Create(100, system->getSurfaceSize("data/alien_bomb.png") );
 		for (auto bomb = bombs_pool.pool.begin(); bomb != bombs_pool.pool.end(); bomb++)
 		{
 			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();
 			bomb_behaviour->Create(system, *bomb, &game_objects);
 			RenderComponent * bomb_render = new RenderComponent();
-			bomb_render->Create(system, *bomb, &game_objects, "data/bomb.bmp", "data/bomb.bmp");
+			bomb_render->Create(system, *bomb, &game_objects, "data/alien_bomb.png", "data/alien_bomb.png");
 
 			(*bomb)->Create();
 			(*bomb)->AddComponent(bomb_behaviour);
