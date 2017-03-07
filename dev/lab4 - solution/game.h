@@ -243,6 +243,7 @@ public:
 		// creates the two boxes cowering the "extra level backgrounds"
 		SDL_Rect rect = { 0, 0, WINDOW_WIDTH/4, MINIMAP_HEIGHT };
 		SDL_Rect rect2 = { 3*WINDOW_WIDTH/4, 0, WINDOW_WIDTH / 4, MINIMAP_HEIGHT };
+		SDL_Rect line = { 0, MINIMAP_HEIGHT, WINDOW_WIDTH, 5 };
 
 		// creates a visual of the camera width in the minimap, quite messy but is just drawing  rectangles in correct positions
 		SDL_Rect camera_left_edge = { WINDOW_WIDTH/2 - WINDOW_WIDTH/scaling/2, 5, 2, MINIMAP_HEIGHT-10 };
@@ -257,6 +258,7 @@ public:
 		SDL_SetRenderDrawColor(system->renderer, 20, 20, 20, 255);
 		SDL_RenderFillRect(system->renderer, &rect);
 		SDL_RenderFillRect(system->renderer, &rect2);
+		SDL_RenderFillRect(system->renderer, &line);
 		SDL_SetRenderDrawColor(system->renderer, 100, 100, 100, 255);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge);
 		SDL_RenderFillRect(system->renderer, &camera_left_edge_top_wing);

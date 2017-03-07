@@ -88,6 +88,8 @@ void CollideComponent::Update(float dt, int camX, int camY)
 		GameObject * go0 = coll_objects->pool[i];
 		if (go0->enabled)
 		{
+			// depending on the size of the game object, check the hit box that should be from the middle of the object.
+			// box should be from center of the object +- 10px in horizontal and +- 30px in vertical
 			if ((go0->position.x + go0->size.x > go->position.x + go->size.x - 10) &&
 				(go0->position.x + go0->size.x < go->position.x + go->size.x + 10) &&
 				(go0->position.y + go0->size.y > go->position.y + go->size.y - 30) &&

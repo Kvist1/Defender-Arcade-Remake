@@ -17,7 +17,7 @@ const int MINIMAP_WIDTH = LEVEL_WIDTH/6;
 const int MINIMAP_HEIGHT = LEVEL_HEIGHT/6;
 
 const unsigned int	MAX_NUM_GAME_OBJECTS = 10000;
-const unsigned int	NUM_LIVES = 2;
+const unsigned int	NUM_LIVES = 5;
 const unsigned int	NUM_PLAYER_BOMBS = 3;
 
 const unsigned int	MAX_NUM_ROCKETS = 32;
@@ -30,7 +30,7 @@ const float			ALIEN_RANGE = 400.0f;
 const float			PLAYER_SPEED = 550.0f;
 const float			ROCKET_SPEED = 1000.0f;
 const float			ALIEN_SPEED = 160.0f;
-const float			BOMB_SPEED = 320.0f;
+const float			BOMB_SPEED = 500.0f;
 const float			HUMAN_SPEED = 30.0f;
 
 
