@@ -105,7 +105,7 @@ public:
 	virtual void Init()
 	{
 		time_bomb_launched = -10000.f;	// time from the last dropped bomb
-		randomTime = rand() % 6; // random time between 0 - 5s 
+		randomTime = rand() % 5; // random time between 0 - 4s 
 		timeAccumulator = 0;
 		shootThroughLevelEdgeRight = false; // needed to check if alien want to shoot through level edges
 		shootThroughLevelEdgeLeft = false;

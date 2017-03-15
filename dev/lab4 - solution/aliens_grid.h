@@ -31,7 +31,7 @@ public:
 
 class AliensGridBehaviourComponent : public Component
 {
-	float COOL_TIME_ABDUCTION;
+	float coolTimeAbduction;
 
 	float timeAccumulator;
 	Player *player;
@@ -54,7 +54,7 @@ public:
 		this->bombs_pool = bombs_pool;
 		this->player = player;
 		this->human_pool = human_pool;
-		this->COOL_TIME_ABDUCTION = 3.0f;
+		this->coolTimeAbduction = 3.0f;
 	}
 
 	virtual void Init()
@@ -84,6 +84,7 @@ public:
 		AliensGrid * alienGrid = (AliensGrid *)go;
 		if (alienGrid->resetTimer) {
 			timeAccumulator = 0;
+			coolTimeAbduction = getRandomTime();
 			alienGrid->resetTimer = false;
 		}
 
@@ -95,11 +96,16 @@ public:
 		}
 	}
 
+	int getRandomTime()
+	{
+		return (rand() % 7) + 3; // random number between 3-10
+	}
+
 	// return true if enough time has passed from the previous abduction
 	bool IsAbductionTime(float dt)
 	{
 		timeAccumulator += dt;
-		if (timeAccumulator > COOL_TIME_ABDUCTION)
+		if (timeAccumulator > coolTimeAbduction)
 		{
 			timeAccumulator = 0;
 			return true;
