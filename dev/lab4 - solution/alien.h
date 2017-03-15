@@ -127,7 +127,6 @@ public:
 		}
 		else if (alienMove == AlienMove::flyingWithHuman)
 		{
-			//alien->yDirection = 1;
 			SDL_Log("Flying with human");
 			alien->yDirection = -1;
 			alien->position.y += alien->yDirection * ALIEN_SPEED / 3 * dt;
@@ -161,7 +160,14 @@ public:
 		if (go->position.y >(LEVEL_HEIGHT - go->size.y - 90))
 			go->position.y = LEVEL_HEIGHT - go->size.y - 90;
 		else if (go->position.y < MINIMAP_HEIGHT)
-			go->position.y = MINIMAP_HEIGHT;
+			if (alienMove == AlienMove::flyingWithHuman)
+			{
+				closestHuman->Receive(new MessageNew(HUMAN_LOST_IN_SPACE));
+				alienMove = horizontal; // reset
+				alien->enabled = false;
+			}
+			else
+				go->position.y = MINIMAP_HEIGHT;
 
 		// fire against player if possible
 		if (dt != 0 && PlayerInRange() && CanFire())

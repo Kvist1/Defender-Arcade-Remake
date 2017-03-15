@@ -340,9 +340,6 @@ public:
 
 	virtual void Receive(MessageNew *m)
 	{
-		if (m->msg == GAME_ABDUCTION)
-			gameState = abduction;
-
 		if (m->msg == GAME_OVER)
 			game_over = true;
 
@@ -352,6 +349,11 @@ public:
 		if (m->msg == PLAYER_BOMB_DROPPED)
 			KillAllAliensInRange();
 
+		if (m->msg == GAME_ABDUCTION)
+			gameState = abduction;
+
+		if (m->msg == HUMAN_LOST_IN_SPACE)
+			gameState = normal;
 	}
 
 	void KillAllAliensInRange()

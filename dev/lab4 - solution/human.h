@@ -52,6 +52,13 @@ public:
 			if (m->position != NULL)
 				this->alienPosition = m->position;
 		}
+
+		if (m->msg == HUMAN_LOST_IN_SPACE)
+		{
+			Send(new MessageNew(HUMAN_LOST_IN_SPACE));
+			humanState = walking; // reset
+			enabled = false;
+		}
 	}
 
 	void ChangeDirection()
