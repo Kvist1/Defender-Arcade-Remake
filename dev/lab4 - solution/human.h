@@ -2,7 +2,8 @@
 enum HumanState
 {
 	walking,
-	abduction
+	abduction,
+	falling
 };
 
 class Human : public GameObject
@@ -59,6 +60,11 @@ public:
 			humanState = walking; // reset
 			enabled = false;
 		}
+
+		if (m->msg == HUMAN_FALLING)
+		{
+			humanState = falling;
+		}
 	}
 
 	void ChangeDirection()
@@ -84,14 +90,18 @@ public:
 
 		Human * human = (Human *)go;
 
-		if (human->humanState == HumanState::walking)
+		if (human->humanState == walking)
 			human->position.x += human->direction * HUMAN_SPEED * dt; // direction * speed * time
 
-		else if (human->humanState == HumanState::abduction)
+		else if (human->humanState == abduction)
 		{
-			//TODO
 			human->position.y = human->alienPosition->y + 50;
 			human->position.x = human->alienPosition->x + 32;
+		}
+		else if (human->humanState == falling)
+		{
+			//TODO
+			SDL_Log("human faalling");
 		}
 
 		if (human->position.x > LEVEL_WIDTH)

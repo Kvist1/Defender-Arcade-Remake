@@ -167,7 +167,7 @@ public:
 		if (!are_aliens_still_there)
 		{
 			// level win!
-			GAME_SPEED += 0.4f;
+			//GAME_SPEED += 0.4f;
 			aliens_grid->Init();
 		}
 

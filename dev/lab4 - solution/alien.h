@@ -18,6 +18,8 @@ public:
 	ObjectPool<Human> * human_pool;
 	bool goPickUpHuman;
 	int * abductionCount;
+	AlienMove alienMove;
+	Human * closestHuman;
 
 	virtual void Init(float xPos, float yPos, Player * player, ObjectPool<Bomb> * bombs_pool, ObjectPool<Human> * human_pool, int *abductionCount)
 	{
@@ -45,6 +47,7 @@ public:
 		this->player = player;
 		this->goPickUpHuman = false;
 		this->abductionCount = abductionCount;
+		closestHuman = NULL;
 	}
 
 	virtual void Receive(MessageNew *m)
@@ -57,6 +60,9 @@ public:
 			enabled = false;
 			Send(new MessageNew(ALIEN_HIT)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
 			SDL_Log("Alien::Hit");
+
+			if (alienMove == flyingWithHuman)
+				closestHuman->Receive(new MessageNew(HUMAN_FALLING));
 		}
 	}
 
@@ -78,11 +84,9 @@ class AlienBehaviourComponent : public Component
 private:
 	int randomTime; // to make the alien move uncontinous. milliseconds
 	float timeAccumulator;
-	AlienMove alienMove;
 	bool shootThroughLevelEdgeLeft;
 	bool shootThroughLevelEdgeRight;
 	float distanceToPlayer;
-	Human * closestHuman;
 	float distanceToHuman;
 
 public:
@@ -92,40 +96,42 @@ public:
 	{
 		time_bomb_launched = -10000.f;	// time from the last dropped bomb
 		randomTime = rand() % 6; // random time between 0 - 5s 
-		alienMove = GetRandomMovement();
 		timeAccumulator = 0;
 		shootThroughLevelEdgeRight = false; // needed to check if alien want to shoot through level edges
 		shootThroughLevelEdgeLeft = false;
 		distanceToPlayer = -1;
+
+		Alien * alien = (Alien *)go;
+		alien->alienMove = GetRandomMovement();
 	}
 
 	virtual void Update(float dt, int camX, int camY)
 	{
-
+		
 		Alien * alien = (Alien *)go;
 
 		// alienMove states < 2 are random movements
-		if (alienMove < 2 && TimeToChangeMovement(dt))
-			alienMove = GetRandomMovement();
+		if (alien->alienMove < 2 && TimeToChangeMovement(dt))
+			alien->alienMove = GetRandomMovement();
 
 		if (alien->goPickUpHuman)
 		{
-			closestHuman = findClosestHuman();
-			alienMove = AlienMove::flyingAgainstHuman;
-			alien->abductionCount++;
+			alien->closestHuman = findClosestHuman();
+			alien->alienMove = AlienMove::flyingAgainstHuman;
+			(*alien->abductionCount)++;
 			alien->goPickUpHuman = false;
 		}
 
-		if (alienMove == AlienMove::horizontal)
+		if (alien->alienMove == AlienMove::horizontal)
 		{
 			alien->position.x += alien->xDirection * ALIEN_SPEED * dt; // direction * speed * time
 		} 
-		else if (alienMove == AlienMove::diagonal)
+		else if (alien->alienMove == AlienMove::diagonal)
 		{
 			alien->position.x += alien->xDirection * ALIEN_SPEED * dt;
 			alien->position.y += alien->yDirection * ALIEN_SPEED * dt;
 		}
-		else if (alienMove == AlienMove::flyingWithHuman)
+		else if (alien->alienMove == AlienMove::flyingWithHuman)
 		{
 			SDL_Log("Flying with human");
 			alien->yDirection = -1;
@@ -134,20 +140,20 @@ public:
 			if reached space with human, disable both human and alien
 			*/
 		}
-		else if (alienMove == AlienMove::flyingAgainstHuman)
+		else if (alien->alienMove == AlienMove::flyingAgainstHuman)
 		{
 			// direction against walking human, new every update
-			glm::vec2 direction = (closestHuman->position - alien->position) / distanceToHuman;
+			glm::vec2 direction = (alien->closestHuman->position - alien->position) / distanceToHuman;
 			// move in that direction
 			alien->position += direction * ALIEN_SPEED * dt;
 			// calculate new distance
-			distanceToHuman = glm::distance(alien->position, closestHuman->position);
+			distanceToHuman = glm::distance(alien->position, alien->closestHuman->position);
 
 			// if close enough, grab with "abduction beam"
-			if (glm::distance(alien->position, closestHuman->position) < 100)
+			if (glm::distance(alien->position, alien->closestHuman->position) < 100)
 			{
-				alienMove = AlienMove::flyingWithHuman;
-				closestHuman->Receive(new MessageNew(ABDUCTION, &alien->position));
+				alien->alienMove = AlienMove::flyingWithHuman;
+				alien->closestHuman->Receive(new MessageNew(ABDUCTION, &alien->position));
 			}
 		}
 
@@ -160,10 +166,11 @@ public:
 		if (go->position.y >(LEVEL_HEIGHT - go->size.y - 90))
 			go->position.y = LEVEL_HEIGHT - go->size.y - 90;
 		else if (go->position.y < MINIMAP_HEIGHT)
-			if (alienMove == AlienMove::flyingWithHuman)
+			if (alien->alienMove == AlienMove::flyingWithHuman)
 			{
-				closestHuman->Receive(new MessageNew(HUMAN_LOST_IN_SPACE));
-				alienMove = horizontal; // reset
+				alien->closestHuman->Receive(new MessageNew(HUMAN_LOST_IN_SPACE));
+				alien->alienMove = horizontal; // reset
+				(*alien->abductionCount)--; 
 				alien->enabled = false;
 			}
 			else
@@ -185,18 +192,21 @@ public:
 		Alien * alien = (Alien *)go;
 
 		distanceToHuman = 10000.0f; // init value
-		Human * closestHuman = NULL;
+		Human * h = NULL;
 
 		for (auto human = alien->human_pool->pool.begin(); human != alien->human_pool->pool.end(); human++)
 		{
-			float temp = glm::distance(alien->position, (*human)->position);
-			if (temp < distanceToHuman)
+			if ((*human)->enabled) 
 			{
-				distanceToHuman = temp;
-				closestHuman = (*human);
+				float temp = glm::distance(alien->position, (*human)->position);
+				if (temp < distanceToHuman)
+				{
+					distanceToHuman = temp;
+					h = (*human);
+				}
 			}
 		}
-		return closestHuman;
+		return h;
 	}
 
 	bool TimeToChangeMovement(float dt)

@@ -49,6 +49,7 @@ public:
 
 	virtual void Update(float dt, int camX, int camY)
 	{
+		SDL_Log("count: %d", abductionCount);
 		// check is one of tha aliens wants to change direction becase it reached the edge of the window 
 		/*if (change_direction)
 			for (auto alien = aliens_pool->pool.begin(); alien != aliens_pool->pool.end(); alien++)
@@ -75,7 +76,6 @@ public:
 		{
 			Alien * alien = aliens_pool->SelectRandom();
 			alien->GoPickUpHuman();
-			abductionCount++;
 		}
 	}
 
