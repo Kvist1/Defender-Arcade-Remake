@@ -316,8 +316,8 @@ public:
 
 		if (gameState == abduction)
 		{
-			sprintf(msg, "Abduction in process!", Score());
-			system->drawText(1050, 40, msg);
+			sprintf(msg, "Abduction in process!");
+			system->drawText(WINDOW_WIDTH/2 -80, MINIMAP_HEIGHT + 10, msg);
 		}
 
 		if (IsGameOver())

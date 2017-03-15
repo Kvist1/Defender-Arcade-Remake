@@ -1,5 +1,13 @@
 class Human;
 
+enum AlienMove
+{
+	horizontal,
+	diagonal,
+	flyingWithHuman,
+	flyingAgainstHuman,
+};
+
 class Alien : public GameObject
 {
 
@@ -70,14 +78,6 @@ class AlienBehaviourComponent : public Component
 private:
 	int randomTime; // to make the alien move uncontinous. milliseconds
 	float timeAccumulator;
-	enum AlienMove
-	{
-		horizontal,
-		diagonal,
-		flyingWithHuman,
-		flyingAgainstHuman,
-	};
-
 	AlienMove alienMove;
 	bool shootThroughLevelEdgeLeft;
 	bool shootThroughLevelEdgeRight;
