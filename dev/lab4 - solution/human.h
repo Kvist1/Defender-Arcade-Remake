@@ -64,6 +64,7 @@ public:
 		if (m->msg == HUMAN_FALLING)
 		{
 			humanState = falling;
+			Send(new MessageNew(HUMAN_FALLING));
 		}
 	}
 
@@ -102,11 +103,18 @@ public:
 		{
 			//TODO
 			SDL_Log("human faalling");
+			human->position.y += 300 * dt;
 		}
 
 		if (human->position.x > LEVEL_WIDTH)
 			human->position.x = 0;
 		else if (human->position.x < 0)
 			human->position.x = LEVEL_WIDTH;
+
+		if (human->position.y > LEVEL_HEIGHT - 50)
+		{
+			human->position.y = LEVEL_HEIGHT - 50;
+			human->humanState = walking;
+		}
 	}
 };

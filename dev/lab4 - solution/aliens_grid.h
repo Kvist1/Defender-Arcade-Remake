@@ -1,7 +1,38 @@
 #include <ctime>
 
+
+
+class AliensGrid : public GameObject
+{
+public:
+	bool resetTimer;
+
+	virtual ~AliensGrid() { SDL_Log("AliensGrid::~AliensGrid"); }
+
+
+	virtual void Init()
+	{
+		SDL_Log("AliensGrid::Init");
+		GameObject::Init();
+		resetTimer = false;
+	}
+
+	virtual void Receive(MessageNew *m)
+	{
+		if (!enabled)
+			return;
+
+		if (m->msg == HUMAN_LOST_IN_SPACE || m->msg == HUMAN_FALLING)
+		{
+			resetTimer = true;
+		}
+	}
+};
+
 class AliensGridBehaviourComponent : public Component
 {
+	float COOL_TIME_ABDUCTION;
+
 	float timeAccumulator;
 	Player *player;
 
@@ -23,6 +54,7 @@ public:
 		this->bombs_pool = bombs_pool;
 		this->player = player;
 		this->human_pool = human_pool;
+		this->COOL_TIME_ABDUCTION = 3.0f;
 	}
 
 	virtual void Init()
@@ -49,29 +81,13 @@ public:
 
 	virtual void Update(float dt, int camX, int camY)
 	{
-		SDL_Log("count: %d", abductionCount);
-		// check is one of tha aliens wants to change direction becase it reached the edge of the window 
-		/*if (change_direction)
-			for (auto alien = aliens_pool->pool.begin(); alien != aliens_pool->pool.end(); alien++)
-				if ((*alien)->enabled)
-					(*alien)->ChangeDirection();*/
+		AliensGrid * alienGrid = (AliensGrid *)go;
+		if (alienGrid->resetTimer) {
+			timeAccumulator = 0;
+			alienGrid->resetTimer = false;
+		}
 
-		// is enough time passed from the last bomb, shoot another bomb from a random active alien
-		// dt = 0 means that game has been paused
-		/*if (dt != 0 && CanFire())
-		{
-			Bomb * bomb = bombs_pool->FirstAvailable();
-			if (bomb != NULL)
-			{
-				Alien * alien = aliens_pool->SelectRandom();
-				if (alien != NULL)
-				{
-					bomb->Init(alien->position.x, alien->position.y + 32);
-					game_objects->insert(bomb);
-				}
-			}
-		}*/
-
+		// controls if humans should to be picked up
 		if (abductionCount < abductionsAllowed && IsAbductionTime(dt))
 		{
 			Alien * alien = aliens_pool->SelectRandom();
@@ -83,30 +99,11 @@ public:
 	bool IsAbductionTime(float dt)
 	{
 		timeAccumulator += dt;
-		if (timeAccumulator > 11)
+		if (timeAccumulator > COOL_TIME_ABDUCTION)
 		{
 			timeAccumulator = 0;
 			return true;
 		}
 		return false;
 	}
-};
-
-
-
-class AliensGrid : public GameObject
-{
-public:
-
-	virtual ~AliensGrid() { SDL_Log("AliensGrid::~AliensGrid"); }
-
-
-
-	virtual void Init()
-	{
-		SDL_Log("AliensGrid::Init");
-		GameObject::Init();
-	}
-
-
 };

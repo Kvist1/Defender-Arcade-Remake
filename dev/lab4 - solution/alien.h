@@ -62,7 +62,17 @@ public:
 			SDL_Log("Alien::Hit");
 
 			if (alienMove == flyingWithHuman)
+			{
 				closestHuman->Receive(new MessageNew(HUMAN_FALLING));
+				alienMove = diagonal; // reset
+				(*abductionCount)--;
+			}
+
+			if (alienMove == flyingAgainstHuman)
+			{
+				alienMove = diagonal; // reset
+				(*abductionCount)--;
+			}
 		}
 	}
 
@@ -133,12 +143,8 @@ public:
 		}
 		else if (alien->alienMove == AlienMove::flyingWithHuman)
 		{
-			SDL_Log("Flying with human");
 			alien->yDirection = -1;
 			alien->position.y += alien->yDirection * ALIEN_SPEED / 3 * dt;
-			/*
-			if reached space with human, disable both human and alien
-			*/
 		}
 		else if (alien->alienMove == AlienMove::flyingAgainstHuman)
 		{

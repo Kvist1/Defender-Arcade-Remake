@@ -76,22 +76,6 @@ public:
 			(*rocket)->AddComponent(render);
 		}
 
-		humans_pool.Create(4, system->getSurfaceSize("data/human.png") );
-		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
-		{
-			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
-			behaviour->Create(system, *human, &game_objects);
-			RenderComponent * render = new RenderComponent();
-			render->Create(system, *human, &game_objects, "data/human.png", "data/human.png");
-			CollideComponent * rocket_coll = new CollideComponent();
-			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
-			(*human)->AddComponent(behaviour);
-			(*human)->AddComponent(render);
-			(*human)->AddComponent(rocket_coll);
-			(*human)->AddReceiver(this);
-			game_objects.insert(*human);
-		}
-
 
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
@@ -115,6 +99,24 @@ public:
 			(*alien)->AddComponent(alien_render);
 			(*alien)->AddComponent(alien_coll);
 			(*alien)->AddReceiver(this);
+		}
+
+
+		humans_pool.Create(4, system->getSurfaceSize("data/human.png"));
+		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
+		{
+			HumanBehaviourComponent * behaviour = new HumanBehaviourComponent();
+			behaviour->Create(system, *human, &game_objects);
+			RenderComponent * render = new RenderComponent();
+			render->Create(system, *human, &game_objects, "data/human.png", "data/human.png");
+			CollideComponent * rocket_coll = new CollideComponent();
+			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
+			(*human)->AddComponent(behaviour);
+			(*human)->AddComponent(render);
+			(*human)->AddComponent(rocket_coll);
+			(*human)->AddReceiver(this);
+			(*human)->AddReceiver(aliens_grid);
+			game_objects.insert(*human);
 		}
 
 		bombs_pool.Create(100, system->getSurfaceSize("data/alien_bomb.png") );
@@ -352,7 +354,7 @@ public:
 		if (m->msg == GAME_ABDUCTION)
 			gameState = abduction;
 
-		if (m->msg == HUMAN_LOST_IN_SPACE)
+		if (m->msg == HUMAN_LOST_IN_SPACE || m->msg == HUMAN_FALLING)
 			gameState = normal;
 	}
 
