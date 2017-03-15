@@ -39,15 +39,15 @@ public:
 		this->abductionCount = abductionCount;
 	}
 
-	virtual void Receive(Message m)
+	virtual void Receive(MessageNew *m)
 	{
 		if (!enabled)
 			return;
 
-		if (m == HIT)
+		if (m->msg == HIT)
 		{
 			enabled = false;
-			Send(ALIEN_HIT); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
+			Send(new MessageNew(ALIEN_HIT)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
 			SDL_Log("Alien::Hit");
 		}
 	}
@@ -104,7 +104,8 @@ public:
 
 		Alien * alien = (Alien *)go;
 
-		if (alienMove != AlienMove::flyingAgainstHuman && TimeToChangeMovement(dt))
+		// alienMove states < 2 are random movements
+		if (alienMove < 2 && TimeToChangeMovement(dt))
 			alienMove = GetRandomMovement();
 
 		if (alien->goPickUpHuman)
@@ -126,7 +127,10 @@ public:
 		}
 		else if (alienMove == AlienMove::flyingWithHuman)
 		{
-			alien->position.y += alien->yDirection * ALIEN_SPEED * dt;
+			//alien->yDirection = 1;
+			SDL_Log("Flying with human");
+			alien->yDirection = -1;
+			alien->position.y += alien->yDirection * ALIEN_SPEED / 3 * dt;
 			/*
 			if reached space with human, disable both human and alien
 			*/
@@ -143,7 +147,8 @@ public:
 			// if close enough, grab with "abduction beam"
 			if (glm::distance(alien->position, closestHuman->position) < 100)
 			{
-				closestHuman->Receive(ABDUCTION);
+				alienMove = AlienMove::flyingWithHuman;
+				closestHuman->Receive(new MessageNew(ABDUCTION, &alien->position));
 			}
 		}
 

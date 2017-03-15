@@ -28,6 +28,13 @@ class Game : public GameObject
 	int bgScrollingOffset = 0;
 	int showGameOverBlink = 0;
 
+	enum GameState
+	{
+		normal,
+		abduction
+	};
+	GameState gameState;
+
 public:
 
 	virtual void Create(AvancezLib* system)
@@ -81,6 +88,7 @@ public:
 			(*human)->AddComponent(behaviour);
 			(*human)->AddComponent(render);
 			(*human)->AddComponent(rocket_coll);
+			(*human)->AddReceiver(this);
 			game_objects.insert(*human);
 		}
 
@@ -125,6 +133,7 @@ public:
 		life_sprite = system->createSprite("data/player_life.png");
 		bomb_count_sprite = system->createSprite("data/player_bomb.png");
 		score = 0;
+		gameState = normal;
 	}
 
 	virtual void Init()
@@ -167,6 +176,7 @@ public:
 		bool humans_are_still_alive = false;
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 			humans_are_still_alive |= (*human)->enabled;
+		
 		if (!humans_are_still_alive)
 		{
 			game_over = true;
@@ -304,6 +314,12 @@ public:
 		for (int i = 0; i < player->bombs; i++)
 			bomb_count_sprite->draw(i * 36 + 110, 80-10);
 
+		if (gameState == abduction)
+		{
+			sprintf(msg, "Abduction in process!", Score());
+			system->drawText(1050, 40, msg);
+		}
+
 		if (IsGameOver())
 		{
 			sprintf(msg, "*** G A M E  O V E R ***");
@@ -322,16 +338,20 @@ public:
 		}
 	}
 
-	virtual void Receive(Message m)
+	virtual void Receive(MessageNew *m)
 	{
-		if (m == GAME_OVER)
+		if (m->msg == GAME_ABDUCTION)
+			gameState = abduction;
+
+		if (m->msg == GAME_OVER)
 			game_over = true;
 
-		if (m == ALIEN_HIT)
+		if (m->msg == ALIEN_HIT)
 			score += POINTS_PER_ALIEN * GAME_SPEED;
 
-		if (m == PLAYER_BOMB_DROPPED)
+		if (m->msg == PLAYER_BOMB_DROPPED)
 			KillAllAliensInRange();
+
 	}
 
 	void KillAllAliensInRange()
@@ -341,7 +361,7 @@ public:
 				&&	(*alien)->position.x >= camera.x
 				&&	(*alien)->position.x <= camera.x + camera.w )
 			{
-				(*alien)->Receive(HIT);
+				(*alien)->Receive(new MessageNew(HIT));
 			}
 	}
 

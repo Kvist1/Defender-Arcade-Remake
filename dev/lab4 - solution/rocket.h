@@ -73,12 +73,12 @@ public:
 		facingDirection = fDirection;
 	}
 
-	virtual void Receive(Message m)
+	virtual void Receive(MessageNew *m)
 	{
 		if (!enabled)
 			return;
 
-		if (m == HIT)
+		if (m->msg == HIT)
 		{
 			enabled = false;
 			SDL_Log("Rocket::Hit");

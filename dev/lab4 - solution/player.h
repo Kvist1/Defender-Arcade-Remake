@@ -18,15 +18,15 @@ public:
 		facingDirection = left;
 	}
 
-	virtual void Receive(Message m)
+	virtual void Receive(MessageNew *m)
 	{
-		if (m == HIT)
+		if (m->msg == HIT)
 		{
 			SDL_Log("Player::Hit!");
 			RemoveLife();
 
 			if (lives < 0)
-				Send(GAME_OVER);
+				Send(new MessageNew(GAME_OVER));
 		}
 	}
 
@@ -34,7 +34,7 @@ public:
 	{
 		if (bombs > 0) {
 			bombs--;
-			Send(PLAYER_BOMB_DROPPED);
+			Send(new MessageNew(PLAYER_BOMB_DROPPED));
 		}
 	}
 

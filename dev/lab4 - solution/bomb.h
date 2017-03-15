@@ -19,9 +19,9 @@ public:
 	}
 
 
-	virtual void Receive(Message m) 
+	virtual void Receive(MessageNew *m) 
 	{
-		if (m == HIT)
+		if (m->msg == HIT)
 		{ 
 			enabled = false;
 			SDL_Log("Bomb::Hit");

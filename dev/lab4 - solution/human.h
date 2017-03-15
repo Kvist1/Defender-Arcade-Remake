@@ -11,6 +11,7 @@ class Human : public GameObject
 public:
 	int direction;
 	HumanState humanState;
+	glm::vec2 * alienPosition;
 
 	virtual void Init()
 	{
@@ -31,23 +32,25 @@ public:
 		humanState = HumanState::walking;
 	}
 
-	virtual void Receive(Message m)
+	virtual void Receive(MessageNew *m)
 	{
 		if (!enabled)
 			return;
 
-		if (m == HIT)
+		if (m->msg == HIT)
 		{
 			enabled = false;
-			Send(HUMAN_HIT); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
+			Send(new MessageNew(HUMAN_HIT)); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
 			SDL_Log("Human::Hit");
 		}
 
-		if (m == ABDUCTION)
+		if (m->msg == ABDUCTION)
 		{
-			Send(HUMAN_ABDUCTION);
+			Send(new MessageNew(GAME_ABDUCTION));
 			SDL_Log("abduction beam start");
 			humanState = HumanState::abduction;
+			if (m->position != NULL)
+				this->alienPosition = m->position;
 		}
 	}
 
@@ -57,7 +60,7 @@ public:
 		position.y += 32;
 
 		if (position.y > (480 - 32))
-			Send(GAME_OVER);
+			Send(new MessageNew(GAME_OVER));
 	}
 
 };
@@ -78,7 +81,11 @@ public:
 			human->position.x += human->direction * HUMAN_SPEED * dt; // direction * speed * time
 
 		else if (human->humanState == HumanState::abduction)
-			human->position.x = human->position.x; // TODO!!!!
+		{
+			//TODO
+			human->position.y = human->alienPosition->y + 50;
+			human->position.x = human->alienPosition->x + 32;
+		}
 
 		if (human->position.x > LEVEL_WIDTH)
 			human->position.x = 0;

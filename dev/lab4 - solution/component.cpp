@@ -95,8 +95,8 @@ void CollideComponent::Update(float dt, int camX, int camY)
 				(go0->position.y + go0->size.y > go->position.y + go->size.y - 30) &&
 				(go0->position.y + go0->size.y < go->position.y + go->size.y + 30))
 			{
-				go->Receive(HIT);
-				go0->Receive(HIT);
+				go->Receive(new MessageNew(HIT));
+				go0->Receive(new MessageNew(HIT));
 			}
 		}
 	}
