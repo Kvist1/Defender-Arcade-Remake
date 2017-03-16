@@ -13,6 +13,7 @@ void Component::Create(AvancezLib * system, GameObject * go, std::set<GameObject
 	this->game_objects = game_objects;
 }
 
+
 void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name)
 {
 	Component::Create(system, go, game_objects);
@@ -37,6 +38,8 @@ void RenderComponent::Update(float dt, int camX, int camY)
 	{
 		sprite->draw(int(go->position.x - camX), int(go->position.y - camY));
 
+		/* special cases when position is close to level edge.. need to see what's in the beginning
+		of the level if you are at the end and vice versa (since it loops) */
 		if (go->position.x < WINDOW_WIDTH && go->position.x > 0)
 		{
 			sprite->draw(int(go->position.x - camX + LEVEL_WIDTH), int(go->position.y - camY));
@@ -74,12 +77,44 @@ void RenderComponent::Destroy()
 }
 
 
+void MiniMapRenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name)
+{
+	Component::Create(system, go, game_objects);
+
+	sprite = system->createSprite(sprite_name);
+
+	scaling = LEVEL_WIDTH / MINIMAP_WIDTH;
+	mWindowWidth = WINDOW_WIDTH / scaling;
+	halfSpriteSize = 32 / 2; // the sprites are 32px
+}
+
+void MiniMapRenderComponent::Update(float dt, int camX, int camY)
+{
+	mCamX = camX / scaling;
+	
+	mXPos = WINDOW_WIDTH / 2 - mWindowWidth / 2 + go->position.x / scaling - mCamX + halfSpriteSize / scaling;
+	mYPos = go->position.y / scaling + halfSpriteSize / scaling;
+	SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
+	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos);
+	SDL_RenderDrawPoint(system->renderer, mXPos + 1, mYPos);
+	SDL_RenderDrawPoint(system->renderer, mXPos - 1, mYPos);
+	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos + 1);
+	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos - 1);
+}
+
+void MiniMapRenderComponent::Destroy()
+{
+	if (sprite != NULL)
+		sprite->destroy();
+	sprite = NULL;
+}
+
+
 void CollideComponent::Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects)
 {
 	Component::Create(system, go, game_objects);
 	this->coll_objects = coll_objects;
 }
-
 
 void CollideComponent::Update(float dt, int camX, int camY)
 {
@@ -101,3 +136,4 @@ void CollideComponent::Update(float dt, int camX, int camY)
 		}
 	}
 }
+

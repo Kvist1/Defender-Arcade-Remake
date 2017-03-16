@@ -49,6 +49,8 @@ public:
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
 		RenderComponent * player_render = new RenderComponent();
 		player_render->Create(system, player, &game_objects, "data/player_left.png", "data/player_right.png");
+		MiniMapRenderComponent * player_miniRender = new MiniMapRenderComponent();
+		player_miniRender->Create(system, player, &game_objects, "data/player_left.png");
 		CollideComponent * player_bomb_collision = new CollideComponent();
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();
@@ -57,6 +59,7 @@ public:
 		player->Create(system->getSurfaceSize("data/player_left.png"));
 		player->AddComponent(player_behaviour);
 		player->AddComponent(player_render);
+		player->AddComponent(player_miniRender);
 		player->AddComponent(player_bomb_collision);
 		player->AddComponent(player_alien_collision);
 		player->AddReceiver(this);
@@ -91,11 +94,14 @@ public:
 			alien_behaviour->Create(system, *alien, &game_objects);
 			RenderComponent * alien_render = new RenderComponent();
 			alien_render->Create(system, *alien, &game_objects, "data/Alien_Ship.png");
+			MiniMapRenderComponent * alien_miniRender = new MiniMapRenderComponent();
+			alien_miniRender->Create(system, (*alien), &game_objects, "data/player_left.png");
 			CollideComponent * alien_coll = new CollideComponent();
 			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*alien)->Create();
 			(*alien)->AddComponent(alien_behaviour);
 			(*alien)->AddComponent(alien_render);
+			(*alien)->AddComponent(alien_miniRender);
 			(*alien)->AddComponent(alien_coll);
 			(*alien)->AddReceiver(this);
 		}
@@ -108,11 +114,14 @@ public:
 			behaviour->Create(system, *human, &game_objects);
 			RenderComponent * render = new RenderComponent();
 			render->Create(system, *human, &game_objects, "data/human.png", "data/human.png");
+			MiniMapRenderComponent * human_miniRender = new MiniMapRenderComponent();
+			human_miniRender->Create(system, (*human), &game_objects, "data/player_left.png");
 			CollideComponent * rocket_coll = new CollideComponent();
 			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*human)->AddComponent(behaviour);
 			(*human)->AddComponent(render);
 			(*human)->AddComponent(rocket_coll);
+			(*human)->AddComponent(human_miniRender);
 			(*human)->AddReceiver(this);
 			(*human)->AddReceiver(aliens_grid);
 			game_objects.insert(*human);
@@ -159,6 +168,8 @@ public:
 
 		for (auto go = game_objects.begin(); go != game_objects.end(); go++)
 			(*go)->Update(dt, camera.x, camera.y);
+
+		DrawMiniMapCameraBox();
 
 		// check if there are still active aliens
 		// if not, send a message to re-init the level
@@ -217,53 +228,25 @@ public:
 		bgMini_sprite->draw( mini_map_x_position - MINIMAP_WIDTH, 0);
 		bgMini_sprite->draw( mini_map_x_position, 0);
 		bgMini_sprite->draw( mini_map_x_position + MINIMAP_WIDTH, 0);
+	}
 
-		int halfSpriteSize = 32/2; // the sprites are 32px
-		int mXPos = WINDOW_WIDTH / 2 - mWindowWidth / 2 + player->position.x / scaling - mCamX + halfSpriteSize / scaling;
-		int mYPos = player->position.y / scaling + halfSpriteSize / scaling;
-		SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
-		SDL_RenderDrawPoint(system->renderer, mXPos, mYPos);
-		SDL_RenderDrawPoint(system->renderer, mXPos+1, mYPos);
-		SDL_RenderDrawPoint(system->renderer, mXPos-1, mYPos);
-		SDL_RenderDrawPoint(system->renderer, mXPos, mYPos+1);
-		SDL_RenderDrawPoint(system->renderer, mXPos, mYPos-1);
+	virtual void DrawMiniMapCameraBox()
+	{
+		int scaling = LEVEL_WIDTH / MINIMAP_WIDTH;
 
-
-		SDL_SetRenderDrawColor(system->renderer, 50, 50, 255, 255);
-		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
-			if ((*human)->enabled)
-			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling+1, (*human)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling-1, (*human)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling+1);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*human)->position.x / scaling - mCamX + 16 / scaling, (*human)->position.y / scaling + 16 / scaling-1);
-			}
-		
-		SDL_SetRenderDrawColor(system->renderer, 255, 0, 0, 255);
-		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
-			if ((*alien)->enabled)
-			{
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling+1, (*alien)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling-1, (*alien)->position.y / scaling + 16 / scaling);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling+1);
-				SDL_RenderDrawPoint(system->renderer, WINDOW_WIDTH / 2 - mWindowWidth / 2 + (*alien)->position.x / scaling - mCamX + 16 / scaling, (*alien)->position.y / scaling + 16 / scaling-1);
-
-			}
 		// creates the two boxes cowering the "extra level backgrounds"
-		SDL_Rect rect = { 0, 0, WINDOW_WIDTH/4, MINIMAP_HEIGHT };
-		SDL_Rect rect2 = { 3*WINDOW_WIDTH/4, 0, WINDOW_WIDTH / 4, MINIMAP_HEIGHT };
+		SDL_Rect rect = { 0, 0, WINDOW_WIDTH / 4, MINIMAP_HEIGHT };
+		SDL_Rect rect2 = { 3 * WINDOW_WIDTH / 4, 0, WINDOW_WIDTH / 4, MINIMAP_HEIGHT };
 		SDL_Rect line = { 0, MINIMAP_HEIGHT, WINDOW_WIDTH, 5 };
 
 		// creates a visual of the camera width in the minimap, quite messy but is just drawing  rectangles in correct positions
-		SDL_Rect camera_left_edge = { WINDOW_WIDTH/2 - WINDOW_WIDTH/scaling/2, 5, 2, MINIMAP_HEIGHT-10 };
+		SDL_Rect camera_left_edge = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, 5, 2, MINIMAP_HEIGHT - 10 };
 		SDL_Rect camera_left_edge_top_wing = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, 5, 10, 2 };
-		SDL_Rect camera_left_edge_bottom_wing = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, MINIMAP_HEIGHT-5, 10, 2 };
+		SDL_Rect camera_left_edge_bottom_wing = { WINDOW_WIDTH / 2 - WINDOW_WIDTH / scaling / 2, MINIMAP_HEIGHT - 5, 10, 2 };
 
-		SDL_Rect camera_right_edge = { WINDOW_WIDTH / 2 + WINDOW_WIDTH/scaling/2, 5, 2, MINIMAP_HEIGHT-10 };
-		SDL_Rect camera_right_edge_top_wing = { WINDOW_WIDTH/2 + WINDOW_WIDTH/scaling/2 -10, 5, 10, 2 };
-		SDL_Rect camera_right_edge_bottom_wing = { WINDOW_WIDTH/2 + WINDOW_WIDTH/scaling/2 -8, MINIMAP_HEIGHT-5, 10, 2 };
+		SDL_Rect camera_right_edge = { WINDOW_WIDTH / 2 + WINDOW_WIDTH / scaling / 2, 5, 2, MINIMAP_HEIGHT - 10 };
+		SDL_Rect camera_right_edge_top_wing = { WINDOW_WIDTH / 2 + WINDOW_WIDTH / scaling / 2 - 10, 5, 10, 2 };
+		SDL_Rect camera_right_edge_bottom_wing = { WINDOW_WIDTH / 2 + WINDOW_WIDTH / scaling / 2 - 8, MINIMAP_HEIGHT - 5, 10, 2 };
 
 		// Render them
 		SDL_SetRenderDrawColor(system->renderer, 20, 20, 20, 255);

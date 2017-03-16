@@ -40,6 +40,25 @@ public:
 	Sprite * GetSprite2() { return sprite2; }
 };
 
+class MiniMapRenderComponent : public Component
+{
+	Sprite* sprite;
+
+	int scaling;
+	int mCamX;
+	int mWindowWidth;
+
+	int halfSpriteSize; // the sprites are around 32px
+	int mXPos;
+	int mYPos;
+
+
+public:
+	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, const char * sprite_name);
+	virtual void Update(float dt, int camX, int camY);
+	virtual void Destroy();
+};
+
 class CollideComponent : public Component
 {
 	ObjectPool<GameObject> * coll_objects; // collision will be tested with these objects
