@@ -33,7 +33,7 @@ public:
 		humanState = HumanState::walking;
 	}
 
-	virtual void Receive(MessageNew *m)
+	virtual void Receive(Package *m)
 	{
 		if (!enabled)
 			return;
@@ -41,13 +41,13 @@ public:
 		if (m->msg == HIT)
 		{
 			enabled = false;
-			Send(new MessageNew(HUMAN_HIT)); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
+			Send(new Package(HUMAN_HIT)); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
 			SDL_Log("Human::Hit");
 		}
 
 		if (m->msg == ABDUCTION)
 		{
-			Send(new MessageNew(GAME_ABDUCTION));
+			Send(new Package(GAME_ABDUCTION));
 			SDL_Log("abduction beam start");
 			humanState = HumanState::abduction;
 			if (m->position != NULL)
@@ -56,7 +56,7 @@ public:
 
 		if (m->msg == HUMAN_LOST_IN_SPACE)
 		{
-			Send(new MessageNew(HUMAN_LOST_IN_SPACE));
+			Send(new Package(HUMAN_LOST_IN_SPACE));
 			humanState = walking; // reset
 			enabled = false;
 		}
@@ -64,7 +64,7 @@ public:
 		if (m->msg == HUMAN_FALLING)
 		{
 			humanState = falling;
-			Send(new MessageNew(HUMAN_FALLING));
+			Send(new Package(HUMAN_FALLING));
 		}
 	}
 
@@ -74,7 +74,7 @@ public:
 		position.y += 32;
 
 		if (position.y > (480 - 32))
-			Send(new MessageNew(GAME_OVER));
+			Send(new Package(GAME_OVER));
 	}
 
 };

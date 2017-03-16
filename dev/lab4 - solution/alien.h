@@ -50,7 +50,7 @@ public:
 		closestHuman = NULL;
 	}
 
-	virtual void Receive(MessageNew *m)
+	virtual void Receive(Package *m)
 	{
 		if (!enabled)
 			return;
@@ -58,12 +58,12 @@ public:
 		if (m->msg == HIT)
 		{
 			enabled = false;
-			Send(new MessageNew(ALIEN_HIT)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
+			Send(new Package(ALIEN_HIT)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
 			SDL_Log("Alien::Hit");
 
 			if (alienMove == flyingWithHuman)
 			{
-				closestHuman->Receive(new MessageNew(HUMAN_FALLING));
+				closestHuman->Receive(new Package(HUMAN_FALLING));
 				alienMove = diagonal; // reset
 				(*abductionCount)--;
 			}
@@ -159,7 +159,7 @@ public:
 			if (glm::distance(alien->position, alien->closestHuman->position) < 100)
 			{
 				alien->alienMove = AlienMove::flyingWithHuman;
-				alien->closestHuman->Receive(new MessageNew(ABDUCTION, &alien->position));
+				alien->closestHuman->Receive(new Package(ABDUCTION, &alien->position));
 			}
 		}
 
@@ -174,7 +174,7 @@ public:
 		else if (go->position.y < MINIMAP_HEIGHT)
 			if (alien->alienMove == AlienMove::flyingWithHuman)
 			{
-				alien->closestHuman->Receive(new MessageNew(HUMAN_LOST_IN_SPACE));
+				alien->closestHuman->Receive(new Package(HUMAN_LOST_IN_SPACE));
 				alien->alienMove = horizontal; // reset
 				(*alien->abductionCount)--; 
 				alien->enabled = false;

@@ -17,7 +17,7 @@ public:
 		resetTimer = false;
 	}
 
-	virtual void Receive(MessageNew *m)
+	virtual void Receive(Package *m)
 	{
 		if (!enabled)
 			return;

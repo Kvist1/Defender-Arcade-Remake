@@ -18,7 +18,7 @@ public:
 		facingDirection = left;
 	}
 
-	virtual void Receive(MessageNew *m)
+	virtual void Receive(Package *m)
 	{
 		if (m->msg == HIT)
 		{
@@ -26,7 +26,7 @@ public:
 			RemoveLife();
 
 			if (lives < 0)
-				Send(new MessageNew(GAME_OVER));
+				Send(new Package(GAME_OVER));
 		}
 	}
 
@@ -34,7 +34,7 @@ public:
 	{
 		if (bombs > 0) {
 			bombs--;
-			Send(new MessageNew(PLAYER_BOMB_DROPPED));
+			Send(new Package(PLAYER_BOMB_DROPPED));
 		}
 	}
 

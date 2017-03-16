@@ -21,7 +21,6 @@ class Game : public GameObject
 
 	unsigned int score = 0;
 
-	// bg 1920*480px, mini 344*85px
 	Sprite *bg_sprite, *bgMini_sprite;
 	//The camera area
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
@@ -340,7 +339,7 @@ public:
 		}
 	}
 
-	virtual void Receive(MessageNew *m)
+	virtual void Receive(Package *m)
 	{
 		if (m->msg == GAME_OVER)
 			game_over = true;
@@ -365,7 +364,7 @@ public:
 				&&	(*alien)->position.x >= camera.x
 				&&	(*alien)->position.x <= camera.x + camera.w )
 			{
-				(*alien)->Receive(new MessageNew(HIT));
+				(*alien)->Receive(new Package(HIT));
 			}
 	}
 

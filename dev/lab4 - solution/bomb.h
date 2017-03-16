@@ -19,7 +19,7 @@ public:
 	}
 
 
-	virtual void Receive(MessageNew *m) 
+	virtual void Receive(Package *m) 
 	{
 		if (m->msg == HIT)
 		{ 

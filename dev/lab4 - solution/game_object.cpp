@@ -58,7 +58,7 @@ void GameObject::AddReceiver(GameObject * go)
 	receivers.push_back(go);
 }
 
-void GameObject::Send(MessageNew *m)
+void GameObject::Send(Package *m)
 {
 	for (auto i = 0; i < receivers.size(); i++)
 	{

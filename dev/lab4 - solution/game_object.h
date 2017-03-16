@@ -4,28 +4,30 @@
 
 enum Message { HUMAN_FALLING, HUMAN_LOST_IN_SPACE, GAME_ABDUCTION, ABDUCTION, HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
 class GameObject;
-class MessageNew
+
+// GameObject sends packages containing the Message and in some cases Position (vec2) and a Sender (GameObject)
+class Package
 {
 public:
 	Message msg;
 	glm::vec2 * position;
 	GameObject * sender;
 
-	MessageNew(Message msg)
+	Package(Message msg)
 	{
 		this->msg = msg;
 		this->position = NULL;
 		this->sender = NULL;
 	}
 
-	MessageNew(Message msg, glm::vec2 * position)
+	Package(Message msg, glm::vec2 * position)
 	{
 		this->msg = msg;
 		this->position = position;
 		this->sender = NULL;
 	}
 
-	MessageNew(Message msg, glm::vec2 * position, GameObject * sender)
+	Package(Message msg, glm::vec2 * position, GameObject * sender)
 	{
 		this->msg = msg;
 		this->position = position;
@@ -63,6 +65,6 @@ public:
 	virtual void Update(float dt, int camX, int camY);
 	virtual void Destroy();
 	virtual void AddReceiver(GameObject *go);
-	virtual void Receive(MessageNew *m) {}
-	void Send(MessageNew *m);
+	virtual void Receive(Package *m) {}
+	void Send(Package *m);
 };
