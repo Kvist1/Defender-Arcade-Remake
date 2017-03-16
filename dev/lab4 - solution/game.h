@@ -40,12 +40,15 @@ public:
 	{
 		SDL_Log("Game::Create");
 
+		//create system
 		this->system = system;
 		bg_sprite = system->createSprite("data/test_background.bmp");
 
+		//create minimap background
 		mmbHandler = new MiniMapBackgroundHandler();
 		mmbHandler->Create(system, "data/test_background_small.bmp");
 
+		//create player
 		player = new Player();
 		PlayerBehaviourComponent * player_behaviour = new PlayerBehaviourComponent();
 		player_behaviour->Create(system, player, &game_objects, &rockets_pool);
@@ -67,6 +70,7 @@ public:
 		player->AddReceiver(this);
 		game_objects.insert(player);
 
+		//create rockets
 		rockets_pool.Create(30);
 		for (auto rocket = rockets_pool.pool.begin(); rocket != rockets_pool.pool.end(); rocket++)
 		{
@@ -80,7 +84,7 @@ public:
 			(*rocket)->AddComponent(render);
 		}
 
-
+		//create alien handler 
 		aliens_grid = new AliensGrid();
 		AliensGridBehaviourComponent  * aliensgrid_behaviour = new AliensGridBehaviourComponent();
 		aliensgrid_behaviour->Create(system, aliens_grid, player, &game_objects, &aliens_pool, &bombs_pool, &humans_pool);
@@ -88,7 +92,7 @@ public:
 		aliens_grid->AddComponent(aliensgrid_behaviour);
 		game_objects.insert(aliens_grid);
 
-
+		//create aliens
 		aliens_pool.Create(55, system->getSurfaceSize("data/Alien_Ship.png") );
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
 		{
@@ -108,7 +112,7 @@ public:
 			(*alien)->AddReceiver(this);
 		}
 
-
+		//create humans
 		humans_pool.Create(4, system->getSurfaceSize("data/human.png"));
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++)
 		{
@@ -129,6 +133,7 @@ public:
 			game_objects.insert(*human);
 		}
 
+		//create alien bombs
 		bombs_pool.Create(100, system->getSurfaceSize("data/alien_bomb.png") );
 		for (auto bomb = bombs_pool.pool.begin(); bomb != bombs_pool.pool.end(); bomb++)
 		{
