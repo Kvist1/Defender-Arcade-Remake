@@ -26,7 +26,7 @@ public:
 		}
 
 		// When the rocket reaches a bit behind the sides of the screen, it disappears.
-		if ( (go->position.x < camX - WINDOW_WIDTH || go->position.x > camX + WINDOW_WIDTH * 2)
+		if ( (go->position.x < camX || go->position.x > camX + WINDOW_WIDTH)
 			&& !passedLevelWidthLeft
 			&& !passedLevelWidthRight) 
 		{
@@ -40,7 +40,6 @@ public:
 				go->enabled = false;
 				SDL_Log("ROCKET DISABLED");
 				passedLevelWidthRight = false;
-				//SDL_Log("Rocket xPos = %d", (int)go->horizontalPosition);
 			}
 		}
 		else if (passedLevelWidthLeft)
@@ -50,7 +49,6 @@ public:
 				go->enabled = false;
 				SDL_Log("ROCKET DISABLED");
 				passedLevelWidthLeft = false;
-				//SDL_Log("Rocket xPos = %d", (int)go->horizontalPosition);
 			}
 		}
 	}
