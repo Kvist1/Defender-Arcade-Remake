@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 {
 	
 	AvancezLib system;
-	AvancezLib::SystemState gameStates;
+	AvancezLib::SystemState gameState;
 
 	system.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	
@@ -74,8 +74,8 @@ int main(int argc, char** argv)
 		dt = dt * GAME_SPEED;
 		lastTime = newTime;
 
-		system.getSystemState(gameStates);
-		if (gameStates.isPaused)
+		system.getSystemState(gameState);
+		if (gameState.isPaused)
 			game.Update(0);
 		else
 			game.Update(dt);
