@@ -52,6 +52,7 @@ float GAME_SPEED = 1.f;		// speed of the game; it is increased each time all the
 #include "aliens_grid.h"
 #include "game.h"
 #include "SDL_image.h"
+#include "MiniMap.h"
 
 int main(int argc, char** argv)
 {

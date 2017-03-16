@@ -51,6 +51,9 @@
     <ClInclude Include="human.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="avancezlib.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="defender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

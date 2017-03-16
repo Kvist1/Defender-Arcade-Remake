@@ -28,6 +28,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="human.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="object_pool.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="rocket.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="component.cpp" />
     <ClCompile Include="game_object.cpp" />
     <ClCompile Include="defender.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
