@@ -269,21 +269,21 @@ public:
 		}
 	}
 
-	virtual void Receive(Package *m)
+	virtual void Receive(Package *p)
 	{
-		if (m->msg == GAME_OVER)
+		if (p->msg == GAME_OVER)
 			game_over = true;
 
-		if (m->msg == ALIEN_HIT)
+		if (p->msg == ALIEN_HIT)
 			score += POINTS_PER_ALIEN * GAME_SPEED;
 
-		if (m->msg == PLAYER_BOMB_DROPPED)
+		if (p->msg == PLAYER_BOMB_DROPPED)
 			KillAllAliensInRange();
 
-		if (m->msg == GAME_ABDUCTION)
+		if (p->msg == GAME_ABDUCTION)
 			gameState = abduction;
 
-		if (m->msg == HUMAN_LOST_IN_SPACE || m->msg == HUMAN_FALLING)
+		if (p->msg == HUMAN_LOST_IN_SPACE || p->msg == HUMAN_FALLING || p->msg == HUMAN_HIT_WHILE_ABDUCTION)
 			gameState = normal;
 	}
 

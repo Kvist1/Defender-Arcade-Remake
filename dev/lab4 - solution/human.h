@@ -43,6 +43,8 @@ public:
 			enabled = false;
 			Send(new Package(HUMAN_HIT)); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
 			SDL_Log("Human::Hit");
+			if (humanState == abduction)
+				Send(new Package(HUMAN_HIT_WHILE_ABDUCTION));
 		}
 
 		if (m->msg == ABDUCTION)
