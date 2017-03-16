@@ -52,7 +52,7 @@ public:
 		RenderComponent * player_render = new RenderComponent();
 		player_render->Create(system, player, &game_objects, "data/player_left.png", "data/player_right.png");
 		MiniMapRenderComponent * player_miniRender = new MiniMapRenderComponent();
-		player_miniRender->Create(system, player, &game_objects, "data/player_left.png");
+		player_miniRender->Create(system, player, &game_objects, "data/player_minimap.png");
 		CollideComponent * player_bomb_collision = new CollideComponent();
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();
@@ -97,7 +97,7 @@ public:
 			RenderComponent * alien_render = new RenderComponent();
 			alien_render->Create(system, *alien, &game_objects, "data/Alien_Ship.png");
 			MiniMapRenderComponent * alien_miniRender = new MiniMapRenderComponent();
-			alien_miniRender->Create(system, (*alien), &game_objects, "data/player_left.png");
+			alien_miniRender->Create(system, (*alien), &game_objects, "data/alien_minimap.png");
 			CollideComponent * alien_coll = new CollideComponent();
 			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*alien)->Create();
@@ -117,7 +117,7 @@ public:
 			RenderComponent * render = new RenderComponent();
 			render->Create(system, *human, &game_objects, "data/human.png", "data/human.png");
 			MiniMapRenderComponent * human_miniRender = new MiniMapRenderComponent();
-			human_miniRender->Create(system, (*human), &game_objects, "data/player_left.png");
+			human_miniRender->Create(system, (*human), &game_objects, "data/human_minimap.png");
 			CollideComponent * rocket_coll = new CollideComponent();
 			rocket_coll->Create(system, *human, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
 			(*human)->AddComponent(behaviour);

@@ -85,7 +85,8 @@ void MiniMapRenderComponent::Create(AvancezLib * system, GameObject * go, std::s
 
 	scaling = LEVEL_WIDTH / MINIMAP_WIDTH;
 	mWindowWidth = WINDOW_WIDTH / scaling;
-	halfSpriteSize = 32 / 2; // the sprites are 32px
+	halfSpriteSize = go->size.x / 2;
+	newOrigo = WINDOW_WIDTH / 2 - MINIMAP_WIDTH / 2;
 }
 
 void MiniMapRenderComponent::Update(float dt, int camX, int camY)
@@ -94,12 +95,18 @@ void MiniMapRenderComponent::Update(float dt, int camX, int camY)
 	
 	mXPos = WINDOW_WIDTH / 2 - mWindowWidth / 2 + go->position.x / scaling - mCamX + halfSpriteSize / scaling;
 	mYPos = go->position.y / scaling + halfSpriteSize / scaling;
-	SDL_SetRenderDrawColor(system->renderer, 255, 255, 255, 255);
-	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos);
-	SDL_RenderDrawPoint(system->renderer, mXPos + 1, mYPos);
-	SDL_RenderDrawPoint(system->renderer, mXPos - 1, mYPos);
-	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos + 1);
-	SDL_RenderDrawPoint(system->renderer, mXPos, mYPos - 1);
+
+	/* special cases when position is close to level edge.. (since it loops) */
+	if (mXPos > newOrigo + MINIMAP_WIDTH)
+	{
+		sprite->draw(mXPos - MINIMAP_WIDTH, mYPos);
+	}
+	else if (mXPos < newOrigo)
+	{
+		sprite->draw(mXPos + MINIMAP_WIDTH, mYPos);
+	} 
+	else 
+		sprite->draw(mXPos, mYPos);
 }
 
 void MiniMapRenderComponent::Destroy()

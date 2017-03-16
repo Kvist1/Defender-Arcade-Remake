@@ -47,7 +47,7 @@ class MiniMapRenderComponent : public Component
 	int scaling;
 	int mCamX;
 	int mWindowWidth;
-
+	int newOrigo;
 	int halfSpriteSize; // the sprites are around 32px
 	int mXPos;
 	int mYPos;
