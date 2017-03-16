@@ -295,12 +295,29 @@ public:
 	void KillAllAliensInRange()
 	{
 		for (auto alien = aliens_pool.pool.begin(); alien != aliens_pool.pool.end(); alien++)
-			if (	(*alien)->enabled 
-				&&	(*alien)->position.x >= camera.x
-				&&	(*alien)->position.x <= camera.x + camera.w )
+		{
+			if ((*alien)->enabled)
 			{
-				(*alien)->Receive(new Package(HIT));
+				// normal case, check if alien is inside camera/window view
+				if (	(*alien)->position.x >= camera.x
+					&&	(*alien)->position.x <= camera.x + camera.w )
+				{
+					(*alien)->Receive(new Package(HIT));
+				}
+				// special case if camera going over left edge of level
+				else if (	camera.x < 0
+						&&	(*alien)->position.x > LEVEL_WIDTH + camera.x)
+				{
+					(*alien)->Receive(new Package(HIT));
+				}
+				// special case if camera going over right edge of level
+				else if (	camera.x + WINDOW_WIDTH > LEVEL_WIDTH
+						&&	(*alien)->position.x < WINDOW_WIDTH - (LEVEL_WIDTH - camera.x))
+				{
+					(*alien)->Receive(new Package(HIT));
+				}
 			}
+		}
 	}
 
 	bool IsGameOver()
