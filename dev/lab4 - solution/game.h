@@ -12,6 +12,7 @@ class Game : public GameObject
 	ObjectPool<Bomb> bombs_pool;
 	ObjectPool<Human> humans_pool;
 	ObjectPool<PowerUp> power_up_pool;
+	ObjectPool<Bomb> power_up_bombs_pool;
 
 	Player * player;
 	AliensGrid * aliens_grid;
@@ -130,11 +131,15 @@ public:
 			alien_miniRender->Create(system, (*alien), &game_objects, "data/alien_minimap.png");
 			CollideComponent * alien_coll = new CollideComponent();
 			alien_coll->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&rockets_pool);
+			CollideComponent * power_up_bomb_collision = new CollideComponent();
+			power_up_bomb_collision->Create(system, *alien, &game_objects, (ObjectPool<GameObject>*)&power_up_bombs_pool);
+
 			(*alien)->Create();
 			(*alien)->AddComponent(alien_behaviour);
 			(*alien)->AddComponent(alien_render);
 			(*alien)->AddComponent(alien_miniRender);
 			(*alien)->AddComponent(alien_coll);
+			(*alien)->AddComponent(power_up_bomb_collision);
 			(*alien)->AddReceiver(this);
 		}
 
@@ -173,6 +178,20 @@ public:
 			(*bomb)->AddComponent(bomb_render);
 		}
 
+		//create power up bombs
+		power_up_bombs_pool.Create(15, system->getSurfaceSize("data/power_up_bomb.png"));
+		for (auto bomb = power_up_bombs_pool.pool.begin(); bomb != power_up_bombs_pool.pool.end(); bomb++)
+		{
+			BombBehaviourComponent * bomb_behaviour = new BombBehaviourComponent();
+			bomb_behaviour->Create(system, *bomb, &game_objects);
+			RenderComponent * bomb_render = new RenderComponent();
+			bomb_render->Create(system, *bomb, &game_objects, "data/power_up_bomb.png", "data/power_up_bomb.png");
+
+			(*bomb)->Create();
+			(*bomb)->AddComponent(bomb_behaviour);
+			(*bomb)->AddComponent(bomb_render);
+		}
+
 		life_sprite = system->createSprite("data/player_life.png");
 		bomb_count_sprite = system->createSprite("data/player_bomb.png");
 		score = 0;
@@ -184,7 +203,7 @@ public:
 		player->Init();
 
 		for (auto power_up = power_up_pool.pool.begin(); power_up != power_up_pool.pool.end(); power_up++)
-			(*power_up)->Init(&aliens_pool, &bombs_pool);
+			(*power_up)->Init(&aliens_pool, &power_up_bombs_pool);
 
 		aliens_grid->Init();
 

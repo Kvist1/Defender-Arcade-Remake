@@ -34,8 +34,7 @@ public:
 
 		if (p->msg == HIT_POWER_UP)
 		{
-			SDL_Log("POWERUP::Hit");
-			
+			//SDL_Log("POWERUP::Hit");
 		} 
 		else if (p->msg == START_POWER_UP)
 		{
