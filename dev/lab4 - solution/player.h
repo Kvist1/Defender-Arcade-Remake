@@ -25,7 +25,7 @@ public:
 			SDL_Log("Player::Hit!");
 			RemoveLife();
 
-			if (lives < 0)
+			if (lives < 1)
 				Send(new Package(GAME_OVER));
 		}
 		else if (p->msg == HIT_POWER_UP)
