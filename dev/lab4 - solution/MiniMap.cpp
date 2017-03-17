@@ -4,7 +4,7 @@
 
 MiniMapBackgroundHandler::~MiniMapBackgroundHandler()
 {
-	SDL_Log("Player::~Player");
+	SDL_Log("MiniMapBackgroundHandler::~MiniMapBackgroundHandler");
 }
 
 void MiniMapBackgroundHandler::Create(AvancezLib * system, const char * sprite_name)

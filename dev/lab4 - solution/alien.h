@@ -5,7 +5,7 @@ enum AlienMove
 	horizontal,
 	diagonal,
 	flyingWithHuman,
-	flyingAgainstHuman,
+	flyingAgainstHuman
 };
 
 class Alien : public GameObject
@@ -58,7 +58,7 @@ public:
 		if (m->msg == HIT)
 		{
 			enabled = false;
-			Send(new Package(ALIEN_HIT)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
+			Send(new Package(ALIEN_HIT, &position)); // re-broadcast the message to signal that the aliens has been hit (used to increase the score)
 			SDL_Log("Alien::Hit");
 
 			if (alienMove == flyingWithHuman)

@@ -1,4 +1,5 @@
 #include "MiniMap.h"
+#include "ExplosionRenderHandler.h"
 
 class Game : public GameObject
 {
@@ -20,6 +21,7 @@ class Game : public GameObject
 
 	unsigned int score = 0;
 
+	ExplosionRenderHandler *explosionHandler;
 	MiniMapBackgroundHandler *mmbHandler;
 	Sprite *bg_sprite;
 	//The camera area
@@ -47,6 +49,10 @@ public:
 		//create minimap background
 		mmbHandler = new MiniMapBackgroundHandler();
 		mmbHandler->Create(system, "data/test_background_small.bmp");
+
+		//create explosion handler
+		explosionHandler = new ExplosionRenderHandler();
+		explosionHandler->Create(system);
 
 		//create player
 		player = new Player();
@@ -177,6 +183,7 @@ public:
 			(*go)->Update(dt, camera.x, camera.y);
 
 		mmbHandler->DrawMiniMapCameraBox();
+		explosionHandler->Update(camera.x, dt);
 
 		// check if there are still active aliens
 		// if not, send a message to re-init the level
@@ -280,7 +287,13 @@ public:
 			game_over = true;
 
 		if (p->msg == ALIEN_HIT)
+		{
 			score += POINTS_PER_ALIEN * GAME_SPEED;
+			if (p->position != NULL)
+			{
+				explosionHandler->AddExplosion(p->position->x, p->position->y);
+			}
+		}
 
 		if (p->msg == PLAYER_BOMB_DROPPED)
 			KillAllAliensInRange();

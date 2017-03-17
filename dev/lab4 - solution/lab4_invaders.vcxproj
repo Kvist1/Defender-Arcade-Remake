@@ -24,6 +24,7 @@
     <ClInclude Include="avancezlib.h" />
     <ClInclude Include="bomb.h" />
     <ClInclude Include="component.h" />
+    <ClInclude Include="ExplosionRenderHandler.h" />
     <ClInclude Include="game_object.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GlobalVariables.h" />
@@ -36,6 +37,7 @@
   <ItemGroup>
     <ClCompile Include="avancezlib.cpp" />
     <ClCompile Include="component.cpp" />
+    <ClCompile Include="ExplosionRenderHandler.cpp" />
     <ClCompile Include="game_object.cpp" />
     <ClCompile Include="defender.cpp" />
     <ClCompile Include="MiniMap.cpp" />

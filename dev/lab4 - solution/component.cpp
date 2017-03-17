@@ -116,7 +116,6 @@ void MiniMapRenderComponent::Destroy()
 	sprite = NULL;
 }
 
-
 void CollideComponent::Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects)
 {
 	Component::Create(system, go, game_objects);
@@ -143,4 +142,5 @@ void CollideComponent::Update(float dt, int camX, int camY)
 		}
 	}
 }
+
 
