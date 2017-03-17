@@ -353,6 +353,7 @@ public:
 		life_sprite->destroy();
 		bg_sprite->destroy();
 		mmbHandler->Destroy();
+		explosionHandler->Destroy();
 		bomb_count_sprite->destroy();
 	
 		rockets_pool.Destroy();

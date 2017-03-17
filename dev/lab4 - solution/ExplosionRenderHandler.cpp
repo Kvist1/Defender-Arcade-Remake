@@ -59,7 +59,11 @@ void ExplosionRenderHandler::RemoveExplosion(Explosion * explosion)
 
 void ExplosionRenderHandler::Destroy()
 {
-	
+	for (std::set<Explosion*>::iterator it = explosions_set.begin(); it != explosions_set.end();)
+	{
+		(*it)->Destroy();
+		it = explosions_set.erase(it);
+	}
 }
 
 
