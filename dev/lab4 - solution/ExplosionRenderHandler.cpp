@@ -116,9 +116,8 @@ void Explosion::DrawExplosion(int camX, float dt)
 		sprites[spriteNbr]->draw(x - camX - LEVEL_WIDTH, y);
 	}
 
-
 	if (TimeToChangeSprite(dt))
-		spriteNbr++; //(spriteNbr++) % 6;
+		spriteNbr++; 
 	if (spriteNbr == 6)
 		animationDone = true;
 }
