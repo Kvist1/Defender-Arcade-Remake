@@ -30,6 +30,7 @@ class Game : public GameObject
 	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	int bgScrollingOffset = 0;
 	int showGameOverBlink = 0;
+	int wave = 1;
 
 	enum GameState
 	{
@@ -236,8 +237,9 @@ public:
 			are_aliens_still_there |= (*alien)->enabled;
 		if (!are_aliens_still_there)
 		{
-			// level win!
+			// wave win!
 			//GAME_SPEED += 0.4f;
+			wave++;
 			aliens_grid->Init();
 		}
 
@@ -288,7 +290,7 @@ public:
 		char msg[1024];
 		sprintf(msg, "Score: %07d", Score());
 		system->drawText(1050, 40, msg);
-		sprintf(msg, "Bonus: %.1fX", GAME_SPEED);
+		sprintf(msg, "Wave:    %d", wave);
 		system->drawText(1050, 80, msg);
 
 		sprintf(msg, "Lives: ", GAME_SPEED);

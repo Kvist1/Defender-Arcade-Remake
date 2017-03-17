@@ -110,7 +110,7 @@ public:
 				if (timeForPowerUp(dt))
 				{
 					power_up->position.x = rand() % LEVEL_WIDTH;
-					power_up->position.y = (rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT)) + MINIMAP_HEIGHT;
+					power_up->position.y = (rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT)) + MINIMAP_HEIGHT-50; // set margin where it can spawn
 					power_up->powerUpState = inAir;
 				}
 			}
