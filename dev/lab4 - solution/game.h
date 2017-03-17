@@ -90,10 +90,13 @@ public:
 			power_up_behaviour->Create(system, *power_up, &game_objects);
 			RenderComponent * power_up_render = new RenderComponent();
 			power_up_render->Create(system, *power_up, &game_objects, "data/power_up.png");
+			MiniMapRenderComponent * powerup_miniRender = new MiniMapRenderComponent();
+			powerup_miniRender->Create(system, (*power_up), &game_objects, "data/power_up_minimap.png");
 
 			(*power_up)->Create(system->getSurfaceSize("data/power_up.png"));
 			(*power_up)->AddComponent(power_up_behaviour);
 			(*power_up)->AddComponent(power_up_render);
+			(*power_up)->AddComponent(powerup_miniRender);
 			player->AddReceiver(*power_up); 
 			game_objects.insert(*power_up);
 		}
