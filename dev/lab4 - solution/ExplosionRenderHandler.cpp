@@ -103,7 +103,20 @@ bool Explosion::TimeToChangeSprite(float dt)
 
 void Explosion::DrawExplosion(int camX, float dt)
 {
-	sprites[spriteNbr]->draw(x - camX, y);
+	sprites[spriteNbr]->draw(x - camX, y); // normal case
+	
+	/* special cases when position is close to level edge.. need to see what's in the beginning
+	of the level if you are at the end and vice versa (since it loops) */
+	if (x < WINDOW_WIDTH && x > 0)
+	{
+		sprites[spriteNbr]->draw(x - camX + LEVEL_WIDTH, y);
+	}
+	else if (x < LEVEL_WIDTH && x > LEVEL_WIDTH - WINDOW_WIDTH)
+	{
+		sprites[spriteNbr]->draw(x - camX - LEVEL_WIDTH, y);
+	}
+
+
 	if (TimeToChangeSprite(dt))
 		spriteNbr++; //(spriteNbr++) % 6;
 	if (spriteNbr == 6)
