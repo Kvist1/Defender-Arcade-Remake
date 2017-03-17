@@ -2,7 +2,8 @@
 enum PowerUpState
 {
 	inAir,
-	pickedByPlayer
+	pickedByPlayer,
+	inActive
 };
 
 
@@ -20,9 +21,9 @@ public:
 	{
 		GameObject::Init();
 		this->position.x = 200;
-		this->position.y = 200;
+		this->position.y = -100;
 		this->enabled = true;
-		this->powerUpState = inAir;
+		this->powerUpState = inActive;
 		this->aliens_pool = aliens_pool;
 		this->bombs_pool = bombs_pool;
 	}
@@ -49,8 +50,9 @@ class PowerUpBehaviourComponent : public Component
 {
 	float time_bomb_launched;
 private:
-	float timeBetweenPowerUps;
+	float timeToNextPowerUp;
 	float timeAccumulator;
+	float timeActive;
 
 	bool shootThroughLevelEdgeLeft;
 	bool shootThroughLevelEdgeRight;
@@ -70,29 +72,53 @@ public:
 	virtual void Init()
 	{
 		time_bomb_launched = -10000.f;	// time from the last dropped bomb
-		timeAccumulator = 0.f;	
-		timeBetweenPowerUps = 10.0f;
+		timeAccumulator = 0.0f;	
+		timeToNextPowerUp = 10.0f;
 		distanceToAlien = -1;
 		shootThroughLevelEdgeRight = false; // needed to check if power_up want to shoot through level edges
 		shootThroughLevelEdgeLeft = false;
+		timeActive = 0.0f;
 	}
 
 	virtual void Update(float dt, int camX, int camY)
 	{
 		PowerUp * power_up = (PowerUp *)go;
 
-		if (dt != 0 && power_up->powerUpState == pickedByPlayer)
+		if (dt != 0)
 		{
-			power_up->position.x = power_up->playerPosition->x;
-			power_up->position.y = power_up->playerPosition->y;
+			if (power_up->powerUpState == pickedByPlayer) {
+				power_up->position.x = power_up->playerPosition->x;
+				power_up->position.y = power_up->playerPosition->y;
 
-			// fire against alien if possible
-			closestAlien = findClosestAlien();
-			if (closestAlien != NULL && AnyAlienInRange() && CanFire())
-				fireAgainst(closestAlien);
+				// fire against alien if possible
+				closestAlien = findClosestAlien();
+				if (closestAlien != NULL && AnyAlienInRange() && CanFire())
+					fireAgainst(closestAlien);
+
+				timeActive += dt;
+				if (timeActive > 10.0f)
+				{
+					power_up->powerUpState = inActive;
+					power_up->position.y = -100;
+					timeActive = 0;
+					timeToNextPowerUp = (rand() % 6) + 5; // random time between 5-10s 
+				}
+
+			}
+			else if (power_up->powerUpState == inActive)
+			{
+				if (timeForPowerUp(dt))
+				{
+					power_up->position.x = rand() % LEVEL_WIDTH;
+					power_up->position.y = (rand() % (LEVEL_HEIGHT-MINIMAP_HEIGHT)) + MINIMAP_HEIGHT;
+					power_up->powerUpState = inAir;
+				}
+			}
+			else if (power_up->powerUpState == inAir)
+			{
+				//do nothing
+			}
 		}
-		/*if (timeForPowerUp(dt))
-			SDL_Log("POWER_UP SPAWN");*/
 	}
 
 	void fireAgainst(Alien * alien)
@@ -167,7 +193,7 @@ public:
 	bool CanFire()
 	{
 		// shoot just if enough time passed by
-		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / GAME_SPEED / 5))
+		if ((system->getElapsedTime() - time_bomb_launched) < (BOMB_TIME_INTERVAL / GAME_SPEED / 20))
 			return false;
 
 		// drop the bomb with 3% chance
@@ -184,7 +210,7 @@ public:
 	bool timeForPowerUp(float dt)
 	{
 		timeAccumulator += dt;
-		if (timeAccumulator > timeBetweenPowerUps)
+		if (timeAccumulator > timeToNextPowerUp)
 		{
 			timeAccumulator = 0;
 			return true;
