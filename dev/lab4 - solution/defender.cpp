@@ -23,7 +23,6 @@ const float			ALIEN_RANGE = 400.0f;
 const float			PLAYER_SPEED = 550.0f;
 const float			ROCKET_SPEED = 1200.0f;
 const float			ALIEN_SPEED = 160.0f;
-const float			BOMB_SPEED = 500.0f;
 const float			HUMAN_SPEED = 30.0f;
 
 float GAME_SPEED = 1.f;		// speed of the game; it is also the score multiplier

@@ -261,7 +261,8 @@ public:
 				direction = (alien->player->position - alien->position) / distanceToPlayer;
 			}
 
-			bomb->Init(alien->position, direction, distanceToPlayer);
+			float bomb_speed = 500.0f;
+			bomb->Init(alien->position, direction, distanceToPlayer, bomb_speed);
 			game_objects->insert(bomb);
 		}
 	}

@@ -5,8 +5,9 @@ class Bomb : public GameObject
 public:
 	glm::vec2 direction, startPosition;
 	float travelDistance;
+	float speed;
 
-	virtual void Init(glm::vec2 position, glm::vec2 direction, float travelDistance)
+	virtual void Init(glm::vec2 position, glm::vec2 direction, float travelDistance, float speed)
 	{
 		SDL_Log("Bomb::Init");
 		GameObject::Init();
@@ -16,6 +17,7 @@ public:
 		this->direction = direction;
 		this->facingDirection = FacingDirection::left;
 		this->travelDistance = travelDistance;
+		this->speed = speed;
 	}
 
 
@@ -44,7 +46,7 @@ public:
 	{
 		Bomb * bomb = (Bomb *)go;
 
-		distance += dt * BOMB_SPEED;
+		distance += dt * bomb->speed;
 		bomb->position = bomb->startPosition + (bomb->direction * distance);
 
 		if (bomb->position.x > LEVEL_WIDTH)
