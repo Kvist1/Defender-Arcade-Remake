@@ -92,6 +92,7 @@ public:
 			(*power_up)->Create(system->getSurfaceSize("data/power_up.png"));
 			(*power_up)->AddComponent(power_up_behaviour);
 			(*power_up)->AddComponent(power_up_render);
+			player->AddReceiver(*power_up); 
 			game_objects.insert(*power_up);
 		}
 
@@ -183,7 +184,7 @@ public:
 		player->Init();
 
 		for (auto power_up = power_up_pool.pool.begin(); power_up != power_up_pool.pool.end(); power_up++)
-			(*power_up)->Init();
+			(*power_up)->Init(&aliens_pool, &bombs_pool);
 
 		aliens_grid->Init();
 

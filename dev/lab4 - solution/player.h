@@ -18,15 +18,19 @@ public:
 		facingDirection = left;
 	}
 
-	virtual void Receive(Package *m)
+	virtual void Receive(Package *p)
 	{
-		if (m->msg == HIT)
+		if (p->msg == HIT)
 		{
 			SDL_Log("Player::Hit!");
 			RemoveLife();
 
 			if (lives < 0)
 				Send(new Package(GAME_OVER));
+		}
+		else if (p->msg == HIT_POWER_UP)
+		{
+			Send(new Package(START_POWER_UP, &this->position));
 		}
 	}
 

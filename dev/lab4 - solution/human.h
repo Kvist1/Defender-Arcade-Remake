@@ -33,12 +33,12 @@ public:
 		humanState = HumanState::walking;
 	}
 
-	virtual void Receive(Package *m)
+	virtual void Receive(Package *p)
 	{
 		if (!enabled)
 			return;
 
-		if (m->msg == HIT)
+		if (p->msg == HIT)
 		{
 			enabled = false;
 			Send(new Package(HUMAN_HIT)); // re-broadcast the message to signal that the human has been hit (will be used to decrease the score)
@@ -47,23 +47,23 @@ public:
 				Send(new Package(HUMAN_HIT_WHILE_ABDUCTION));
 		}
 
-		if (m->msg == ABDUCTION)
+		if (p->msg == ABDUCTION)
 		{
 			Send(new Package(GAME_ABDUCTION));
 			SDL_Log("abduction beam start");
 			humanState = HumanState::abduction;
-			if (m->position != NULL)
-				this->alienPosition = m->position;
+			if (p->position != NULL)
+				this->alienPosition = p->position;
 		}
 
-		if (m->msg == HUMAN_LOST_IN_SPACE)
+		if (p->msg == HUMAN_LOST_IN_SPACE)
 		{
 			Send(new Package(HUMAN_LOST_IN_SPACE));
 			humanState = walking; // reset
 			enabled = false;
 		}
 
-		if (m->msg == HUMAN_FALLING)
+		if (p->msg == HUMAN_FALLING)
 		{
 			humanState = falling;
 			Send(new Package(HUMAN_FALLING));

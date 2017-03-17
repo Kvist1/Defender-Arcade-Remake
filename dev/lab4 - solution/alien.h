@@ -184,7 +184,7 @@ public:
 
 		// fire against player if possible
 		if (dt != 0 && PlayerInRange() && CanFire())
-			fire(dt);
+			fire();
 	}
 
 	// random move pattern, horizontal or diagonal
@@ -231,7 +231,7 @@ public:
 		return false;
 	}
 
-	void fire(float dt)
+	void fire()
 	{
 		Alien * alien = (Alien *)go;
 
@@ -248,7 +248,6 @@ public:
 				glm::vec2 simulatedPosition(alien->position.x - LEVEL_WIDTH, alien->position.y);
 				direction = (alien->player->position - simulatedPosition) / distanceToPlayer;
 				shootThroughLevelEdgeRight = false;
-				SDL_Log("shootThroughLevelEdgeRight: TRUE");
 			}
 			else if (shootThroughLevelEdgeLeft)
 			{
