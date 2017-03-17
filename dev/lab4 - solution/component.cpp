@@ -143,4 +143,31 @@ void CollideComponent::Update(float dt, int camX, int camY)
 	}
 }
 
+void PowerUpCollideComponent::Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects, ObjectPool<GameObject> * coll_objects)
+{
+	Component::Create(system, go, game_objects);
+	this->coll_objects = coll_objects;
+}
+
+void PowerUpCollideComponent::Update(float dt, int camX, int camY)
+{
+	for (auto i = 0; i < coll_objects->pool.size(); i++)
+	{
+		GameObject * go0 = coll_objects->pool[i];
+		if (go0->enabled)
+		{
+			// depending on the size of the game object, check the hit box that should be from the middle of the object.
+			// box should be from center of the object +- 10px in horizontal and +- 30px in vertical
+			if ((go0->position.x + go0->size.x > go->position.x + go->size.x - 10) &&
+				(go0->position.x + go0->size.x < go->position.x + go->size.x + 10) &&
+				(go0->position.y + go0->size.y > go->position.y + go->size.y - 30) &&
+				(go0->position.y + go0->size.y < go->position.y + go->size.y + 30))
+			{
+				go->Receive(new Package(HIT_POWER_UP));
+				go0->Receive(new Package(HIT_POWER_UP));
+			}
+		}
+	}
+}
+
 

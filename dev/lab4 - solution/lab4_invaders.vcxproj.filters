@@ -57,6 +57,9 @@
     <ClInclude Include="ExplosionRenderHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="power_up.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="avancezlib.cpp">

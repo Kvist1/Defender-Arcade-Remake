@@ -11,6 +11,7 @@ class Game : public GameObject
 	ObjectPool<Alien> aliens_pool;
 	ObjectPool<Bomb> bombs_pool;
 	ObjectPool<Human> humans_pool;
+	ObjectPool<PowerUp> power_up_pool;
 
 	Player * player;
 	AliensGrid * aliens_grid;
@@ -66,15 +67,33 @@ public:
 		player_bomb_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&bombs_pool);
 		CollideComponent * player_alien_collision = new CollideComponent();
 		player_alien_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&aliens_pool);
-		
+		PowerUpCollideComponent * player_power_up_collision = new PowerUpCollideComponent();
+		player_power_up_collision->Create(system, player, &game_objects, (ObjectPool<GameObject>*)&power_up_pool);
+
 		player->Create(system->getSurfaceSize("data/player_left.png"));
 		player->AddComponent(player_behaviour);
 		player->AddComponent(player_render);
 		player->AddComponent(player_miniRender);
 		player->AddComponent(player_bomb_collision);
 		player->AddComponent(player_alien_collision);
+		player->AddComponent(player_power_up_collision);
 		player->AddReceiver(this);
 		game_objects.insert(player);
+
+		//create powerup
+		power_up_pool.Create(1, system->getSurfaceSize("data/power_up.png"));
+		for (auto power_up = power_up_pool.pool.begin(); power_up != power_up_pool.pool.end(); power_up++)
+		{
+			PowerUpBehaviourComponent * power_up_behaviour = new PowerUpBehaviourComponent();
+			power_up_behaviour->Create(system, *power_up, &game_objects);
+			RenderComponent * power_up_render = new RenderComponent();
+			power_up_render->Create(system, *power_up, &game_objects, "data/power_up.png");
+
+			(*power_up)->Create(system->getSurfaceSize("data/power_up.png"));
+			(*power_up)->AddComponent(power_up_behaviour);
+			(*power_up)->AddComponent(power_up_render);
+			game_objects.insert(*power_up);
+		}
 
 		//create rockets
 		rockets_pool.Create(30);
@@ -162,7 +181,12 @@ public:
 	virtual void Init()
 	{
 		player->Init();
+
+		for (auto power_up = power_up_pool.pool.begin(); power_up != power_up_pool.pool.end(); power_up++)
+			(*power_up)->Init();
+
 		aliens_grid->Init();
+
 		for (auto human = humans_pool.pool.begin(); human != humans_pool.pool.end(); human++) 
 			(*human)->Init();
 
@@ -360,6 +384,7 @@ public:
 		aliens_pool.Destroy();
 		bombs_pool.Destroy();
 		humans_pool.Destroy();
+		power_up_pool.Destroy();
 
 		delete aliens_grid;
 		delete player;

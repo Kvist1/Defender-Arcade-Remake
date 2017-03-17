@@ -2,7 +2,7 @@
 #include <vector>
 #include "glm\glm.hpp"
 
-enum Message { HUMAN_HIT_WHILE_ABDUCTION, HUMAN_FALLING, HUMAN_LOST_IN_SPACE, GAME_ABDUCTION, ABDUCTION, HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
+enum Message { HIT_POWER_UP, HUMAN_HIT_WHILE_ABDUCTION, HUMAN_FALLING, HUMAN_LOST_IN_SPACE, GAME_ABDUCTION, ABDUCTION, HIT, ALIEN_HIT, HUMAN_HIT, PLAYER_BOMB_DROPPED, GAME_OVER, LEVEL_WIN, NO_MSG };
 class GameObject;
 
 // GameObject sends packages containing the Message and in some cases Position (vec2) and a Sender (GameObject)

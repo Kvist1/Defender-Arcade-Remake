@@ -39,6 +39,7 @@ float GAME_SPEED = 1.f;		// speed of the game; it is also the score multiplier
 #include "bomb.h"
 #include "player.h"
 #include "human.h"
+#include "power_up.h"
 #include "alien.h"
 #include "aliens_grid.h"
 #include "game.h"

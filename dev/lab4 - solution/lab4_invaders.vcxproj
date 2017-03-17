@@ -32,6 +32,7 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="object_pool.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="power_up.h" />
     <ClInclude Include="rocket.h" />
   </ItemGroup>
   <ItemGroup>

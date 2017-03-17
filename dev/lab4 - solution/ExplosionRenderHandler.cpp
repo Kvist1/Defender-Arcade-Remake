@@ -11,19 +11,6 @@ ExplosionRenderHandler::~ExplosionRenderHandler()
 void ExplosionRenderHandler::Create(AvancezLib * system)
 {
 	this->system = system;
-
-	// test
-	/*Explosion *e1 = new Explosion();
-	e1->Create(system, this, 100, 100);
-	explosions_set.insert(e1);
-
-	Explosion *e2 = new Explosion();
-	e2->Create(system, this, 100, 200);
-	explosions_set.insert(e2);
-
-	Explosion *e3 = new Explosion();
-	e3->Create(system, this, 100, 300);
-	explosions_set.insert(e3);*/
 }
 
 void ExplosionRenderHandler::Update(int camX, float dt)
@@ -93,7 +80,7 @@ Explosion::~Explosion()
 bool Explosion::TimeToChangeSprite(float dt)
 {
 	timeAccumulator += dt;
-	if (timeAccumulator > 0.18f)
+	if (timeAccumulator > 0.1f)
 	{
 		timeAccumulator = 0;
 		return true;
