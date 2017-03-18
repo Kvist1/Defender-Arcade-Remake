@@ -1,157 +1,230 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="RocketBehaviourComponent" Collapsed="true">
-    <Position X="4.75" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>rocket.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Rocket" Collapsed="true">
-    <Position X="2.5" Y="5" Width="1.5" />
+    <Position X="2.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAACAAAAAAA=</HashCode>
       <FileName>rocket.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObjectPool&lt;T&gt;" Collapsed="true">
-    <Position X="13.25" Y="0.5" Width="1.5" />
+    <Position X="7.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAABAAAAAAAAAAAABAAEAAQAgAAAACAAA=</HashCode>
       <FileName>object_pool.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Component" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQgAAIAAAAAAACAAAAQAAAAAABAAEAQAAACAAAAAAA=</HashCode>
       <FileName>component.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RenderComponent" Collapsed="true">
-    <Position X="0.75" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAEAAAAAAAAAAAABBAQEAAAAAAAAQAAAA=</HashCode>
       <FileName>component.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CollideComponent" Collapsed="true">
-    <Position X="2.5" Y="1.75" Width="1.5" />
+    <Position X="4" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>component.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameObject" Collapsed="true">
-    <Position X="5" Y="3.75" Width="1.5" />
+    <Position X="6.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABQAAAAAAAAIAAAAAMCAIAAAAABAAEIQBAACAAAgAAA=</HashCode>
       <FileName>game_object.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BombBehaviourComponent" Collapsed="true">
-    <Position X="6.5" Y="2.5" Width="1.5" />
+    <Position X="2.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>bomb.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bomb" Collapsed="true">
-    <Position X="4.25" Y="5" Width="1.5" />
+    <Position X="4" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIBAAAIAAAAAAAAAAAAAQAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAIBAAAIAAAAAAAAAAAQAQAAACAAAAAAA=</HashCode>
       <FileName>bomb.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Alien" Collapsed="true">
-    <Position X="6" Y="5" Width="1.5" />
+    <Position X="5.75" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAgAAQAAAACAAAAAAAAAAAAAAAiARIAACAAAAgAA=</HashCode>
+      <HashCode>IAAAIgAAQAAAACAAAAAACAAAAAAAAiARIAACAAAAgAA=</HashCode>
       <FileName>alien.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlienBehaviourComponent" Collapsed="true">
-    <Position X="8.25" Y="2.5" Width="1.5" />
+    <Position X="4" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAIAAAAACAFAAAAIAACBAAAAAACAAkBBACAgBAACA=</HashCode>
+      <HashCode>AAQAAAAAAACAFAAAAIAAABAAAAAACAAkBBACAgBAACA=</HashCode>
       <FileName>alien.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AliensGridBehaviourComponent" Collapsed="true">
-    <Position X="10" Y="2.5" Width="1.5" />
+    <Position X="5.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQAAgQBAAAAAAAAAAAAAAAAAAAAAEABIAACAAAAADI=</HashCode>
+      <HashCode>IAQAAgQBAAAAAAAAAAAAAAAAAAAAAEABJAACAAAAADI=</HashCode>
       <FileName>aliens_grid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AliensGrid" Collapsed="true">
-    <Position X="7.75" Y="5" Width="1.5" />
+    <Position X="7.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAQQAACAAAAAAA=</HashCode>
       <FileName>aliens_grid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Sprite" Collapsed="true">
-    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Position X="6" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAQAIAAEAAAAAAAgAQAAAAAAAAgAA=</HashCode>
       <FileName>avancezlib.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AvancezLib" Collapsed="true">
-    <Position X="11.5" Y="0.5" Width="1.5" />
+    <Position X="6" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQIAgAAAAAAAAAAAAEAEAFgAAAAAAAJMAAAAAAAEgAA=</HashCode>
       <FileName>avancezlib.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game" Collapsed="true">
-    <Position X="0.75" Y="5" Width="1.5" />
+    <Position X="0.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAwAAgIJEgAAAgiAAAAIACAAAEBwAEQVAAAGAQCCAAI=</HashCode>
+      <HashCode>AAwAAgIJIgAAAgiAAQAIACAAAEBwAEQVAAgmABCCAAI=</HashCode>
       <FileName>game.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerBehaviourComponent" Collapsed="true">
-    <Position X="11.75" Y="2.5" Width="1.5" />
+    <Position X="7.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAEAQAAgCAAAAAAAkAEAAACQAAgAAA=</HashCode>
       <FileName>player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Player" Collapsed="true">
-    <Position X="9.5" Y="5" Width="1.5" />
+    <Position X="9.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAEAAAAIAAQAAAAAIAAAAQAAACAAAAABA=</HashCode>
       <FileName>player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HumanBehaviourComponent" Collapsed="true">
-    <Position X="13.5" Y="2.5" Width="1.5" />
+    <Position X="9.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>human.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Human" Collapsed="true">
-    <Position X="11.25" Y="5" Width="1.5" />
+    <Position X="11" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAACAQAAACAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAACAAAAAAACAQAAACAQAAAAA=</HashCode>
       <FileName>human.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Message">
-    <Position X="13.5" Y="4.25" Width="1.5" />
+  <Class Name="MiniMapRenderComponent" Collapsed="true">
+    <Position X="2.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAAICAIAQgAAAAAAAAIAACAAAAAAAgAA=</HashCode>
+      <HashCode>AAQAACAAAAAAAAABAAAYAABABFBAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerUpCollideComponent" Collapsed="true">
+    <Position X="5.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExplosionRenderHandler" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgQAgAQAAAAAAACAAAAAAAAAAABAAEAAAAAAAAQAAAA=</HashCode>
+      <FileName>ExplosionRenderHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Explosion" Collapsed="true">
+    <Position X="3" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAgIAAAAACAAAACAAAABEBAAEAAAABgAACAACA=</HashCode>
+      <FileName>ExplosionRenderHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Package">
+    <Position X="14.75" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>game_object.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniMapBackgroundHandler" Collapsed="true">
+    <Position X="0.5" Y="10" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAACAAAEAAAAAAABAAEAAAAEAAQAAAAA=</HashCode>
+      <FileName>MiniMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerUp" Collapsed="true">
+    <Position X="12.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgABAAAAAAAAAAAAAAAAABAAAAARAAACAAAAgAA=</HashCode>
+      <FileName>power_up.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerUpBehaviourComponent" Collapsed="true">
+    <Position X="11" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCQAAAAAAAFAACAAAAABAQAAAAAEAMABACEABAASA=</HashCode>
+      <FileName>power_up.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Message">
+    <Position X="14.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAEAAABAICAIAQAAAAAAAAAYAACgAAAAQAgAA=</HashCode>
       <FileName>game_object.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HumanState" Collapsed="true">
-    <Position X="11.25" Y="6" Width="1.5" />
+    <Position X="11" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>human.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AlienMove" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEQAAAgAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>alien.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PowerUpState" Collapsed="true">
+    <Position X="12.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAg=</HashCode>
+      <FileName>power_up.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
