@@ -103,8 +103,7 @@ public:
 		}
 		else if (human->humanState == falling)
 		{
-			//TODO
-			SDL_Log("human faalling");
+			SDL_Log("human falling");
 			human->position.y += 300 * dt;
 		}
 
