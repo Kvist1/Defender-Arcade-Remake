@@ -196,6 +196,7 @@ public:
 			(*bomb)->AddComponent(bomb_render);
 		}
 
+		//create background sprites and init score 
 		life_sprite = system->createSprite("data/player_life.png");
 		bomb_count_sprite = system->createSprite("data/player_bomb.png");
 		score = 0;
@@ -316,6 +317,7 @@ public:
 		{
 			sprintf(msg, "*** G A M E  O V E R ***");
 
+			// just makes the text game over blink (makes it more visible)
 			if (showGameOverBlink == 0)
 			{
 				system->drawText(550, 400, msg);

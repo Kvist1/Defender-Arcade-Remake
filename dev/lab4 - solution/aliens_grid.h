@@ -1,14 +1,11 @@
 #include <ctime>
 
-
-
 class AliensGrid : public GameObject
 {
 public:
 	bool resetTimer;
 
 	virtual ~AliensGrid() { SDL_Log("AliensGrid::~AliensGrid"); }
-
 
 	virtual void Init()
 	{
@@ -59,9 +56,9 @@ public:
 
 	virtual void Init()
 	{
-		timeAccumulator = 0.f;	// time until next abduction try by aliens
+		timeAccumulator = 0.f;	// time counting against next abduction try by aliens
 		abductionCount = 0;
-		abductionsAllowed = 1; // could be increased on a harder level
+		abductionsAllowed = 1; // could be increased on a harder wave
 
 		float random_xPos;
 		float random_yPos;

@@ -21,6 +21,7 @@ void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<Game
 	sprite = system->createSprite(sprite_name);
 }
 
+// an alternative create if the game object for example have a different left and right move sprite
 void RenderComponent::Create(AvancezLib * system, GameObject * go, std::set<GameObject*>* game_objects, const char * sprite_name, const char * sprite2_name)
 {
 	Component::Create(system, go, game_objects);

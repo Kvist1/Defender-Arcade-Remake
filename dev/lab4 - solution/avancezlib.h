@@ -60,9 +60,9 @@ public:
 		bool right; // right arrow
 		bool up; 
 		bool down;
-		bool pause;
-		bool restart;
-		bool dropBomb;
+		bool pause; // 'p' key
+		bool restart; // not implemented yet
+		bool dropBomb; // 's' key
 	};
 
 	// Returns the keyboard status. If a flag is set, the corresponding key is being held down.
@@ -85,9 +85,5 @@ private:
 	KeyStatus key;
 	SystemState state;
 };
-
-
-
-
 
 #endif // __AVANCEZ_LIB__

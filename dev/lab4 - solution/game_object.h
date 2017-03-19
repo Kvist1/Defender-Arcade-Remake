@@ -45,8 +45,7 @@ protected:
 
 public:
 	glm::vec2 position;
-	// size = width and height
-	glm::vec2 size; 
+	glm::vec2 size; // size = width and height
 	bool enabled;
 	enum FacingDirection
 	{

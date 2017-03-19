@@ -104,7 +104,7 @@ public:
 		else if (human->humanState == falling)
 		{
 			SDL_Log("human falling");
-			human->position.y += 300 * dt;
+			human->position.y += 300 * dt; // 300 = fallspeed
 		}
 
 		if (human->position.x > LEVEL_WIDTH)

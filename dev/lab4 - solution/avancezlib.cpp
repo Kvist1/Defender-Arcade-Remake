@@ -2,8 +2,6 @@
 #include "SDL_image.h"
 #include "glm\glm.hpp"
 
-
-
 // Creates the main window. Returns true on success.
 bool AvancezLib::init(int width, int height)
 {

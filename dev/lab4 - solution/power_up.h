@@ -6,7 +6,6 @@ enum PowerUpState
 	inActive
 };
 
-
 class PowerUp : public GameObject
 {
 
@@ -41,7 +40,7 @@ public:
 		{
 			powerUpState = pickedByPlayer;
 			if (p->position != NULL)
-				this->playerPosition = p->position;
+				this->playerPosition = p->position; // attach to player
 		}
 	}
 };
@@ -66,7 +65,6 @@ public:
 	virtual void Create(AvancezLib* system, GameObject * go, std::set<GameObject*> * game_objects)
 	{
 		Component::Create(system, go, game_objects);
-
 	}
 
 	virtual void Init()
@@ -103,7 +101,6 @@ public:
 					timeActive = 0;
 					timeToNextPowerUp = (rand() % 6) + 5; // random time between 5-10s 
 				}
-
 			}
 			else if (power_up->powerUpState == inActive)
 			{

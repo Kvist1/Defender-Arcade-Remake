@@ -34,7 +34,7 @@ public:
 
 class BombBehaviourComponent : public Component
 {
-	float distance; // distance flying towards target (player)
+	float distance; // distance flying towards target
 
 public:
 	virtual void Init()

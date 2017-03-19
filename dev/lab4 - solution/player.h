@@ -76,6 +76,7 @@ public:
 	{
 		AvancezLib::KeyStatus keys;
 		system->getKeyStatus(keys);
+		
 		if (keys.right)
 			MoveHorizontal(dt * PLAYER_SPEED);
 		else if (keys.left)
@@ -84,19 +85,21 @@ public:
 			MoveVertical(-dt * PLAYER_SPEED/2);
 		else if (keys.down)
 			MoveVertical(dt * PLAYER_SPEED/2);
+		
 		if (keys.fire && dt != 0)
 		{
 			if (CanFire())
 			{
 				// fetches a rocket from the pool and use it in game_objects
 				Rocket * rocket = rockets_pool->FirstAvailable();
-				if (rocket != NULL)	// rocket is NULL is the object pool can not provide an object
+				if (rocket != NULL)	// rocket is NULL if the object pool can not provide an object
 				{
 					rocket->Init(go->position.x, go->position.y, go->facingDirection);
 					game_objects->insert(rocket);
 				}
 			}
 		}
+
 		if (keys.dropBomb)
 		{
 			if (CanDropBomb())
@@ -105,8 +108,6 @@ public:
 				player->DropBomb();
 			}
 		}
-
-		//SDL_Log("playerPos: %0.1f", go->position.x);
 	}
 
 	// move the player left or right
@@ -160,7 +161,7 @@ public:
 
 		time_bomb_pressed = system->getElapsedTime();
 
-		SDL_Log("Nuke!");
+		SDL_Log("Player::bomb!");
 		return true;
 	}
 };

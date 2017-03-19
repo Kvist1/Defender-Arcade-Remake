@@ -58,7 +58,6 @@ public:
 // rockets are shot by the player towards the aliens
 class Rocket : public GameObject
 {
-
 public:
 
 	virtual void Init(float xPos, float yPos, GameObject::FacingDirection fDirection)
